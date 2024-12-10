@@ -1,6 +1,6 @@
-const a = 1; 
-const b = 3;
-console.log(a + b)
-export default function soma(a:number, b: number){
-    return a + b
-}
+import express from "express";
+const app = express();
+const port = process.env.PORT
+app.listen(port, () => {
+    console.log("servidor rodando")
+} )
