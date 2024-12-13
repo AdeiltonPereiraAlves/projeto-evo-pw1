@@ -8,4 +8,5 @@ interface UsuarioType  {
   imagem: File;
   tipo: Tipo;
 };
+
 export default UsuarioType;
