@@ -4,9 +4,9 @@ interface UsuarioType  {
   id?: string;
   nome: string;
   email: string;
-  senha?: string;
-  imagem: File;
   tipo: Tipo;
+  senha?: string;
+  imagem?: string; // ou string
 };
 
 export default UsuarioType;
