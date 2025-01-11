@@ -1,43 +1,69 @@
 import Tipo from "../../../@types/Tipo";
-
+import Erros from '../../constants/Erros'
 import Id from "../../shared/Id";
+import Validador from "../../utils/Validador";
 
-export default abstract class Usuario {
-  private id: Id;
-
+export default  class Usuario {
+  
   constructor(
-    private nome: string,
-    private email: string,
-    private tipo: Tipo,
-    private senha?: string,
-    private imagem?: string
+    private _id: Id,
+    private _nome: string,
+    private _email: string,
+    private _tipo: Tipo,
+    private _senha?: string,
+    private _imagem?: string
   ) {
-    this.id = Id.gerarId();
+    // this.id = Id.gerarId();
+   
   }
-
+  // get e set id
+  setId(id:string){
+    if(!id){
+      throw new Error(Erros.ID_INVALIDO)
+    }
+    this._id = id
+  }
   getId(): Id{
-    return this.id;
+    return this._id;
   }
-
+  //get e set nome
+  setNome(nome:string) {
+     const res = Validador.naoVazia(nome,Erros.NOME_VAZIO)
+     if(!res){
+       this._nome = nome
+       
+     }
+     return res
+     
+  }
   getNome(): string {
-    return this.nome;
+    return this._nome;
   }
+  
+  setSenha(senha: string){
+      const res = Validador.naoVazia(senha,Erros.SENHA_INVALIDA)
+        if(!res){
+          this._senha = senha
+        }
+        return res
 
+  }
   getSenha(): string |undefined {
-    return this.senha;
+    return this._senha;
   }
   getEmail(): string {
-    return this.email;
+    return this._email;
   }
   getImagem(): string | undefined {
-    return this.imagem;
+    return this._imagem;
   }
 
   getTipo(): Tipo {
-    return this.tipo;
+    return this._tipo;
   }
-  alterarTipo(tipo: Tipo): void {
-    this.tipo = tipo;
+   setTipo(tipo: Tipo): void {
+    this._tipo = tipo;
   }
+
 
 }
