@@ -1,5 +1,5 @@
  enum Tipo{
-    Voluntario = "VOLUNTARIO",
+    VOLUNTARIO = "VOLUNTARIO",
     ONG = "ONG"
 }
 
