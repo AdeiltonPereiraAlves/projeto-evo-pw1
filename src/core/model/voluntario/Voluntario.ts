@@ -5,18 +5,17 @@ import Usuario from "../usuario/Usuario";
 
 export default class Voluntario extends Usuario {
   constructor(
-    
+    id: string,
     nome: string,
     email: string,
     tipo: Tipo,
-    senha: string,
     private habilidades: string[],
     private interesses: string[],
     private disponibilidade: Disponibilidade,
-  
+    senha?: string | undefined,
     imagem?: string | undefined
   ) {
-    super( nome, email, tipo, senha, imagem);
+    super(id, nome, email, tipo, senha, imagem);
   }
   getTipo(): Tipo {
     return this.getTipo();
@@ -32,5 +31,4 @@ export default class Voluntario extends Usuario {
   getDisponibilidade(): Disponibilidade {
     return this.disponibilidade;
   }
-
 }

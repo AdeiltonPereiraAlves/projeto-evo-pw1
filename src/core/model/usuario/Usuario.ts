@@ -3,12 +3,11 @@ import Erros from '../../constants/Erros'
 import Id from "../../shared/Id";
 import Validador from "../../utils/Validador";
 
-export default  class Usuario {
+export default class Usuario {
   constructor(
     private _id: Id,
     private _nome: string,
     private _email: string,
-   
     private _tipo: Tipo,
     private _senha?: string,
     private _imagem?: string
