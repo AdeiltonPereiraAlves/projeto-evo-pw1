@@ -3,7 +3,8 @@
         "exemplo": "custom",
         "portas": "circleci",
         "adptadores": "connection",
-        "usuario": "admin"
+        "usuario": "admin",
+        "useCase": "Luau"
         
     }
 }
