@@ -1,0 +1,9 @@
+{
+    "material-icon-theme.folders.associations": {
+        "exemplo": "custom",
+        "portas": "circleci",
+        "adptadores": "connection",
+        "usuario": "admin"
+        
+    }
+}

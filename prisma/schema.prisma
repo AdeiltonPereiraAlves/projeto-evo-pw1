@@ -1,0 +1,95 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Usuario {
+  id         String      @id @default(uuid())
+  nome       String
+  email      String
+  senha      String
+  imagem     String?
+  tipo       TipoUsuario
+  voluntario Voluntario?
+  ong        Ong?
+}
+
+enum TipoUsuario {
+  VOLUNTARIO
+  ONG
+}
+enum Status{
+  ENCERRADO,
+  ABERTO
+}
+enum Disponibilidade {
+  MANHA
+  TARDE
+  NOITE
+  INTEGRAL
+}
+
+model Voluntario {
+  id              String            @id @default(uuid())
+  usuarioId       String            @unique
+  usuario         Usuario           @relation(fields: [usuarioId], references: [id])
+  interesses      String[]
+  habilidades     String[]
+  disponibilidade Disponibilidade[]
+}
+
+model Ong {
+  id          String   @id @default(uuid())
+  usuarioId   String   @unique
+  usuario     Usuario  @relation(fields: [usuarioId], references: [id])
+  cnpj        String   @unique
+  descricao   String
+  visao       String
+  areaAtuacao String[]
+  endereco    String
+}
+model Vaga{
+  id String @id @default(uuid())
+  ongId String
+
+  descricao String
+  requesitos String[]
+  status Status
+  duracao String
+  localizacao String
+  ong Ong @relation(fields:[ongId], references: [id])
+  inscricoes Inscricao[]
+}
+
+model Inscricao{
+  id String @id @default(uuid())
+  voluntarioId String
+  vagaId String
+  data  DateTime @default(now())
+  status Status
+  voluntario Voluntario @relation(fields:[voluntarioId], references: [id])
+  vaga Vaga @relation(fields:[vagaId], references: [id])
+}
+
+model Avaliacao{
+  id String @id @default(uuid())
+  voluntarioId String
+  ongId String
+  data DateTime @default(now())
+  frequecia String?
+  tipo TipoUsuario
+  comentario String
+  nota Int
+  voluntario Voluntario @relation(fields:[voluntarioId], references: [id])
+  ong Ong @relation(fields:[ongId], references: [id])
+}
