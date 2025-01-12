@@ -20,9 +20,9 @@ export default class Voluntario extends Usuario {
     super(id, nome, email, tipo, senha, imagem);
   }
 
-  
+  //get e set habilidades
   setHabilidades(habilidades: string[]){
-    const res = Validador.arrayInvalido(habilidades, Erros.ARRAY_INVALIDO)
+    const res = Validador.arrayInvalido(habilidades, Erros.HABILIDADES_INVALIDAS)
     console.log(res)
      if(res){
          return res;
@@ -33,11 +33,25 @@ export default class Voluntario extends Usuario {
   getHabilidades(): string[] {
     return this._habilidades;
   }
-
+  
+ //get e set interesses
+  setInteresses(interesses: string[]){
+    const res = Validador.arrayInvalido(interesses, Erros.INTERESSES_INVALIDOS)
+    console.log(res)
+     if(res){
+         return res;
+     }
+     
+     this._interesses = interesses
+  }
   getInteresses(): string[] {
     return this._interesses;
   }
 
+  //get e set disponibilidade
+  setDisponibilidade(disponibilidades:Disponibilidade){
+       this._disponibilidade = disponibilidades
+  }
   getDisponibilidade(): Disponibilidade {
     return this._disponibilidade;
   }

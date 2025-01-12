@@ -16,9 +16,9 @@ describe("testar voluntario",()=> {
             _nome: "Jose",
             _email: "jose@email.com",
             _tipo: Tipo.VOLUNTARIO,
-            habilidades:habilidades,
-            interesses: ["Ajudar adolecentes","Ajudar comunidade"],
-            disponibilidade: Disponibilidade.INTEGRAL,
+            _habilidades:habilidades,
+            _interesses: interesses,
+            _disponibilidade: Disponibilidade.INTEGRAL,
             _senha: "123", 
             _imagem: "img/perfil"
         })
@@ -44,7 +44,7 @@ describe("testar voluntario",()=> {
         
     
 
-        expect(v.setHabilidades([])).toBe("ARRAY_INVALIDO")
+        expect(v.setHabilidades([])).toBe("HABILIDADES_INVALIDAS")
 
     })
     test("Deve retornar erro ao alterar habilidades para vazio",() => {
@@ -56,7 +56,19 @@ describe("testar voluntario",()=> {
         
     
         const h = ["","",""]
-        expect(v.setHabilidades(h)).toBe("ARRAY_INVALIDO")
+        expect(v.setHabilidades(h)).toBe("HABILIDADES_INVALIDAS")
+
+    })
+    test("Deve retornar erro ao alterar interesses para vazio",() => {
+        const id  = Id.gerarId()
+       
+        const habilidades = ["pisicolo","Comunicativo","Cuidadoso"]
+        const interesses = ["Ajudar adolecentes","Ajudar comunidade"]
+        const v = new Voluntario(id, "Jose", "jose@email.com", Tipo.VOLUNTARIO,habilidades,interesses,Disponibilidade.INTEGRAL,"123", "img/perfil")
+        
+    
+        const i = ["","",""]
+        expect(v.setInteresses(i)).toBe("INTERESSES_INVALIDOS")
 
     })
 })
