@@ -24,4 +24,27 @@ describe("testar voluntario",()=> {
         })
 
     })
+    test("Deve alterar o nome do  Voluntario valido",() => {
+        const id  = Id.gerarId()
+        
+        const habilidades = ["pisicolo","Comunicativo","Cuidadoso"]
+        const interesses = ["Ajudar adolecentes","Ajudar comunidade"]
+        const v = new Voluntario(id, "Jose", "jose@email.com", Tipo.VOLUNTARIO,habilidades,interesses,Disponibilidade.INTEGRAL,"123", "img/perfil")
+        v.setNome("Carlos alves")
+
+        expect(v.getNome()).toBe("Carlos alves")
+
+    })
+    test("Deve retornar erro ao alterar habilidades para vazio",() => {
+        const id  = Id.gerarId()
+       
+        const habilidades = ["pisicolo","Comunicativo","Cuidadoso"]
+        const interesses = ["Ajudar adolecentes","Ajudar comunidade"]
+        const v = new Voluntario(id, "Jose", "jose@email.com", Tipo.VOLUNTARIO,habilidades,interesses,Disponibilidade.INTEGRAL,"123", "img/perfil")
+        
+    
+
+        expect(v.setHabilidades([])).toBe("ARRAY_INVALIDO")
+
+    })
 })

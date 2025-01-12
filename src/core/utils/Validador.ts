@@ -15,4 +15,11 @@ export default class Validador {
     const errosFiltrados = erros.filter((e) => e !== null) as string[];
     return errosFiltrados.length > 0 ? errosFiltrados : null;
   }
+  static arrayInvalido(arr:(string | null | undefined)[], erro:string): string | null{
+     if(arr.length === 0 || null || undefined){
+       return erro
+     }
+     return null
+
+  }
 }
