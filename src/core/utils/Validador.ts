@@ -1,3 +1,5 @@
+import { error } from "console";
+
 export default class Validador {
   static naoNulo(valor: any, erro: string): string | null {
     return valor !== null && valor !== undefined ? null : erro;
@@ -15,11 +17,20 @@ export default class Validador {
     const errosFiltrados = erros.filter((e) => e !== null) as string[];
     return errosFiltrados.length > 0 ? errosFiltrados : null;
   }
-  static arrayInvalido(arr:(string | null | undefined)[], erro:string): string | null{
-     if(arr.length === 0 || null || undefined){
-       return erro
-     }
-     return null
-
-  }
+  static arrayInvalido(
+    arr: (string | null | undefined)[],
+    erro: string
+  ): string | null  {
+    if (!arr || arr.length === 0 ) {
+      return erro;
+    } 
+     
+    const validarItemArray = arr.some((item) => item === null || item ===undefined || item === "")
+      if(validarItemArray){
+        return erro
+      }
+      return null;
+    }
+   
+   
 }

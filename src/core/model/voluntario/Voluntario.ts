@@ -23,9 +23,11 @@ export default class Voluntario extends Usuario {
   
   setHabilidades(habilidades: string[]){
     const res = Validador.arrayInvalido(habilidades, Erros.ARRAY_INVALIDO)
+    console.log(res)
      if(res){
          return res;
      }
+     
      this._habilidades = habilidades
   }
   getHabilidades(): string[] {
