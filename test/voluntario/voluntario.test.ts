@@ -59,6 +59,44 @@ describe("testar voluntario",()=> {
         expect(v.setHabilidades(h)).toBe("HABILIDADES_INVALIDAS")
 
     })
+    test("Deve  alterar habilidades ",() => {
+        const id  = Id.gerarId()
+       
+        const habilidades = ["pisicolo","Comunicativo","Cuidadoso"]
+        const interesses = ["Ajudar adolecentes","Ajudar comunidade"]
+        const v = new Voluntario(id, "Jose", "jose@email.com", Tipo.VOLUNTARIO,habilidades,interesses,Disponibilidade.INTEGRAL,"123", "img/perfil")
+        
+    
+        const h = ["comunicativo","Cuidadoso","bom em vendas"]
+        v.setHabilidades(h)
+        expect(v.getHabilidades()).toEqual(["comunicativo","Cuidadoso","bom em vendas"])
+
+    })
+    test("Deve retornar erro se alguma habilidade estiver vazia ",() => {
+        const id  = Id.gerarId()
+       
+        const habilidades = ["pisicolo","Comunicativo","Cuidadoso"]
+        const interesses = ["Ajudar adolecentes","Ajudar comunidade"]
+        const v = new Voluntario(id, "Jose", "jose@email.com", Tipo.VOLUNTARIO,habilidades,interesses,Disponibilidade.INTEGRAL,"123", "img/perfil")
+        
+    
+        const h = ["comunicativo","Cuidadoso"," "]
+       
+        expect( v.setHabilidades(h)).toBe("HABILIDADES_INVALIDAS")
+
+    })
+    test("Deve retornar habilidades",() => {
+        const id  = Id.gerarId()
+       
+        const habilidades = ["pisicolo","Comunicativo","Cuidadoso"]
+        const interesses = ["Ajudar adolecentes","Ajudar comunidade"]
+        const v = new Voluntario(id, "Jose", "jose@email.com", Tipo.VOLUNTARIO,habilidades,interesses,Disponibilidade.INTEGRAL,"123", "img/perfil")
+        
+    
+        
+        expect(v.getHabilidades()).toEqual(["pisicolo","Comunicativo","Cuidadoso"])
+
+    })
     test("Deve retornar erro ao alterar interesses para vazio",() => {
         const id  = Id.gerarId()
        
@@ -69,6 +107,55 @@ describe("testar voluntario",()=> {
     
         const i = ["","",""]
         expect(v.setInteresses(i)).toBe("INTERESSES_INVALIDOS")
+
+    })
+    test("Deve retornar erro ao inserir string vazia no interesses ",() => {
+        const id  = Id.gerarId()
+       
+        const habilidades = ["pisicolo","Comunicativo","Cuidadoso"]
+        const interesses = ["Ajudar adolecentes","Ajudar comunidade"]
+        const v = new Voluntario(id, "Jose", "jose@email.com", Tipo.VOLUNTARIO,habilidades,interesses,Disponibilidade.INTEGRAL,"123", "img/perfil")
+        
+    
+        const i = ["Ajudar adolecentes",""]
+        expect(v.setInteresses(i)).toBe("INTERESSES_INVALIDOS")
+
+    })
+    test("Deve retornar  interesses ",() => {
+        const id  = Id.gerarId()
+       
+        const habilidades = ["pisicolo","Comunicativo","Cuidadoso"]
+        const interesses = ["Ajudar adolecentes","Ajudar comunidade"]
+        const v = new Voluntario(id, "Jose", "jose@email.com", Tipo.VOLUNTARIO,habilidades,interesses,Disponibilidade.INTEGRAL,"123", "img/perfil")
+        
+    
+      
+        expect(v.getInteresses()).toEqual(["Ajudar adolecentes","Ajudar comunidade"])
+
+    })
+    test("Deve alterar interesses ",() => {
+        const id  = Id.gerarId()
+       
+        const habilidades = ["pisicolo","Comunicativo","Cuidadoso"]
+        const interesses = ["Ajudar adolecentes","Ajudar comunidade"]
+        const v = new Voluntario(id, "Jose", "jose@email.com", Tipo.VOLUNTARIO,habilidades,interesses,Disponibilidade.INTEGRAL,"123", "img/perfil")
+        
+        
+        const i = ["Ajudar adolecentes","Ajudar idosos"]
+        v.setInteresses(i)
+        expect(v.getInteresses()).toEqual(["Ajudar adolecentes","Ajudar idosos"])
+
+    })
+    test("Deve alterar disponibilidade",() => {
+        const id  = Id.gerarId()
+       
+        const habilidades = ["pisicolo","Comunicativo","Cuidadoso"]
+        const interesses = ["Ajudar adolecentes","Ajudar comunidade"]
+        const v = new Voluntario(id, "Jose", "jose@email.com", Tipo.VOLUNTARIO,habilidades,interesses,Disponibilidade.INTEGRAL,"123", "img/perfil")
+        
+        v.setDisponibilidade(Disponibilidade.MANHA)
+        
+        expect(v.getDisponibilidade()).toBe("manhã")
 
     })
 })

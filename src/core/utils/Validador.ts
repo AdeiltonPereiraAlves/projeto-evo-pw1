@@ -21,11 +21,12 @@ export default class Validador {
     arr: (string | null | undefined)[],
     erro: string
   ): string | null  {
+    
     if (!arr || arr.length === 0 ) {
       return erro;
     } 
      
-    const validarItemArray = arr.some((item) => item === null || item ===undefined || item === "")
+    const validarItemArray = arr.some((item) => item === null || item ===undefined || item === "" || item === " ")
       if(validarItemArray){
         return erro
       }
