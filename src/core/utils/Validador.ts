@@ -35,11 +35,11 @@ export default class Validador {
 
     static validarCnpj(cnpj:string, erro:string): string | null{
       const regex: RegExp = /^\d{2}\.\d{3}\.\d{3}\/\d{4}\-\d{2}$/;
-      regex.test(cnpj)
-      if(regex){
-        return null
+      const res = regex.test(cnpj)
+      if(res === false){
+        return erro
       }
-      return erro
+      return null
     }
    
    
