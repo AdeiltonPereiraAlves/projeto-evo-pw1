@@ -111,7 +111,7 @@ export default class Ong extends Usuario {
   }
 
   setEndereco(endereco: string) {
-    const res = Validador.naoVazia(endereco, Erros.MISSAO_VAZIA);
+    const res = Validador.naoVazia(endereco, Erros.ENDERECO_VAZIO);
     if (res) {
       return res;
     }
