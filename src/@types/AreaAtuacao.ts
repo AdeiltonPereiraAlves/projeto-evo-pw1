@@ -29,4 +29,4 @@ enum AreaAtuacao {
     EMPODERAMENTO = 'Empoderamento de Comunidades',
     TECNOLOGIA_SOCIAL = 'Tecnologia Social'
   }
-  
+export default AreaAtuacao

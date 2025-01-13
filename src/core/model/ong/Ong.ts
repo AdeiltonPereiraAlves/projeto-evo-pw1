@@ -1,3 +1,4 @@
+import AreaAtuacao from "../../../@types/AreaAtuacao";
 import Tipo from "../../../@types/Tipo";
 import Usuario from "../usuario/Usuario";
 
@@ -11,7 +12,7 @@ export default class Ong extends Usuario{
         private cnpj: string,
         private descricao: string,
         private visao: string,
-        private areaAtuacao: string[],
+        private areaAtuacao: AreaAtuacao,
         private endereco: string,
 
         senha:string,
@@ -33,7 +34,7 @@ export default class Ong extends Usuario{
       return this.descricao
     }
     setDescricao(descricao: string){
-
+        
     }
     //get set missao
     getMissao(){
@@ -67,7 +68,7 @@ export default class Ong extends Usuario{
     }
 
     setEndereco(endereco:string){
-      
+
     }
 
 
