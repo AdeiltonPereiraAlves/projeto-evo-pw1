@@ -41,6 +41,16 @@ export default class Validador {
       }
       return null
     }
-   
+   static validarLatitude(latitude: number): boolean {
+    return latitude >= -90 && latitude <= 90;
+  }
+
+  static validarLongitude(longitude: number): boolean {
+    return longitude >= -180 && longitude <= 180;
+  }
+
+  static validarCoordenadas(latitude: number, longitude: number, erro:string): string | null{
+    return this.validarLatitude(latitude) && this.validarLongitude(longitude)? null : erro;
+  }
    
 }
