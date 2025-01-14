@@ -3,3 +3,5 @@ enum TipoTrabalho {
     REMOTO = 'Remoto',
     HIBRIDO = 'Hibrido'
   }
+
+  export default TipoTrabalho

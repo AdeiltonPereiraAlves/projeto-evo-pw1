@@ -1,4 +1,5 @@
 import Status from "./Status";
+import TipoTrabalho from "./TipoTrabalho";
 
 export default interface Vagatype {
   id?: string;

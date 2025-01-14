@@ -1,5 +1,6 @@
 import Status from "../../../@types/Status";
-import Vagatype from "../../../@types/Vagatype";
+import TipoTrabalho from "../../../@types/TipoTrabalho";
+
 import Erros from "../../constants/Erros";
 import Validador from "../../utils/Validador";
 
@@ -26,9 +27,10 @@ export default class Vaga {
     longitude: number
   ) {
     const erros = Validador.combinar(
-      Validador.arrayInvalido(requisitos, Erros.CNPJ_INVALIDO),
-      Validador.naoVazia(duracao, Erros.MISSAO_VAZIA),
-      Validador.naoVazia(localizacao, Erros.DESCRICAO_VAZIA),
+        Validador.naoVazia(descricao, Erros.DESCRICAO_INVALIDA),
+      Validador.arrayInvalido(requisitos, Erros.REQUISITOS_INVALIDOS),
+      Validador.naoVazia(duracao, Erros.DURACAO_INVALIDA),
+      Validador.naoVazia(localizacao, Erros.LOCALIZACAO_INVALIDA),
       Validador.validarCoordenadas(
         latitude,
         longitude,
@@ -49,6 +51,9 @@ export default class Vaga {
     this.longitude = longitude;
   }
 
+  getId(){
+    return this.id
+  }
   // get e set descricao
   setDescricao(descricao: string) {
     const erro = Validador.naoVazia(descricao, Erros.DESCRICAO_INVALIDA);
@@ -78,10 +83,7 @@ export default class Vaga {
 
   // get e set status
   setStatus(status: Status) {
-    const erro = Validador.naoNulo(status, Erros.STATUS_INVALIDO);
-    if (erro) {
-      throw new Error(erro);
-    }
+   
     this.status = status;
   }
   getStatus(): Status {
@@ -114,10 +116,7 @@ export default class Vaga {
 
   // get e set tipoTrabalho
   setTipoTrabalho(tipoTrabalho: TipoTrabalho) {
-    const erro = Validador.naoNulo(tipoTrabalho, Erros.TIPO_TRABALHO_INVALIDO);
-    if (erro) {
-      throw new Error(erro);
-    }
+ 
     this.tipoTrabalho = tipoTrabalho;
   }
   getTipoTrabalho(): TipoTrabalho {
