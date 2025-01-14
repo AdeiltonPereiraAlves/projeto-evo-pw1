@@ -6,18 +6,36 @@ import Validador from "../../utils/Validador";
 import Usuario from "../usuario/Usuario";
 
 export default class Voluntario extends Usuario {
+  private _habilidades: string[]
+  private _interesses: string[]
+  private _disponibilidade: Disponibilidade
   constructor(
     id: string,
     nome: string,
     email: string,
     tipo: Tipo,
-    private _habilidades: string[],
-    private _interesses: string[],
-    private _disponibilidade: Disponibilidade,
-    senha?: string | undefined,
-    imagem?: string | undefined
+    habilidades: string[],
+    interesses: string[],
+    disponibilidade: Disponibilidade,
+    senha: string ,
+    imagem: string 
   ) {
     super(id, nome, email, tipo, senha, imagem);
+    const erros = Validador.combinar(
+      Validador.arrayInvalido(habilidades, Erros.HABILIDADES_INVALIDAS),
+      Validador.arrayInvalido(interesses, Erros.INTERESSES_INVALIDOS),
+      
+      
+    );
+
+    if (erros) {
+      throw new Error(erros.join(", "));
+    }
+    
+    this._habilidades = habilidades ;
+    this._interesses = interesses;
+    this._disponibilidade = disponibilidade;
+   
   }
 
   //get e set habilidades
@@ -53,7 +71,7 @@ export default class Voluntario extends Usuario {
   setDisponibilidade(disponibilidades: Disponibilidade) {
     this._disponibilidade = disponibilidades;
   }
-  getDisponibilidade(): Disponibilidade {
+  getDisponibilidade() {
     return this._disponibilidade;
   }
 }

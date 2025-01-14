@@ -3,6 +3,7 @@ import Tipo from '../../src/@types/Tipo'
 import Voluntario from '../../src/core/model/voluntario/Voluntario'
 import Id from '../../src/core/shared/Id'
 import Disponibilidade from '../../src/@types/Disponibilidade'
+import Erros from '../../src/core/constants/Erros'
 
 describe("testar voluntario",()=> {
     test("Deve criar um Voluntario valido",() => {
@@ -158,4 +159,28 @@ describe("testar voluntario",()=> {
         expect(v.getDisponibilidade()).toBe("manhã")
 
     })
+    
+  test("deve lançar um erro se os valores passados para o construtor forem inválidos", () => {
+    expect(() => {
+      
+      new Voluntario(
+        '1', " ", "", Tipo.VOLUNTARIO,[],[],Disponibilidade.INTEGRAL,"", ""
+      );
+    }).toThrow(
+      `${Erros.NOME_VAZIO}, ${Erros.EMAIL_INVALIDO}, ${Erros.SENHA_INVALIDA}, ${Erros.IMAGEM_INVALIDA}`
+    );
+  
+  })
+  test("deve lançar um erro se os valores passados para o construtor forem inválidos", () => {
+    expect(() => {
+      
+      new Voluntario(
+        '1', "jose ", "jose@email.com", Tipo.VOLUNTARIO,[],[],Disponibilidade.INTEGRAL,"123", "123"
+      );
+    }).toThrow(
+      `${Erros.HABILIDADES_INVALIDAS}, ${Erros.INTERESSES_INVALIDOS}`
+    );
+  
+  })
+  
 })

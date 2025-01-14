@@ -17,11 +17,13 @@ model Usuario {
   id         String      @id @default(uuid())
   nome       String
   email      String
-  senha      String
-  imagem     String?
+  senha      String?
+  imagem     String
   tipo       TipoUsuario
   voluntario Voluntario?
   ong        Ong?
+   createdAt  DateTime @default(now()) // Criado automaticamente na inserção
+  updatedAt  DateTime @updatedAt      // Atualizado automaticamente na modificação
 }
 
 enum TipoUsuario {
@@ -29,7 +31,7 @@ enum TipoUsuario {
   ONG
 }
 enum Status{
-  ENCERRADO,
+  ENCERRADO
   ABERTO
 }
 enum Disponibilidade {
@@ -38,6 +40,38 @@ enum Disponibilidade {
   NOITE
   INTEGRAL
 }
+enum AreaAtuacao {
+  EDUCACAO
+  SAUDE
+  AMBIENTE
+  TECNOLOGIA
+  CULTURA
+  DIREITOS_HUMANOS
+  FOME
+  POBREZA
+  ANIMAL
+  CRIANCA
+  MULHER
+  IGUALDADE
+  IDOSO
+  LGBTQIA
+  REFUGIADOS
+  EDUCACAO_INFANTIL
+  EMPREGO
+  VOLUNTARIADO
+  ESPORTES
+  ARTE
+  FAMILIA
+  SAUDE_MENTAL
+  REABILITACAO
+  JUSTICA_SOCIAL
+  SEGURANCA_ALIMENTAR
+  DESENVOLVIMENTO_SUSTENTAVEL
+  INFRAESTRUTURA
+  EMPODERAMENTO
+  TECNOLOGIA_SOCIAL
+}
+
 
 model Voluntario {
   id              String            @id @default(uuid())
@@ -46,6 +80,9 @@ model Voluntario {
   interesses      String[]
   habilidades     String[]
   disponibilidade Disponibilidade[]
+  inscricoes Inscricao[]
+  avaliacoes Avaliacao[]
+ 
 }
 
 model Ong {
@@ -54,21 +91,35 @@ model Ong {
   usuario     Usuario  @relation(fields: [usuarioId], references: [id])
   cnpj        String   @unique
   descricao   String
+  misao       String
   visao       String
-  areaAtuacao String[]
+  areaAtuacao AreaAtuacao[]
   endereco    String
+  vagas Vaga[]
+  avaliacoes Avaliacao[]
+  
+}
+
+enum TipoTrabalho {
+  PRESENCIAL
+  REMOTO
+  HIBRIDO
 }
 model Vaga{
   id String @id @default(uuid())
   ongId String
-
   descricao String
-  requesitos String[]
+  requisitos String[]
   status Status
   duracao String
   localizacao String
+  tipoTrabalho TipoTrabalho
+  latitude Float
+  longitude Float
   ong Ong @relation(fields:[ongId], references: [id])
   inscricoes Inscricao[]
+  createdAt  DateTime @default(now()) // Criado automaticamente na inserção
+  updatedAt  DateTime @updatedAt      // Atualizado automaticamente na modificação
 }
 
 model Inscricao{
@@ -79,6 +130,8 @@ model Inscricao{
   status Status
   voluntario Voluntario @relation(fields:[voluntarioId], references: [id])
   vaga Vaga @relation(fields:[vagaId], references: [id])
+  createdAt  DateTime @default(now()) // Criado automaticamente na inserção
+  updatedAt  DateTime @updatedAt      // Atualizado automaticamente na modificação
 }
 
 model Avaliacao{
@@ -92,4 +145,6 @@ model Avaliacao{
   nota Int
   voluntario Voluntario @relation(fields:[voluntarioId], references: [id])
   ong Ong @relation(fields:[ongId], references: [id])
+  createdAt  DateTime @default(now()) // Criado automaticamente na inserção
+  updatedAt  DateTime @updatedAt      // Atualizado automaticamente na modificação
 }
