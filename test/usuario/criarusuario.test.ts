@@ -88,4 +88,5 @@ describe("Deve testar funcionalidades do usuario",()=> {
         u.setTipo(Tipo.ONG)
         expect(u.getTipo() ).toBe('ONG')
     })
+    
 })

@@ -22,8 +22,8 @@ export default class Voluntario extends Usuario {
   ) {
     super(id, nome, email, tipo, senha, imagem);
     const erros = Validador.combinar(
-      Validador.arrayInvalido(habilidades, Erros.CNPJ_INVALIDO),
-      Validador.arrayInvalido(interesses, Erros.CNPJ_INVALIDO),
+      Validador.arrayInvalido(habilidades, Erros.HABILIDADES_INVALIDAS),
+      Validador.arrayInvalido(interesses, Erros.INTERESSES_INVALIDOS),
       
       
     );

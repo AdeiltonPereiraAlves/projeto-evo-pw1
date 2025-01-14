@@ -4,15 +4,36 @@ import Id from "../../shared/Id";
 import Validador from "../../utils/Validador";
 
 export default class Usuario {
+  private _id:string;
+  private _nome: string;
+  private _email: string;
+  private _tipo: Tipo;
+  private _senha?: string;
+  private _imagem: string;
   constructor(
-    private _id:string,
-    private _nome: string,
-    private _email: string,
-    private _tipo: Tipo,
-    private _senha: string,
-    private _imagem: string
+    id:string,
+    nome: string,
+    email: string,
+    tipo: Tipo,
+    senha: string,
+    imagem: string
   ) {
-    
+    const erros = Validador.combinar(
+      Validador.naoVazia(nome, Erros.NOME_VAZIO),
+      Validador.naoVazia(email, Erros.EMAIL_INVALIDO),
+      Validador.naoVazia(senha, Erros.SENHA_INVALIDA),
+      Validador.naoVazia(imagem, Erros.IMAGEM_INVALIDA),
+     
+    )
+    if(erros){
+      throw  new Error(erros.join(", "))
+    }
+    this._id = id
+    this._nome = nome
+    this._email =  email
+    this._tipo = tipo
+    this._senha = senha
+    this._imagem = imagem
   }
   // get e set id
 
@@ -20,9 +41,8 @@ export default class Usuario {
     return this._id;
   }
 
-  setId(id: string){
-    this._id = id
-  }
+
+  
   //get e set nome
   setNome(nome:string) {
      const res = Validador.naoVazia(nome,Erros.NOME_VAZIO)
@@ -46,7 +66,7 @@ export default class Usuario {
         return res
 
   }
-  getSenha(): string  {
+  getSenha(): string | undefined  {
     return this._senha;
   }
   
@@ -62,7 +82,7 @@ export default class Usuario {
   }
 
   //set e get imagem
-  getImagem(): string | undefined {
+  getImagem(): string  {
     return this._imagem;
   }
 
