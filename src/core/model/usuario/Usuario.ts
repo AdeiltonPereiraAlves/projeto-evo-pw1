@@ -5,19 +5,23 @@ import Validador from "../../utils/Validador";
 
 export default class Usuario {
   constructor(
-    private _id: Id,
+    private _id:string,
     private _nome: string,
     private _email: string,
     private _tipo: Tipo,
-    private _senha?: string,
-    private _imagem?: string
+    private _senha: string,
+    private _imagem: string
   ) {
     
   }
   // get e set id
 
-  getId(): Id{
+  getId(){
     return this._id;
+  }
+
+  setId(id: string){
+    this._id = id
   }
   //get e set nome
   setNome(nome:string) {
@@ -42,7 +46,7 @@ export default class Usuario {
         return res
 
   }
-  getSenha(): string |undefined {
+  getSenha(): string  {
     return this._senha;
   }
   

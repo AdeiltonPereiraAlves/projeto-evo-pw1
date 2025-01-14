@@ -18,7 +18,7 @@ model Usuario {
   nome       String
   email      String
   senha      String
-  imagem     String?
+  imagem     String
   tipo       TipoUsuario
   voluntario Voluntario?
   ong        Ong?
