@@ -5,19 +5,21 @@ CREATE TYPE "TipoUsuario" AS ENUM ('VOLUNTARIO', 'ONG');
 CREATE TYPE "Status" AS ENUM ('ENCERRADO', 'ABERTO');
 
 -- CreateEnum
-CREATE TYPE "Disponibilidade" AS ENUM ('MANHA', 'TARDE', 'NOITE', 'INTEGRAL');
+CREATE TYPE "AreaAtuacao" AS ENUM ('EDUCACAO', 'SAUDE', 'AMBIENTE', 'TECNOLOGIA', 'CULTURA', 'DIREITOS_HUMANOS', 'FOME', 'POBREZA', 'ANIMAL', 'CRIANCA', 'MULHER', 'IGUALDADE', 'IDOSO', 'LGBTQIA', 'REFUGIADOS', 'EDUCACAO_INFANTIL', 'EMPREGO', 'VOLUNTARIADO', 'ESPORTES', 'ARTE', 'FAMILIA', 'SAUDE_MENTAL', 'REABILITACAO', 'JUSTICA_SOCIAL', 'SEGURANCA_ALIMENTAR', 'DESENVOLVIMENTO_SUSTENTAVEL', 'INFRAESTRUTURA', 'EMPODERAMENTO', 'TECNOLOGIA_SOCIAL');
 
 -- CreateEnum
-CREATE TYPE "AreaAtuacao" AS ENUM ('EDUCACAO', 'SAUDE', 'AMBIENTE', 'TECNOLOGIA', 'CULTURA', 'DIREITOS_HUMANOS', 'FOME', 'POBREZA', 'ANIMAL', 'CRIANCA', 'MULHER', 'IGUALDADE', 'IDOSO', 'LGBTQIA', 'REFUGIADOS', 'EDUCACAO_INFANTIL', 'EMPREGO', 'VOLUNTARIADO', 'ESPORTES', 'ARTE', 'FAMILIA', 'SAUDE_MENTAL', 'REABILITACAO', 'JUSTICA_SOCIAL', 'SEGURANCA_ALIMENTAR', 'DESENVOLVIMENTO_SUSTENTAVEL', 'INFRAESTRUTURA', 'EMPODERAMENTO', 'TECNOLOGIA_SOCIAL');
+CREATE TYPE "TipoTrabalho" AS ENUM ('PRESENCIAL', 'REMOTO', 'HIBRIDO');
 
 -- CreateTable
 CREATE TABLE "Usuario" (
     "id" TEXT NOT NULL,
     "nome" TEXT NOT NULL,
     "email" TEXT NOT NULL,
-    "senha" TEXT NOT NULL,
-    "imagem" TEXT,
+    "senha" TEXT,
+    "imagem" TEXT NOT NULL,
     "tipo" "TipoUsuario" NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Usuario_pkey" PRIMARY KEY ("id")
 );
@@ -28,7 +30,7 @@ CREATE TABLE "Voluntario" (
     "usuarioId" TEXT NOT NULL,
     "interesses" TEXT[],
     "habilidades" TEXT[],
-    "disponibilidade" "Disponibilidade"[],
+    "disponibilidade" TEXT NOT NULL,
 
     CONSTRAINT "Voluntario_pkey" PRIMARY KEY ("id")
 );
@@ -56,8 +58,11 @@ CREATE TABLE "Vaga" (
     "status" "Status" NOT NULL,
     "duracao" TEXT NOT NULL,
     "localizacao" TEXT NOT NULL,
-    "latitude" DECIMAL(65,30) NOT NULL,
-    "longitude" DECIMAL(65,30) NOT NULL,
+    "tipoTrabalho" "TipoTrabalho" NOT NULL,
+    "latitude" DOUBLE PRECISION NOT NULL,
+    "longitude" DOUBLE PRECISION NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Vaga_pkey" PRIMARY KEY ("id")
 );
@@ -69,6 +74,8 @@ CREATE TABLE "Inscricao" (
     "vagaId" TEXT NOT NULL,
     "data" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "status" "Status" NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Inscricao_pkey" PRIMARY KEY ("id")
 );
@@ -83,6 +90,8 @@ CREATE TABLE "Avaliacao" (
     "tipo" "TipoUsuario" NOT NULL,
     "comentario" TEXT NOT NULL,
     "nota" INTEGER NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Avaliacao_pkey" PRIMARY KEY ("id")
 );

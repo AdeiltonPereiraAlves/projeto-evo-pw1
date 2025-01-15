@@ -34,12 +34,7 @@ enum Status{
   ENCERRADO
   ABERTO
 }
-enum Disponibilidade {
-  MANHA
-  TARDE
-  NOITE
-  INTEGRAL
-}
+
 enum AreaAtuacao {
   EDUCACAO
   SAUDE
@@ -79,7 +74,7 @@ model Voluntario {
   usuario         Usuario           @relation(fields: [usuarioId], references: [id])
   interesses      String[]
   habilidades     String[]
-  disponibilidade Disponibilidade[]
+  disponibilidade String
   inscricoes Inscricao[]
   avaliacoes Avaliacao[]
  

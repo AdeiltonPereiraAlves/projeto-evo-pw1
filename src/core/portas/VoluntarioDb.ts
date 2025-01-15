@@ -1,4 +1,4 @@
-import Voluntario from "../core/model/voluntario/Voluntario";
+import Voluntario from "../model/voluntario/Voluntario";
 
 
 export default interface UsuarioDb{
