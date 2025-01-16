@@ -14,7 +14,7 @@ O EVO é desenvolvido seguindo a **Arquitetura Hexagonal (Ports and Adapters)**,
 - **Facilidade de teste**: Componentes bem isolados tornam os testes unitários e de integração mais simples.
 - **Escalabilidade**: Suporte para adicionar novas funcionalidades sem comprometer a estrutura existente.
 
-![Logo do EVO](./img/www.png)
+<img src="./img/www.png" alt="Descrição da imagem" width="300" />
   
 
 ### Componentes principais da arquitetura:
