@@ -82,6 +82,6 @@ O EVO é desenvolvido seguindo a **Arquitetura Hexagonal (Ports and Adapters)**,
 - Configure o arquivo .env:
 - DATABASE_URL=postgresql://usuario:senha@localhost:5432/evo
 - Execute as migrações do banco de dados: npx prisma migrate dev
-- npm run dev**
+- npm run dev
 
 ---
