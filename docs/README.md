@@ -46,6 +46,21 @@ O EVO é desenvolvido seguindo a **Arquitetura Hexagonal (Ports and Adapters)**,
 - Mapa interativo para localização de vagas
 
 ---
+## Desenvolvedores
+[![GitHub](https://img.shields.io/badge/GitHub-AdeiltonPereiraAlves-black?logo=github)](https://github.com/AdeiltonPereiraAlves)
+
+<img src="https://avatars.githubusercontent.com/u/70703098?s=400&u=4394e7f5649e3a899017b3b6532486bc2ac95e44&v=4)" width="150" style="border-radius:50%;" alt="Minha Foto">
+
+### Adeilton Pereira Alves
+## Desenvolvedor FullStack
+- 💻 Estudante de Análise e Desenvolvimento de Sistemas
+- 🚀 Focado em **Node.js**, **React**, **Next.js**, **TypeScript** , **Prisma**, **Express**
+- 📚 Interessado em arquitetura hexagonal e boas práticas de desenvolvimento
+
+### 📫 Como me encontrar:
+- 🌐 [Perfil no GitHub](https://github.com/AdeiltonPereiraAlves)
+- 📧 Email: adeutoo@gmail.com
+
 
 ## 🌐 Instalação e Configuração
 
@@ -59,11 +74,14 @@ O EVO é desenvolvido seguindo a **Arquitetura Hexagonal (Ports and Adapters)**,
 
 1. Clone este repositório:
    ```bash
-   git clone https://github.com/seu-usuario/evo.git
-   cd evo
+   git clone https://github.com/AdeiltonPereiraAlves/projeto-evo-pw1
+   cd projeto-evo-pw1
    npm install
    Crie um banco de dados PostgreSQL.
-Configure o arquivo .env:
-DATABASE_URL=postgresql://usuario:senha@localhost:5432/evo
-Execute as migrações do banco de dados: npx prisma migrate dev
-npm run dev
+---
+- Configure o arquivo .env:
+- DATABASE_URL=postgresql://usuario:senha@localhost:5432/evo
+- Execute as migrações do banco de dados: npx prisma migrate dev
+- npm run dev**
+
+---
