@@ -1,4 +1,4 @@
-import ValidateReq from "../../core/middleware/handleValidation";
+import ValidateReq from "../../adptadores/middleware/handleValidation";
 import RegistrarVoluntario from "../../core/useCase/Voluntario/RegistrarVoluntario";
 import { Express } from "express";
 
@@ -11,7 +11,7 @@ export default class RegistrarVoluntarioController{
         ...middleware: any[]
     ){
         
-        const fn = async (req:Request,res: Response) => {
+        const registratVoluntario = async (req:Request,res: Response) => {
             console.log("Chegou no controller")
 
             const {nome, email, tipo, habilidades, interesses,disponibilidade,senha, imagem} = req.body 
@@ -32,7 +32,7 @@ export default class RegistrarVoluntarioController{
                 res.status(400).send(error.message)
             }
         }
-        this.servidor.post('/registrar', middleware, fn)
+        this.servidor.post('/registrar', middleware,registratVoluntario)
 
     }
 }
