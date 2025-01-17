@@ -7,18 +7,6 @@ import Voluntario from "../../model/voluntario/Voluntario";
 import Id from "../../shared/Id";
 import SenhaCriptografada from "../../portas/SenhaCriptografada";
 import VoluntarioType from "../../../@types/VoluntarioType";
-// export type VoluntarioDto = {
-    
-                    
-//                     nome: string,
-//                     email: string,
-//                     tipo: Tipo,
-//                     habilidades: string[],
-//                     interesses: string[],
-//                     disponibilidade: Disponibilidade,
-//                     senha: string ,
-//                     imagem: string 
-//  }
 
 
 export default class RegistrarVoluntario implements CasoDeUso<VoluntarioType,Voluntario>{
@@ -28,23 +16,25 @@ export default class RegistrarVoluntario implements CasoDeUso<VoluntarioType,Vol
     }
     async executar(dto: VoluntarioType){
         const senhaHash = this.senhaCrypto.criptarSenha(dto.senha!)
-        
-        const voluntario:Voluntario = new Voluntario(
-            Id.gerarId(),
-            dto.nome,
-            dto.email,
-            dto.tipo,
-            dto.habilidades,
-            dto.interesses,
-            dto.disponibilidade,
-            senhaHash,
-            dto.imagem
+        if(dto.tipo ==="VOLUNTARIO"){
 
-        )
-        console.log(voluntario, "voluntario")
-        const newVoluntario = await this.voluntarioDb.inserirUsuario(voluntario)
-        return newVoluntario
-
+            const voluntario:Voluntario = new Voluntario(
+                Id.gerarId(),
+                dto.nome,
+                dto.email,
+                dto.tipo,
+                dto.habilidades,
+                dto.interesses,
+                dto.disponibilidade,
+                senhaHash,
+                dto.imagem
+    
+            )
+            console.log(voluntario, "voluntario")
+            const newVoluntario = await this.voluntarioDb.inserirUsuario(voluntario)
+            return newVoluntario
+         }
+          throw new Error("Erro voluntario")
     }
 
 
