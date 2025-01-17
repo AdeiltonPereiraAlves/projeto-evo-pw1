@@ -15,6 +15,7 @@ export default class RegistrarVoluntarioController{
             console.log("Chegou no controller")
 
             const {nome, email, tipo, habilidades, interesses,disponibilidade,senha, imagem} = req.body 
+           
             try {
                 await this.casoDeUso.executar({
                     nome,

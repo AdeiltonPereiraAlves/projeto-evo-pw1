@@ -6,7 +6,7 @@ interface UsuarioType  {
   email: string;
   tipo: Tipo;
   senha?: string;
-  imagem?: string; // ou string
+  imagem: string; // ou string
 };
 
 export default UsuarioType;

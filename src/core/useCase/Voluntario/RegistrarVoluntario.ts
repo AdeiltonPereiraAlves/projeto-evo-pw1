@@ -5,28 +5,31 @@ import Tipo from "../../../@types/Tipo";
 import VoluntarioDb from "../../portas/VoluntarioDb";
 import Voluntario from "../../model/voluntario/Voluntario";
 import Id from "../../shared/Id";
-export type VoluntarioDto = {
+import SenhaCriptografada from "../../portas/SenhaCriptografada";
+import VoluntarioType from "../../../@types/VoluntarioType";
+// export type VoluntarioDto = {
     
                     
-                    nome: string,
-                    email: string,
-                    tipo: Tipo,
-                    habilidades: string[],
-                    interesses: string[],
-                    disponibilidade: Disponibilidade,
-                    senha: string ,
-                    imagem: string 
- }
+//                     nome: string,
+//                     email: string,
+//                     tipo: Tipo,
+//                     habilidades: string[],
+//                     interesses: string[],
+//                     disponibilidade: Disponibilidade,
+//                     senha: string ,
+//                     imagem: string 
+//  }
 
 
-export default class RegistrarVoluntario implements CasoDeUso<VoluntarioDto,Voluntario>{
+export default class RegistrarVoluntario implements CasoDeUso<VoluntarioType,Voluntario>{
 
-    constructor(private voluntarioDb: VoluntarioDb){
+    constructor(private voluntarioDb: VoluntarioDb, private senhaCrypto: SenhaCriptografada){
 
     }
-    async executar(dto: VoluntarioDto){
+    async executar(dto: VoluntarioType){
+        const senhaHash = this.senhaCrypto.criptarSenha(dto.senha!)
         
-        const voluntario = new Voluntario(
+        const voluntario:Voluntario = new Voluntario(
             Id.gerarId(),
             dto.nome,
             dto.email,
@@ -34,7 +37,7 @@ export default class RegistrarVoluntario implements CasoDeUso<VoluntarioDto,Volu
             dto.habilidades,
             dto.interesses,
             dto.disponibilidade,
-            dto.senha,
+            senhaHash,
             dto.imagem
 
         )
