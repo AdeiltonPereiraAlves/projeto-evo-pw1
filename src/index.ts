@@ -4,7 +4,7 @@ import VoluntarioRepositorio from "./adptadores/db/VoluntarioRepositorio";
 import RegistrarVoluntarioController from "./controllers/voluntario/RegistrarVoluntarioController";
 import ValidateReq from "./adptadores/middleware/handleValidation";
 import middlewareValidator from "./adptadores/middleware/handleValidation";
-import Bcrypt from "./adptadores/auth/Bcrypt";
+import Bcrypt from "./adptadores/auth/BcryptAdapter";
 const app = express();
 const port = process.env.PORT
 app.use(express.json())
