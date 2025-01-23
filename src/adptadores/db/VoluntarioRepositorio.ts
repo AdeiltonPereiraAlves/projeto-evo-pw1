@@ -1,9 +1,7 @@
 import Voluntario from "../../core/model/voluntario/Voluntario";
-import Id from "../../core/shared/Id";
 import VoluntarioDb from "../../core/portas/VoluntarioDb";
 import prismaDb from "../prismaDb/Prisma";
-import Disponibilidade from "../../@types/Disponibilidade";
-import Usuario from "../../core/model/usuario/Usuario";
+
 export default class VoluntarioRepositorio implements VoluntarioDb {
   constructor() {}
   async inserirUsuario(voluntario: Voluntario): Promise<any> {
