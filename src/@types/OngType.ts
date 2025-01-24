@@ -6,6 +6,6 @@ export default interface OngType extends UsuarioType{
     descricao: string
     visao: string
     missao :string
-    areaAtuacao: AreaAtuacao
+    areaAtuacao: AreaAtuacao[]
     endereco: string
 }

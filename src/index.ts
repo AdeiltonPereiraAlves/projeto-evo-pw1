@@ -8,6 +8,9 @@ import Bcrypt from "./adptadores/auth/BcryptAdapter";
 import LoginVoluntarioController from "./controllers/voluntario/LoginVoluntarioController";
 import LoginVoluntario from "./core/useCase/Voluntario/LoginVoluntario";
 import JwtAdapter from "./adptadores/auth/JwtAdapter";
+import buscarVoluntariosControllers from "./controllers/voluntario/BuscarVoluntariosControllers";
+import UserAuthentication from "./adptadores/middleware/UserAuthentication";
+import BuscarVoluntarios from "./core/useCase/Voluntario/BuscarVoluntarios";
 const app = express();
 const port = process.env.PORT
 const secret = process.env.JWTSECRET
@@ -27,3 +30,7 @@ const provedorToken = new  JwtAdapter(secret!)
 const loginVoluntario = new LoginVoluntario(voluntarioDb, provedorToken  ,senhaCrypto)
 new RegistrarVoluntarioController(app,registrarVoluntario,middlewareValidador)
 new LoginVoluntarioController(app,loginVoluntario)
+
+
+const buscarVoluntarios = new BuscarVoluntarios(voluntarioDb)
+new buscarVoluntariosControllers(app,buscarVoluntarios,UserAuthentication(voluntarioDb, provedorToken) )

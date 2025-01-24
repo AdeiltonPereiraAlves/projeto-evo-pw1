@@ -1,9 +1,32 @@
+import Usuario from "../../core/model/usuario/Usuario";
 import Voluntario from "../../core/model/voluntario/Voluntario";
 import VoluntarioDb from "../../core/portas/VoluntarioDb";
 import prismaDb from "../prismaDb/Prisma";
 
 export default class VoluntarioRepositorio implements VoluntarioDb {
   constructor() {}
+  async buscarVoluntarios() {
+      try {
+          const voluntarios = await prismaDb.voluntario.findMany({
+          include: {
+            usuario: {
+              select: {
+                nome: true,
+                email:true,
+                tipo: true
+              }
+            }
+        
+          }
+            
+         })
+         return voluntarios
+      } catch (error) {
+        throw new Error("Erro no buscar voluntarios")
+      }
+
+    
+  }
   async inserirUsuario(voluntario: Voluntario): Promise<any> {
     console.log("chegou no banco");
     try {

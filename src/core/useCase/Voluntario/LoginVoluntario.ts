@@ -14,14 +14,14 @@ export default class LoginVoluntario implements CasoDeUso<Dto,any>{
             const senhaCrypto = usuarioExistente.senha
             
             console.log(dto.senha, senhaCrypto)
-            const mesmaSenha = this.bcrypt.compararSenha(dto.senha, senhaCrypto)
+            const mesmaSenha =  this.bcrypt.compararSenha(dto.senha, senhaCrypto)
 
             console.log(mesmaSenha,"senhas no casodeuso")
             if (!mesmaSenha) {
                 throw new Error("Senhas diferentes");
             }
             
-         
+            
 
             return {
                 usuario: { ...usuarioExistente, senha: undefined },

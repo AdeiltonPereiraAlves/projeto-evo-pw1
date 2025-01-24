@@ -16,7 +16,7 @@ export default class RegistrarVoluntario implements CasoDeUso<VoluntarioType,Vol
     }
     async executar(dto: VoluntarioType){
         const senhaHash = this.senhaCrypto.criptarSenha(dto.senha!)
-        if(dto.tipo ==="VOLUNTARIO"){
+        // if(dto.tipo ==="VOLUNTARIO"){
 
             const voluntario:Voluntario = new Voluntario(
                 Id.gerarId(),
@@ -33,7 +33,7 @@ export default class RegistrarVoluntario implements CasoDeUso<VoluntarioType,Vol
             console.log(voluntario, "voluntario")
             const newVoluntario = await this.voluntarioDb.inserirUsuario(voluntario)
             return newVoluntario
-         }
+        //  }
           throw new Error("Erro voluntario")
     }
 
