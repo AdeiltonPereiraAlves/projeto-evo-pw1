@@ -3,6 +3,9 @@ import Usuario from "../../core/model/usuario/Usuario";
 import Voluntario from "../../core/model/voluntario/Voluntario";
 import VoluntarioDb from "../../core/portas/VoluntarioDb";
 import prismaDb from "../prismaDb/Prisma";
+import UsuarioType from "../../@types/UsuarioType";
+import VoluntarioType from "../../@types/VoluntarioType";
+import imagemUpload from "../middleware/ImagemUpload";
 
 export default class VoluntarioRepositorio implements VoluntarioDb {
   constructor() {}
@@ -14,7 +17,8 @@ export default class VoluntarioRepositorio implements VoluntarioDb {
               select: {
                 nome: true,
                 email:true,
-                tipo: true
+                tipo: true,
+                imagem: true
               }
             }
         
@@ -75,6 +79,48 @@ export default class VoluntarioRepositorio implements VoluntarioDb {
     } catch (error) {
       console.error("Erro ao buscar usuário pelo email:", error);
       return { error: "Erro ao buscar usuário" };
+    }
+  }
+  async buscarPorId(id: string){
+    try {
+      const voluntario = await prismaDb.usuario.findUnique({where: {id}})
+
+      if(!voluntario){
+        return {error : "Id nao encontrado"}
+      }
+      return voluntario
+    } catch (error) {
+      console.error("Erro ao buscar voluntario pelo id:", error);
+      return { error: "Erro ao buscar voluntario" };
+    }
+  }
+  async editarFoto(novaImagem: string,id: string){
+    try {
+       const voluntario = await this.buscarPorId(id)
+       if ("error" in voluntario) {
+        throw new Error(voluntario.error);
+      }
+  
+       const voluntarioFotoAtualizada = await prismaDb.usuario.update({
+         where: {
+           id: voluntario.id,
+           
+           
+         },
+         select:{
+           id:true,
+            nome:true,
+            email:true,
+            imagem: true,
+            tipo: true,
+         },
+         data: {imagem: novaImagem}
+       })
+      
+       return  voluntarioFotoAtualizada
+    } catch (error) {
+      console.error("Erro ao editar foto do voluntario:", error);
+      return { error: "Erro ao editar voluntario" };
     }
   }
 }

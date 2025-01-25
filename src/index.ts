@@ -12,6 +12,8 @@ import buscarVoluntariosControllers from "./controllers/voluntario/BuscarVolunta
 import UserAuthentication from "./adptadores/middleware/UserAuthentication";
 import BuscarVoluntarios from "./core/useCase/Voluntario/BuscarVoluntarios";
 import imagemUpload from "./adptadores/middleware/ImagemUpload";
+import EditarFotoController from "./controllers/voluntario/EditarFotoController";
+import EditarFotoPerfil from "./core/useCase/Voluntario/EditarFotoPerfil";
 
 const app = express();
 const port = process.env.PORT
@@ -38,3 +40,8 @@ new LoginVoluntarioController(app,loginVoluntario)
 
 const buscarVoluntarios = new BuscarVoluntarios(voluntarioDb)
 new buscarVoluntariosControllers(app,buscarVoluntarios,UserAuthentication(voluntarioDb, provedorToken) )
+
+
+// atualiza foto perfil voluntario
+const EditarFoto = new EditarFotoPerfil(voluntarioDb)
+new EditarFotoController(app,EditarFoto,UserAuthentication(voluntarioDb, provedorToken), middlewareImagem)
