@@ -11,7 +11,7 @@ export default class buscarVoluntariosControllers{
 
 
             try {
-                const usuario = req.usuario
+                const usuario = req.usuario // pegando o payload depois do login com as informaões
                 console.log(usuario ,"usuario da req")
                 if(usuario?.tipo === "ONG"){
                     throw new Error("Acesso Negado")

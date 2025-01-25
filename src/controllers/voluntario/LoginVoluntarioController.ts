@@ -8,13 +8,12 @@ export default class LoginvoluntarioController{
     ){
         this.servidor.post('/login', async (req:Request, res:Response ) => {
             try {
-                console.log(req.body.senha)
-                console.log(req.body.email)
-                const resposta = await this.casoDeuso.executar({
+                const login = {
                     email: req.body.email,
-                    senha:req.body.senha
-                })
-                console.log(resposta,"resposta")
+                    senha: req.body.senha
+                }
+                const resposta = await this.casoDeuso.executar(login)
+               
                 res.status(200).json(resposta)
             } catch (error:any) {
                 res.status(403).send(error.message)
