@@ -16,7 +16,7 @@ datasource db {
 model Usuario {
   id         String      @id @default(uuid())
   nome       String
-  email      String
+  email      String      
   senha      String?
   imagem     String
   tipo       TipoUsuario

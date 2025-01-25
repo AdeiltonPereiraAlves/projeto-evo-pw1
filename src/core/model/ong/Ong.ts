@@ -9,7 +9,7 @@ export default class Ong extends Usuario {
   private descricao: string;
   private missao: string;
   private visao: string;
-  private areaAtuacao: AreaAtuacao;
+  private areaAtuacao: AreaAtuacao[];
   private endereco: string;
   constructor(
     id: string,
@@ -20,7 +20,7 @@ export default class Ong extends Usuario {
     cnpj: string,
     descricao: string,
     visao: string,
-    areaAtuacao: AreaAtuacao,
+    areaAtuacao: AreaAtuacao[],
     endereco: string,
 
     senha: string,
@@ -97,10 +97,10 @@ export default class Ong extends Usuario {
   }
 
   //get e set areaAtuacão
-  getAreaAtuacao() {
+  getAreaAtuacao():AreaAtuacao[] {
     return this.areaAtuacao;
   }
-  setAreaAtuacao(areaAtuacao: AreaAtuacao) {
+  setAreaAtuacao(areaAtuacao: AreaAtuacao[]) {
     this.areaAtuacao = areaAtuacao;
   }
 

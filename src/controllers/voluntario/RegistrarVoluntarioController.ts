@@ -1,29 +1,44 @@
+import ValidateReq from "../../adptadores/middleware/handleValidation";
 import RegistrarVoluntario from "../../core/useCase/Voluntario/RegistrarVoluntario";
 import { Express } from "express";
+
+import { Request, Response } from "express";
+
 export default class RegistrarVoluntarioController{
     constructor(
         private servidor: Express, 
-        private casoDeUso: RegistrarVoluntario
+        private casoDeUso: RegistrarVoluntario,
+        ...middleware: any[]
     ){
-
-        this.servidor.post('/registrar', async (req,res) => {
+        
+        const registratVoluntario = async (req:Request,res: Response) => {
             console.log("Chegou no controller")
+            let imagemUp
+            if(req.file){
+                imagemUp = req.file.filename
+            }else{
+                imagemUp = "public/images/profile.png"
+            }
+            const {nome, email, tipo, habilidades, interesses,disponibilidade,senha} = req.body 
+           
             try {
-               const v =  await this.casoDeUso.executar({
-                    nome: req.body.nome,
-                    email: req.body.email,
-                    tipo: req.body.tipo,
-                    habilidades: req.body.habilidades,
-                    interesses: req.body.interesses,
-                    disponibilidade: req.body.disponibilidade,
-                    senha: req.body.senha ,
-                    imagem: req.body.imagem 
+                await this.casoDeUso.executar({
+                    nome,
+                    email,
+                    tipo,
+                    habilidades,
+                    interesses,
+                    disponibilidade,
+                    senha,
+                    imagem: imagemUp!
                 })
-                console.log(v)
-                res.status(201).json(v)
+                
+                res.status(201).send()
             } catch (error:any) {
                 res.status(400).send(error.message)
             }
-        })
+        }
+        this.servidor.post('/registrar', middleware,registratVoluntario)
+
     }
 }

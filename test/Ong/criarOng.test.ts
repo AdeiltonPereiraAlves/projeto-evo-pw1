@@ -15,7 +15,7 @@ describe("Deve testar classe ong", () => {
       "12.345.678/0001-90", // CNPJ da ONG
       "Descrição da ONG", // descrição da ONG
       "Visão da ONG", // visão da ONG
-      AreaAtuacao.EDUCACAO, // área de atuação da ONG
+      [AreaAtuacao.EDUCACAO], // área de atuação da ONG
       "Rua Exemplo, 123", // endereço da ONG
       "senha-secreta", // senha
       "imagem.jpg" // imagem
@@ -29,7 +29,7 @@ describe("Deve testar classe ong", () => {
       cnpj: "12.345.678/0001-90",
       descricao: "Descrição da ONG",
       visao: "Visão da ONG",
-      areaAtuacao: "Educação",
+      areaAtuacao: ["EDUCACAO"],
       endereco: "Rua Exemplo, 123",
       _senha: "senha-secreta",
       _imagem: "imagem.jpg",
@@ -50,7 +50,7 @@ describe("Deve testar classe ong", () => {
           "12.345.678/0001-90", // CNPJ da ONG
           "Descrição da ONG", // descrição da ONG
           "", // visão da ONG
-          AreaAtuacao.EDUCACAO, // área de atuação da ONG
+          [AreaAtuacao.EDUCACAO], // área de atuação da ONG
           "Rua Exemplo, 123", // endereço da ONG
           "senha-secreta", // senha
           "imagem.jpg" // imagem
@@ -72,7 +72,7 @@ describe("Deve testar classe ong", () => {
           "12.345.678/000", // CNPJ da ONG
           "Descrição da ONG", // descrição da ONG
           "Ver", // visão da ONG
-          AreaAtuacao.EDUCACAO, // área de atuação da ONG
+          [AreaAtuacao.EDUCACAO], // área de atuação da ONG
           "Rua Exemplo, 123", // endereço da ONG
           "senha-secreta", // senha
           "imagem.jpg" // imagem
@@ -91,7 +91,7 @@ describe("Deve testar classe ong", () => {
         "12.345.678/0001-90", // CNPJ da ONG
         "Descrição da ONG", // descrição da ONG
         "Ver", // visão da ONG
-        AreaAtuacao.EDUCACAO, // área de atuação da ONG
+        [AreaAtuacao.EDUCACAO], // área de atuação da ONG
         "Rua Exemplo, 123", // endereço da ONG
         "senha-secreta", // senha
         "imagem.jpg" // imagem
@@ -114,7 +114,7 @@ describe("Deve testar classe ong", () => {
         "12.345.678/0001-90", // CNPJ da ONG
         "Descrição da ONG", // descrição da ONG
         "Ver", // visão da ONG
-        AreaAtuacao.EDUCACAO, // área de atuação da ONG
+        [AreaAtuacao.EDUCACAO], // área de atuação da ONG
         "Rua Exemplo, 123", // endereço da ONG
         "senha-secreta", // senha
         "imagem.jpg" // imagem
@@ -137,7 +137,7 @@ describe("Deve testar classe ong", () => {
         "12.345.678/0001-90", // CNPJ da ONG
         "Descrição da ONG", // descrição da ONG
         "Ver", // visão da ONG
-        AreaAtuacao.EDUCACAO, // área de atuação da ONG
+        [AreaAtuacao.EDUCACAO], // área de atuação da ONG
         "Rua Exemplo, 123", // endereço da ONG
         "senha-secreta", // senha
         "imagem.jpg" // imagem
@@ -160,7 +160,7 @@ describe("Deve testar classe ong", () => {
         "12.345.678/0001-90", // CNPJ da ONG
         "Descrição da ONG", // descrição da ONG
         "Ver", // visão da ONG
-        AreaAtuacao.EDUCACAO, // área de atuação da ONG
+        [AreaAtuacao.EDUCACAO], // área de atuação da ONG
         "Rua Exemplo, 123", // endereço da ONG
         "senha-secreta", // senha
         "imagem.jpg" // imagem
@@ -183,7 +183,7 @@ describe("Deve testar classe ong", () => {
         "12.345.678/0001-90", // CNPJ da ONG
         "Descrição da ONG", // descrição da ONG
         "Ver", // visão da ONG
-        AreaAtuacao.EDUCACAO, // área de atuação da ONG
+        [AreaAtuacao.EDUCACAO], // área de atuação da ONG
         "Rua Exemplo, 123", // endereço da ONG
         "senha-secreta", // senha
         "imagem.jpg" // imagem
@@ -206,7 +206,7 @@ describe("Deve testar classe ong", () => {
         "12.345.678/0001-90", // CNPJ da ONG
         "Descrição da ONG", // descrição da ONG
         "Ver", // visão da ONG
-        AreaAtuacao.EDUCACAO, // área de atuação da ONG
+        [AreaAtuacao.EDUCACAO], // área de atuação da ONG
         "Rua Exemplo, 123", // endereço da ONG
         "senha-secreta", // senha
         "imagem.jpg" // imagem
@@ -229,7 +229,7 @@ describe("Deve testar classe ong", () => {
         "12.345.678/0001-90", // CNPJ da ONG
         "Descrição da ONG", // descrição da ONG
         "Ver", // visão da ONG
-        AreaAtuacao.EDUCACAO, // área de atuação da ONG
+        [AreaAtuacao.EDUCACAO], // área de atuação da ONG
         "Rua Exemplo, 123", // endereço da ONG
         "senha-secreta", // senha
         "imagem.jpg" // imagem
@@ -252,7 +252,7 @@ describe("Deve testar classe ong", () => {
         "12.345.678/0001-90", // CNPJ da ONG
         "Descrição da ONG", // descrição da ONG
         "Ver", // visão da ONG
-        AreaAtuacao.EDUCACAO, // área de atuação da ONG
+        [AreaAtuacao.EDUCACAO], // área de atuação da ONG
         "Rua Exemplo, 123", // endereço da ONG
         "senha-secreta", // senha
         "imagem.jpg" // imagem
@@ -275,17 +275,17 @@ describe("Deve testar classe ong", () => {
         "12.345.678/0001-90", // CNPJ da ONG
         "Descrição da ONG", // descrição da ONG
         "Ver", // visão da ONG
-        AreaAtuacao.EDUCACAO, // área de atuação da ONG
+        [AreaAtuacao.EDUCACAO], // área de atuação da ONG
         "Rua Exemplo, 123", // endereço da ONG
         "senha-secreta", // senha
         "imagem.jpg" // imagem
       )
      
      
-      ong.setAreaAtuacao(AreaAtuacao.CULTURA)
+      ong.setAreaAtuacao([AreaAtuacao.CULTURA])
     expect(
         ong.getAreaAtuacao()
-    ).toBe("Cultura");
+    ).toEqual(["CULTURA"]);
   });
 
   test("Deve setar endereço ", () => {
@@ -300,7 +300,7 @@ describe("Deve testar classe ong", () => {
         "12.345.678/0001-90", // CNPJ da ONG
         "Descrição da ONG", // descrição da ONG
         "Ver", // visão da ONG
-        AreaAtuacao.EDUCACAO, // área de atuação da ONG
+        [AreaAtuacao.EDUCACAO], // área de atuação da ONG
         "Rua Exemplo, 123", // endereço da ONG
         "senha-secreta", // senha
         "imagem.jpg" // imagem
@@ -323,7 +323,7 @@ describe("Deve testar classe ong", () => {
         "12.345.678/0001-90", // CNPJ da ONG
         "Descrição da ONG", // descrição da ONG
         "Ver", // visão da ONG
-        AreaAtuacao.EDUCACAO, // área de atuação da ONG
+        [AreaAtuacao.EDUCACAO], // área de atuação da ONG
         "Rua Exemplo, 123", // endereço da ONG
         "senha-secreta", // senha
         "imagem.jpg" // imagem
