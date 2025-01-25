@@ -29,7 +29,7 @@ O EVO é desenvolvido seguindo a **Arquitetura Hexagonal (Ports and Adapters)**,
 ## 🚀 Tecnologias Utilizadas
 
 - **Backend**: TypeScript, Node.js, Prisma, Express.js
-- **Banco de Dados**: PostgreSQL com extensão PostGIS para dados geográficos.
+- **Banco de Dados**: PostgreSQL .
 - **Frontend**: React, Next.js
 - **Testes**: Jest
 - **Controle de Versão**: Git e GitHub
