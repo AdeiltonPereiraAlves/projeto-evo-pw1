@@ -1,11 +1,11 @@
 import { log } from "console";
-import Usuario from "../../core/model/usuario/Usuario";
-import Voluntario from "../../core/model/voluntario/Voluntario";
-import VoluntarioDb from "../../core/portas/VoluntarioDb";
-import prismaDb from "../prismaDb/Prisma";
-import UsuarioType from "../../@types/UsuarioType";
-import VoluntarioType from "../../@types/VoluntarioType";
-import imagemUpload from "../middleware/ImagemUpload";
+import Usuario from "../../../core/model/usuario/Usuario";
+import Voluntario from "../../../core/model/voluntario/Voluntario";
+import VoluntarioDb from "../../../core/portas/VoluntarioDb";
+import prismaDb from "../../prismaDb/Prisma";
+import UsuarioType from "../../../@types/UsuarioType";
+import VoluntarioType from "../../../@types/VoluntarioType";
+import imagemUpload from "../../middleware/ImagemUpload";
 
 export default class VoluntarioRepositorio implements VoluntarioDb {
   constructor() {}

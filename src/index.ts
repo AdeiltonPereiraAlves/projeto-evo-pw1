@@ -1,6 +1,6 @@
 import express from "express";
 import RegistrarVoluntario from "./core/useCase/Voluntario/RegistrarVoluntario";
-import VoluntarioRepositorio from "./adptadores/db/VoluntarioRepositorio";
+import VoluntarioRepositorio from "./adptadores/db/voluntario/VoluntarioRepositorio";
 import RegistrarVoluntarioController from "./controllers/voluntario/RegistrarVoluntarioController";
 import ValidateReq from "./adptadores/middleware/handleValidation";
 import middlewareValidator from "./adptadores/middleware/handleValidation";

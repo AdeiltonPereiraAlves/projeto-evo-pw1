@@ -34,6 +34,6 @@ export default class EditarFotoController{
                 res.status(400).send(error.message)
              }
         }
-        this.servidor.patch("/imagem/perfil", ...middleware,atualizaFotoPerfil)
+        this.servidor.patch("/voluntario/imagem/perfil", ...middleware,atualizaFotoPerfil)
     }
 }
