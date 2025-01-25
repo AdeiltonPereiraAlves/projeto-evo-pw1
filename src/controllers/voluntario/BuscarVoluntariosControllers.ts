@@ -24,6 +24,6 @@ export default class buscarVoluntariosControllers{
             }
       }
 
-      this.servidor.get("/buscar",middleware,buscar)
+      this.servidor.get("/buscar",buscar)
     }
 }

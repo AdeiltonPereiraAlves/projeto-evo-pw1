@@ -1,3 +1,4 @@
+import { log } from "console";
 import Usuario from "../../core/model/usuario/Usuario";
 import Voluntario from "../../core/model/voluntario/Voluntario";
 import VoluntarioDb from "../../core/portas/VoluntarioDb";
@@ -29,6 +30,8 @@ export default class VoluntarioRepositorio implements VoluntarioDb {
   }
   async inserirUsuario(voluntario: Voluntario): Promise<any> {
     console.log("chegou no banco");
+
+    console.log(voluntario.getImagem(), "Imagem no banco")
     try {
       const voluntarioRegistrado = await prismaDb.voluntario.create({
         data: {
@@ -49,7 +52,8 @@ export default class VoluntarioRepositorio implements VoluntarioDb {
       });
       console.log(voluntarioRegistrado);
       return voluntarioRegistrado;
-    } catch (error) {
+    } catch (error: any) {
+      console.log(error)
       throw new Error("erro no banco.");
     }
   }

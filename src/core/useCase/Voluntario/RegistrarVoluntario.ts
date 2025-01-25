@@ -15,6 +15,7 @@ export default class RegistrarVoluntario implements CasoDeUso<VoluntarioType,Vol
 
     }
     async executar(dto: VoluntarioType){
+        console.log(dto.imagem,"imagem no usecase")
         const senhaHash = this.senhaCrypto.criptarSenha(dto.senha!)
         // if(dto.tipo ==="VOLUNTARIO"){
 

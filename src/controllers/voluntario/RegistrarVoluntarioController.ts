@@ -13,8 +13,13 @@ export default class RegistrarVoluntarioController{
         
         const registratVoluntario = async (req:Request,res: Response) => {
             console.log("Chegou no controller")
-
-            const {nome, email, tipo, habilidades, interesses,disponibilidade,senha, imagem} = req.body 
+            let imagemUp
+            if(req.file){
+                imagemUp = req.file.filename
+            }else{
+                imagemUp = "public/images/profile.png"
+            }
+            const {nome, email, tipo, habilidades, interesses,disponibilidade,senha} = req.body 
            
             try {
                 await this.casoDeUso.executar({
@@ -25,7 +30,7 @@ export default class RegistrarVoluntarioController{
                     interesses,
                     disponibilidade,
                     senha,
-                    imagem
+                    imagem: imagemUp!
                 })
                 
                 res.status(201).send()

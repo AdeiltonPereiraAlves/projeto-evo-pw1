@@ -11,6 +11,8 @@ import JwtAdapter from "./adptadores/auth/JwtAdapter";
 import buscarVoluntariosControllers from "./controllers/voluntario/BuscarVoluntariosControllers";
 import UserAuthentication from "./adptadores/middleware/UserAuthentication";
 import BuscarVoluntarios from "./core/useCase/Voluntario/BuscarVoluntarios";
+import imagemUpload from "./adptadores/middleware/ImagemUpload";
+
 const app = express();
 const port = process.env.PORT
 const secret = process.env.JWTSECRET
@@ -28,7 +30,9 @@ const registrarVoluntario = new RegistrarVoluntario(voluntarioDb,senhaCrypto)
 const middlewareValidador = middlewareValidator
 const provedorToken = new  JwtAdapter(secret!)
 const loginVoluntario = new LoginVoluntario(voluntarioDb, provedorToken  ,senhaCrypto)
-new RegistrarVoluntarioController(app,registrarVoluntario,middlewareValidador)
+
+const middlewareImagem = imagemUpload.single("imagem")
+new RegistrarVoluntarioController(app,registrarVoluntario,middlewareValidador,middlewareImagem )
 new LoginVoluntarioController(app,loginVoluntario)
 
 
