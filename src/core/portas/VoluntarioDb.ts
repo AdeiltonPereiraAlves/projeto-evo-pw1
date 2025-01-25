@@ -7,4 +7,6 @@ export default interface VoluntarioDb{
     buscarVoluntarios():any
     buscarPorId(id: string): any
     editarFoto(novaImagem: string,id: string| undefined): any
+    excluirVoluntario(id: string): any
+
 }
