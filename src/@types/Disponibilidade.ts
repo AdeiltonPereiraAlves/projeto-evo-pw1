@@ -1,8 +1,8 @@
 enum Disponibilidade {
-  MANHA = "manhã",
-  TARDE = "tarde",
-  NOITE = "noite",
-  INTEGRAL = "integral",
+  manha = 'manha',
+  tarde = 'tarde',
+  noite = 'noite',
+  integral= 'integral'
 }
 
 export default Disponibilidade;

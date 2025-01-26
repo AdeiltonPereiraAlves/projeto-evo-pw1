@@ -53,7 +53,7 @@ new EditarFotoController(app,editarFoto,UserAuthentication(voluntarioDb, provedo
 //excluir voluntario
 
 const excluirVoluntario = new ExcluirVoluntario(voluntarioDb)
-new ExcluirVoluntarioController(app, excluirVoluntario,middlewareValidador, UserAuthentication(voluntarioDb,provedorToken))
+new ExcluirVoluntarioController(app, excluirVoluntario,UserAuthentication(voluntarioDb, provedorToken),middlewareValidador)
 
 
 //editar voluntario

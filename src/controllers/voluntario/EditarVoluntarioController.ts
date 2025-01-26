@@ -33,6 +33,10 @@ export default class EditarVoluntarioController{
                   }
                  console.log(voluntarioEditavel,"volunter editar")
                  const voluntarioEditado = await this.casoDeUso.executar(voluntarioEditavel)
+
+
+                 voluntarioEditado.senha = undefined // deixa a senha undefined
+                 
                 res.status(200).json(voluntarioEditado)
               } catch (error:any) {
                 res.status(400).send(error.message)

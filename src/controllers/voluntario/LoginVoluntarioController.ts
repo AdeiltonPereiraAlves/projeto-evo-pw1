@@ -12,6 +12,7 @@ export default class LoginvoluntarioController{
                     email: req.body.email,
                     senha: req.body.senha
                 }
+                console.log(login, "login")
                 const resposta = await this.casoDeuso.executar(login)
                
                 res.status(200).json(resposta)

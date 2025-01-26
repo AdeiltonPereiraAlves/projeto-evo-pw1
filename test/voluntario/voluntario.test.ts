@@ -11,7 +11,7 @@ describe("testar voluntario",()=> {
         const idTest = id
         const habilidades = ["pisicolo","Comunicativo","Cuidadoso"]
         const interesses = ["Ajudar adolecentes","Ajudar comunidade"]
-        const v = new Voluntario(id, "Jose", "jose@email.com", Tipo.VOLUNTARIO,habilidades,interesses,Disponibilidade.INTEGRAL,"123", "img/perfil")
+        const v = new Voluntario(id, "Jose", "jose@email.com", Tipo.VOLUNTARIO,habilidades,interesses,[Disponibilidade.integral],"123", "img/perfil")
         expect(v).toEqual({
             _id:  idTest,
             _nome: "Jose",
@@ -19,7 +19,7 @@ describe("testar voluntario",()=> {
             _tipo: Tipo.VOLUNTARIO,
             _habilidades:habilidades,
             _interesses: interesses,
-            _disponibilidade: Disponibilidade.INTEGRAL,
+            _disponibilidade: [Disponibilidade.integral],
             _senha: "123", 
             _imagem: "img/perfil"
         })
@@ -30,7 +30,7 @@ describe("testar voluntario",()=> {
         
         const habilidades = ["pisicolo","Comunicativo","Cuidadoso"]
         const interesses = ["Ajudar adolecentes","Ajudar comunidade"]
-        const v = new Voluntario(id, "Jose", "jose@email.com", Tipo.VOLUNTARIO,habilidades,interesses,Disponibilidade.INTEGRAL,"123", "img/perfil")
+        const v = new Voluntario(id, "Jose", "jose@email.com", Tipo.VOLUNTARIO,habilidades,interesses,[Disponibilidade.integral],"123", "img/perfil")
         v.setNome("Carlos alves")
 
         expect(v.getNome()).toBe("Carlos alves")
@@ -41,7 +41,7 @@ describe("testar voluntario",()=> {
        
         const habilidades = ["pisicolo","Comunicativo","Cuidadoso"]
         const interesses = ["Ajudar adolecentes","Ajudar comunidade"]
-        const v = new Voluntario(id, "Jose", "jose@email.com", Tipo.VOLUNTARIO,habilidades,interesses,Disponibilidade.INTEGRAL,"123", "img/perfil")
+        const v = new Voluntario(id, "Jose", "jose@email.com", Tipo.VOLUNTARIO,habilidades,interesses,[Disponibilidade.integral],"123", "img/perfil")
         
     
 
@@ -53,7 +53,7 @@ describe("testar voluntario",()=> {
        
         const habilidades = ["pisicolo","Comunicativo","Cuidadoso"]
         const interesses = ["Ajudar adolecentes","Ajudar comunidade"]
-        const v = new Voluntario(id, "Jose", "jose@email.com", Tipo.VOLUNTARIO,habilidades,interesses,Disponibilidade.INTEGRAL,"123", "img/perfil")
+        const v = new Voluntario(id, "Jose", "jose@email.com", Tipo.VOLUNTARIO,habilidades,interesses,[Disponibilidade.integral],"123", "img/perfil")
         
     
         const h = ["","",""]
@@ -65,7 +65,7 @@ describe("testar voluntario",()=> {
        
         const habilidades = ["pisicolo","Comunicativo","Cuidadoso"]
         const interesses = ["Ajudar adolecentes","Ajudar comunidade"]
-        const v = new Voluntario(id, "Jose", "jose@email.com", Tipo.VOLUNTARIO,habilidades,interesses,Disponibilidade.INTEGRAL,"123", "img/perfil")
+        const v = new Voluntario(id, "Jose", "jose@email.com", Tipo.VOLUNTARIO,habilidades,interesses,[Disponibilidade.integral],"123", "img/perfil")
         
     
         const h = ["comunicativo","Cuidadoso","bom em vendas"]
@@ -78,7 +78,7 @@ describe("testar voluntario",()=> {
        
         const habilidades = ["pisicolo","Comunicativo","Cuidadoso"]
         const interesses = ["Ajudar adolecentes","Ajudar comunidade"]
-        const v = new Voluntario(id, "Jose", "jose@email.com", Tipo.VOLUNTARIO,habilidades,interesses,Disponibilidade.INTEGRAL,"123", "img/perfil")
+        const v = new Voluntario(id, "Jose", "jose@email.com", Tipo.VOLUNTARIO,habilidades,interesses,[Disponibilidade.integral],"123", "img/perfil")
         
     
         const h = ["comunicativo","Cuidadoso"," "]
@@ -91,7 +91,7 @@ describe("testar voluntario",()=> {
        
         const habilidades = ["pisicolo","Comunicativo","Cuidadoso"]
         const interesses = ["Ajudar adolecentes","Ajudar comunidade"]
-        const v = new Voluntario(id, "Jose", "jose@email.com", Tipo.VOLUNTARIO,habilidades,interesses,Disponibilidade.INTEGRAL,"123", "img/perfil")
+        const v = new Voluntario(id, "Jose", "jose@email.com", Tipo.VOLUNTARIO,habilidades,interesses,[Disponibilidade.integral],"123", "img/perfil")
         
     
         
@@ -103,7 +103,7 @@ describe("testar voluntario",()=> {
        
         const habilidades = ["pisicolo","Comunicativo","Cuidadoso"]
         const interesses = ["Ajudar adolecentes","Ajudar comunidade"]
-        const v = new Voluntario(id, "Jose", "jose@email.com", Tipo.VOLUNTARIO,habilidades,interesses,Disponibilidade.INTEGRAL,"123", "img/perfil")
+        const v = new Voluntario(id, "Jose", "jose@email.com", Tipo.VOLUNTARIO,habilidades,interesses,[Disponibilidade.integral],"123", "img/perfil")
         
     
         const i = ["","",""]
@@ -115,7 +115,7 @@ describe("testar voluntario",()=> {
        
         const habilidades = ["pisicolo","Comunicativo","Cuidadoso"]
         const interesses = ["Ajudar adolecentes","Ajudar comunidade"]
-        const v = new Voluntario(id, "Jose", "jose@email.com", Tipo.VOLUNTARIO,habilidades,interesses,Disponibilidade.INTEGRAL,"123", "img/perfil")
+        const v = new Voluntario(id, "Jose", "jose@email.com", Tipo.VOLUNTARIO,habilidades,interesses,[Disponibilidade.integral],"123", "img/perfil")
         
     
         const i = ["Ajudar adolecentes",""]
@@ -127,7 +127,7 @@ describe("testar voluntario",()=> {
        
         const habilidades = ["pisicolo","Comunicativo","Cuidadoso"]
         const interesses = ["Ajudar adolecentes","Ajudar comunidade"]
-        const v = new Voluntario(id, "Jose", "jose@email.com", Tipo.VOLUNTARIO,habilidades,interesses,Disponibilidade.INTEGRAL,"123", "img/perfil")
+        const v = new Voluntario(id, "Jose", "jose@email.com", Tipo.VOLUNTARIO,habilidades,interesses,[Disponibilidade.integral],"123", "img/perfil")
         
     
       
@@ -139,7 +139,7 @@ describe("testar voluntario",()=> {
        
         const habilidades = ["pisicolo","Comunicativo","Cuidadoso"]
         const interesses = ["Ajudar adolecentes","Ajudar comunidade"]
-        const v = new Voluntario(id, "Jose", "jose@email.com", Tipo.VOLUNTARIO,habilidades,interesses,Disponibilidade.INTEGRAL,"123", "img/perfil")
+        const v = new Voluntario(id, "Jose", "jose@email.com", Tipo.VOLUNTARIO,habilidades,interesses,[Disponibilidade.integral],"123", "img/perfil")
         
         
         const i = ["Ajudar adolecentes","Ajudar idosos"]
@@ -152,11 +152,11 @@ describe("testar voluntario",()=> {
        
         const habilidades = ["pisicolo","Comunicativo","Cuidadoso"]
         const interesses = ["Ajudar adolecentes","Ajudar comunidade"]
-        const v = new Voluntario(id, "Jose", "jose@email.com", Tipo.VOLUNTARIO,habilidades,interesses,Disponibilidade.INTEGRAL,"123", "img/perfil")
+        const v = new Voluntario(id, "Jose", "jose@email.com", Tipo.VOLUNTARIO,habilidades,interesses,[Disponibilidade.integral],"123", "img/perfil")
         
-        v.setDisponibilidade(Disponibilidade.MANHA)
+        v.setDisponibilidade([Disponibilidade.manha])
         
-        expect(v.getDisponibilidade()).toBe("manhã")
+        expect(v.getDisponibilidade()).toEqual(["manha"])
 
     })
     
@@ -164,7 +164,7 @@ describe("testar voluntario",()=> {
     expect(() => {
       
       new Voluntario(
-        '1', " ", "", Tipo.VOLUNTARIO,[],[],Disponibilidade.INTEGRAL,"", ""
+        '1', " ", "", Tipo.VOLUNTARIO,[],[],[Disponibilidade.integral],"", ""
       );
     }).toThrow(
       `${Erros.NOME_VAZIO}, ${Erros.EMAIL_INVALIDO}, ${Erros.SENHA_INVALIDA}, ${Erros.IMAGEM_INVALIDA}`
@@ -175,7 +175,7 @@ describe("testar voluntario",()=> {
     expect(() => {
       
       new Voluntario(
-        '1', "jose ", "jose@email.com", Tipo.VOLUNTARIO,[],[],Disponibilidade.INTEGRAL,"123", "123"
+        '1', "jose ", "jose@email.com", Tipo.VOLUNTARIO,[],[],[Disponibilidade.integral],"123", "123"
       );
     }).toThrow(
       `${Erros.HABILIDADES_INVALIDAS}, ${Erros.INTERESSES_INVALIDOS}`

@@ -65,18 +65,20 @@ export default class VoluntarioRepositorio implements VoluntarioDb {
 
     console.log(email, "email no db")
     try {
-      const usuario = await prismaDb.usuario.findFirst({
-        where: { email },
+      const voluntario = await prismaDb.usuario.findUnique({
+        where: {
+          email:email,
+        },
         include: {
-          voluntario: true,
+          voluntario: true, // Inclui os dados do voluntário
         },
       });
-      console.log(usuario,"usuario db")
-      if (!usuario) {
+      console.log(voluntario,"usuario db")
+      if (!voluntario) {
         return { error: "Usuário não encontrado" };
       }
 
-      return usuario;
+      return voluntario;
     } catch (error) {
       console.error("Erro ao buscar usuário pelo email:", error);
       return { error: "Erro ao buscar usuário" };

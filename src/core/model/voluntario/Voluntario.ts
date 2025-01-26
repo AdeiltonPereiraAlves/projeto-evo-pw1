@@ -8,7 +8,7 @@ import Usuario from "../usuario/Usuario";
 export default class Voluntario extends Usuario {
   private _habilidades: string[]
   private _interesses: string[]
-  private _disponibilidade: Disponibilidade
+  private _disponibilidade: Disponibilidade[]
   constructor(
     id: string,
     nome: string,
@@ -16,7 +16,7 @@ export default class Voluntario extends Usuario {
     tipo: Tipo,
     habilidades: string[],
     interesses: string[],
-    disponibilidade: Disponibilidade,
+    disponibilidade: Disponibilidade[],
     senha: string ,
     imagem: string 
   ) {
@@ -68,7 +68,7 @@ export default class Voluntario extends Usuario {
   }
 
   //get e set disponibilidade
-  setDisponibilidade(disponibilidades: Disponibilidade) {
+  setDisponibilidade(disponibilidades: Disponibilidade[]) {
     this._disponibilidade = disponibilidades;
   }
   getDisponibilidade() {
