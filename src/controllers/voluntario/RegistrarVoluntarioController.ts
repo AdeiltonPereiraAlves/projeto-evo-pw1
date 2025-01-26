@@ -1,4 +1,3 @@
-import ValidateReq from "../../adptadores/middleware/handleValidation";
 import RegistrarVoluntario from "../../core/useCase/Voluntario/RegistrarVoluntario";
 import { Express } from "express";
 
