@@ -55,7 +55,7 @@ O EVO é desenvolvido seguindo a **Arquitetura Hexagonal (Ports and Adapters)**,
 ## Desenvolvedor FullStack
 - 💻 Estudante de Análise e Desenvolvimento de Sistemas
 - 🚀 Focado em **Node.js**, **React**, **Next.js**, **TypeScript** , **Prisma**, **Express**
-- 📚 Interessado em arquitetura hexagonal e boas práticas de desenvolvimento
+- 📚 Interessado em arquitetura hexagonal 
 
 ### 📫 Como me encontrar:
 - 🌐 [Perfil no GitHub](https://github.com/AdeiltonPereiraAlves)
