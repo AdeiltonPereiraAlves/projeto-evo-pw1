@@ -27,13 +27,13 @@ export default function UserAuthentication(_usuarioDb: VoluntarioDb, _token: jwt
 
         console.log(token)
         const tokenPayload= _token.validar(token) as UsuarioType;
-        console.log(tokenPayload)
+        console.log(tokenPayload, "token payload")
         const email = tokenPayload.email; // Acessa diretamente o email do payload
 
         console.log(email)
         const usuario = await _usuarioDb.buscarPorEmail(email);
   
-        console.log(usuario)
+        console.log(usuario, "Usuaraio no auth")
         if(!usuario){
             res.status(404).json("Token invalido")
             return

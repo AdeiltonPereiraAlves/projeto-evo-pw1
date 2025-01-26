@@ -62,6 +62,8 @@ export default class VoluntarioRepositorio implements VoluntarioDb {
 
   // buscar por email
   async buscarPorEmail(email: string) {
+
+    console.log(email, "email no db")
     try {
       const usuario = await prismaDb.usuario.findFirst({
         where: { email },
@@ -69,6 +71,7 @@ export default class VoluntarioRepositorio implements VoluntarioDb {
           voluntario: true,
         },
       });
+      console.log(usuario,"usuario db")
       if (!usuario) {
         return { error: "Usuário não encontrado" };
       }
@@ -81,6 +84,9 @@ export default class VoluntarioRepositorio implements VoluntarioDb {
   }
   async buscarPorId(id: string) {
     try {
+      if (!id) {
+        throw new Error("ID não foi fornecido");
+      }
       const voluntario = await prismaDb.usuario.findUnique({
         where: { id },
         include: { voluntario: true },
@@ -158,5 +164,41 @@ export default class VoluntarioRepositorio implements VoluntarioDb {
       console.error("Erro aodeletar  voluntario:", error);
       return { error: "Erro ao deletar voluntario" };
     }
+  }
+  
+  async editarVoluntario(voluntario:any){
+     try { 
+     
+        const voluntarioAtual = await this.buscarPorId(voluntario.id)
+
+        if(!voluntario){
+          throw new Error("Voluntario Nao encontrado")
+        }
+        let idUsuario = ""
+        if ('voluntario' in voluntarioAtual && voluntarioAtual.voluntario !== null){
+
+           idUsuario = voluntarioAtual.voluntario.usuarioId 
+           const usuarioAtualizado = await prismaDb.usuario.update({
+             where: { id: idUsuario },
+             data: {
+               nome: voluntario.nome ?? voluntarioAtual.nome, // Mantém o valor atual se não for fornecido
+               email: voluntario.email ?? voluntarioAtual.email,
+               tipo: voluntario.tipo ?? voluntarioAtual.tipo,
+               imagem: voluntario.imagem ?? voluntarioAtual.imagem,
+               voluntario: {
+                 update: {
+                   habilidades: voluntario.habilidades ?? voluntarioAtual.voluntario.habilidades,
+                   interesses: voluntario.interesses ?? voluntarioAtual.voluntario.interesses,
+                   disponibilidade: voluntario.disponibilidade ?? voluntarioAtual.voluntario.disponibilidade,
+                 },
+               },
+             },
+           });
+           return usuarioAtualizado
+        }
+     } catch (error) {
+      console.error("Erro ao alterar  voluntario:", error);
+      return { error: "Erro ao alterar voluntario" };
+     }
   }
 }

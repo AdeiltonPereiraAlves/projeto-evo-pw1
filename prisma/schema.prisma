@@ -74,7 +74,7 @@ model Voluntario {
   usuario         Usuario           @relation(fields: [usuarioId], references: [id])
   interesses      String[]
   habilidades     String[]
-  disponibilidade String
+  disponibilidade String []
   inscricoes Inscricao[]
   avaliacoes Avaliacao[]
  

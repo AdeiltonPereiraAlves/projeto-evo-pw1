@@ -16,6 +16,8 @@ import EditarFotoController from "./controllers/voluntario/EditarFotoController"
 import EditarFotoPerfil from "./core/useCase/Voluntario/EditarFotoPerfil";
 import ExcluirVoluntario from "./core/useCase/Voluntario/ExcluirVoluntario";
 import ExcluirVoluntarioController from "./controllers/voluntario/ExcluirVoluntarioController";
+import EditarVoluntario from "./core/useCase/Voluntario/EditarVoluntario";
+import EditarVoluntarioController from "./controllers/voluntario/EditarVoluntarioController";
 
 const app = express();
 const port = process.env.PORT
@@ -52,3 +54,9 @@ new EditarFotoController(app,editarFoto,UserAuthentication(voluntarioDb, provedo
 
 const excluirVoluntario = new ExcluirVoluntario(voluntarioDb)
 new ExcluirVoluntarioController(app, excluirVoluntario,middlewareValidador, UserAuthentication(voluntarioDb,provedorToken))
+
+
+//editar voluntario
+
+const editarVoluntario = new EditarVoluntario(voluntarioDb)
+new EditarVoluntarioController(app,editarVoluntario, middlewareValidador,middlewareImagem,UserAuthentication(voluntarioDb, provedorToken) )
