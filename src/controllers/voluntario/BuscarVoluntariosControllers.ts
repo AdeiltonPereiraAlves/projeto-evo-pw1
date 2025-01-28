@@ -13,9 +13,7 @@ export default class buscarVoluntariosControllers{
             try {
                 const usuario = req.usuario // pegando o payload depois do login com as informaões
                 console.log(usuario ,"usuario da req")
-                if(usuario?.tipo === "ONG"){
-                    throw new Error("Acesso Negado")
-                }
+                
                 const result = await this.casoDeUso.executar()
                 
                 res.status(200).json(result)
@@ -24,6 +22,6 @@ export default class buscarVoluntariosControllers{
             }
       }
 
-      this.servidor.get("/buscar",buscar)
+      this.servidor.get("/buscar",...middleware,buscar)
     }
 }

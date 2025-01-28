@@ -5,14 +5,15 @@ import JwtAdapter from "../auth/JwtAdapter";
 import Usuario from "../../core/model/usuario/Usuario";
 import VoluntarioDb from "../../core/portas/VoluntarioDb";
 import UsuarioType from "../../@types/UsuarioType";
+import UsuarioRepo from "../../core/portas/usuario/UsuarioRepo";
 declare global {
     namespace Express {
       interface Request {
-        usuario?: UsuarioType; // Adicione a propriedade 'usuario'
+        usuario?:UsuarioType; // Adicione a propriedade 'usuario'
       }
     }
 }
-export default function UserAuthentication(_usuarioDb: VoluntarioDb, _token: jwtPort){
+export default function UserAuthentication(_usuarioDb: UsuarioRepo, _token: jwtPort){
      return  async (req:Request, res: Response, next: NextFunction) => {
 
         console.log("Chegou no middlware")
@@ -26,11 +27,11 @@ export default function UserAuthentication(_usuarioDb: VoluntarioDb, _token: jwt
         }
 
         console.log(token)
-        const tokenPayload= _token.validar(token) as UsuarioType;
-        console.log(tokenPayload, "token payload")
+        const tokenPayload= _token.validar(token) as any;
+        console.log(tokenPayload, "token payload no auth")
         const email = tokenPayload.email; // Acessa diretamente o email do payload
 
-        console.log(email)
+        console.log(email, "email")
         const usuario = await _usuarioDb.buscarPorEmail(email);
   
         console.log(usuario, "Usuaraio no auth")

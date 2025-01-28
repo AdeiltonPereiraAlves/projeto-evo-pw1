@@ -63,7 +63,7 @@ export default class VoluntarioRepositorio implements VoluntarioDb {
   // buscar por email
   async buscarPorEmail(email: string) {
 
-    console.log(email, "email no db")
+    console.log(email, "email no db do voluntario")
     try {
       const voluntario = await prismaDb.usuario.findUnique({
         where: {
@@ -73,12 +73,22 @@ export default class VoluntarioRepositorio implements VoluntarioDb {
           voluntario: true, // Inclui os dados do voluntário
         },
       });
-      console.log(voluntario,"usuario db")
-      if (!voluntario) {
-        return { error: "Usuário não encontrado" };
-      }
+      // if (!voluntario) {
+      //   return { error: "Usuário não encontrado" };
+      // }
+      // console.log(voluntario,"usuario db")
+      // let voluntarioV: any
+      // let ong:any
+      // if(voluntario!.tipo === "VOLUNTARIO"){
+      //   voluntarioV = prismaDb.voluntario.findUnique({where:{usuarioId: voluntario!.id}})
+      //   return voluntarioV;
+      // }
+      // else if(voluntario!.tipo ==="ONG"){
+      //     ong = prismaDb.ong.findUnique({where:{usuarioId: voluntario.id}})
+      //     return ong
+      // }
 
-      return voluntario;
+      return voluntario
     } catch (error) {
       console.error("Erro ao buscar usuário pelo email:", error);
       return { error: "Erro ao buscar usuário" };

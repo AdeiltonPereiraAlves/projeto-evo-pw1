@@ -18,6 +18,10 @@ import ExcluirVoluntario from "./core/useCase/Voluntario/ExcluirVoluntario";
 import ExcluirVoluntarioController from "./controllers/voluntario/ExcluirVoluntarioController";
 import EditarVoluntario from "./core/useCase/Voluntario/EditarVoluntario";
 import EditarVoluntarioController from "./controllers/voluntario/EditarVoluntarioController";
+import UsuarioAutorizacao from "./adptadores/middleware/UsuarioAutorizacao"
+import UsuarioRepositorio from "./adptadores/db/usuario/UsuarioRepositorio";
+
+
 
 const app = express();
 const port = process.env.PORT
@@ -35,7 +39,10 @@ const voluntarioDb = new VoluntarioRepositorio();
 const registrarVoluntario = new RegistrarVoluntario(voluntarioDb,senhaCrypto)
 const middlewareValidador = middlewareValidator
 const provedorToken = new  JwtAdapter(secret!)
-const loginVoluntario = new LoginVoluntario(voluntarioDb, provedorToken  ,senhaCrypto)
+
+console.log(provedorToken,"provedor token")
+const usuarioDb = new UsuarioRepositorio() //usuariodb
+const loginVoluntario = new LoginVoluntario(usuarioDb, provedorToken  ,senhaCrypto)
 
 const middlewareImagem = imagemUpload.single("imagem")
 new RegistrarVoluntarioController(app,registrarVoluntario,middlewareValidador,middlewareImagem )
@@ -43,8 +50,8 @@ new LoginVoluntarioController(app,loginVoluntario)
 
 
 const buscarVoluntarios = new BuscarVoluntarios(voluntarioDb)
-new buscarVoluntariosControllers(app,buscarVoluntarios,UserAuthentication(voluntarioDb, provedorToken) )
-
+new buscarVoluntariosControllers(app,buscarVoluntarios,UserAuthentication(usuarioDb, provedorToken),UsuarioAutorizacao(["VOLUNTARIO"]))
+// UsuarioAutorizacao(["VOLUNTARIO"]) 
 
 // atualiza foto perfil voluntario
 const editarFoto = new EditarFotoPerfil(voluntarioDb)

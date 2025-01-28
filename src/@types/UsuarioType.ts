@@ -7,6 +7,7 @@ interface UsuarioType  {
   tipo: Tipo;
   senha?: string;
   imagem: string; // ou string
+  [key: string]: any;
 };
 
 export default UsuarioType;
