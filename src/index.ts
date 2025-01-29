@@ -5,8 +5,8 @@ import RegistrarVoluntarioController from "./controllers/voluntario/RegistrarVol
 import ValidateReq from "./adptadores/middleware/handleValidation";
 import middlewareValidator from "./adptadores/middleware/handleValidation";
 import Bcrypt from "./adptadores/auth/BcryptAdapter";
-import LoginVoluntarioController from "./controllers/voluntario/LoginVoluntarioController";
-import LoginVoluntario from "./core/useCase/Voluntario/LoginVoluntario";
+import LoginUsuarioController from "./controllers/usuario/LoginUsuarioController";
+import LoginVoluntario from "./core/useCase/usuario/LoginUsuario";
 import JwtAdapter from "./adptadores/auth/JwtAdapter";
 import buscarVoluntariosControllers from "./controllers/voluntario/BuscarVoluntariosControllers";
 import UserAuthentication from "./adptadores/middleware/UserAuthentication";
@@ -20,6 +20,9 @@ import EditarVoluntario from "./core/useCase/Voluntario/EditarVoluntario";
 import EditarVoluntarioController from "./controllers/voluntario/EditarVoluntarioController";
 import UsuarioAutorizacao from "./adptadores/middleware/UsuarioAutorizacao"
 import UsuarioRepositorio from "./adptadores/db/usuario/UsuarioRepositorio";
+import OngRepositorio from "./adptadores/db/ong/OngRepositorio";
+import { RegistrarOng } from "./core/useCase/Ong/RegistrarOng";
+import RegistrarOngController from "./controllers/ong/RegistrarOngController";
 
 
 
@@ -46,11 +49,11 @@ const loginVoluntario = new LoginVoluntario(usuarioDb, provedorToken  ,senhaCryp
 
 const middlewareImagem = imagemUpload.single("imagem")
 new RegistrarVoluntarioController(app,registrarVoluntario,middlewareValidador,middlewareImagem )
-new LoginVoluntarioController(app,loginVoluntario)
+new LoginUsuarioController(app,loginVoluntario)
 
 
 const buscarVoluntarios = new BuscarVoluntarios(voluntarioDb)
-new buscarVoluntariosControllers(app,buscarVoluntarios,UserAuthentication(usuarioDb, provedorToken),UsuarioAutorizacao(["VOLUNTARIO"]))
+new buscarVoluntariosControllers(app,buscarVoluntarios,UserAuthentication(usuarioDb, provedorToken),UsuarioAutorizacao(["VOLUNTARIO","ONG"]))// rota permitida para ong e voluntarios
 // UsuarioAutorizacao(["VOLUNTARIO"]) 
 
 // atualiza foto perfil voluntario
@@ -67,3 +70,9 @@ new ExcluirVoluntarioController(app, excluirVoluntario,UserAuthentication(volunt
 
 const editarVoluntario = new EditarVoluntario(voluntarioDb)
 new EditarVoluntarioController(app,editarVoluntario, middlewareValidador,middlewareImagem,UserAuthentication(voluntarioDb, provedorToken) )
+
+
+// ong
+const ongRepositorio = new OngRepositorio()
+const reristarOng = new RegistrarOng(ongRepositorio, senhaCrypto)
+new RegistrarOngController(app, reristarOng)

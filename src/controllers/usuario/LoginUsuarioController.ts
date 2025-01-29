@@ -1,10 +1,11 @@
 import { triggerAsyncId } from "async_hooks";
-import LoginVoluntario from "../../core/useCase/Voluntario/LoginVoluntario";
+import LoginVoluntario from "../../core/useCase/usuario/LoginUsuario";
 import { Request, Response, Express } from "express";
-export default class LoginvoluntarioController{
+import LoginUsuario from "../../core/useCase/usuario/LoginUsuario";
+export default class LoginUsuarioController{
     constructor(
         private servidor: Express,
-        private casoDeuso: LoginVoluntario
+        private casoDeuso: LoginUsuario
     ){
         this.servidor.post('/login', async (req:Request, res:Response ) => {
             try {
@@ -22,3 +23,4 @@ export default class LoginvoluntarioController{
         })
     }
 }
+

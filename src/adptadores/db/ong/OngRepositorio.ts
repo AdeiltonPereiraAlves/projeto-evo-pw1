@@ -6,6 +6,7 @@ export default class OngRepositorio implements OngRepositorioPort  {
     constructor(){}
     async registrar(ong:Ong){
          try {
+          console.log(ong, "ong")
            const resposta =  await prismaDb.ong.create({
                 data: {
                     cnpj:ong.getCnpj(),
