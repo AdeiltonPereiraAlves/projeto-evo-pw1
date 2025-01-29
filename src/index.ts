@@ -23,6 +23,7 @@ import UsuarioRepositorio from "./adptadores/db/usuario/UsuarioRepositorio";
 import OngRepositorio from "./adptadores/db/ong/OngRepositorio";
 import { RegistrarOng } from "./core/useCase/Ong/RegistrarOng";
 import RegistrarOngController from "./controllers/ong/RegistrarOngController";
+import ExcluirOng from "./core/useCase/Ong/ExcluirOng";
 
 
 
@@ -61,9 +62,11 @@ const editarFoto = new EditarFotoPerfil(voluntarioDb)
 new EditarFotoController(app,editarFoto,UserAuthentication(voluntarioDb, provedorToken), middlewareImagem)
 
 //excluir voluntario
+const ongRepositorio = new OngRepositorio()
 
 const excluirVoluntario = new ExcluirVoluntario(voluntarioDb)
-new ExcluirVoluntarioController(app, excluirVoluntario,UserAuthentication(voluntarioDb, provedorToken),middlewareValidador)
+const excluirOng = new ExcluirOng(ongRepositorio)
+new ExcluirVoluntarioController(app, excluirVoluntario,excluirOng,UserAuthentication(voluntarioDb, provedorToken),middlewareValidador)
 
 
 //editar voluntario
@@ -73,6 +76,7 @@ new EditarVoluntarioController(app,editarVoluntario, middlewareValidador,middlew
 
 
 // ong
-const ongRepositorio = new OngRepositorio()
 const reristarOng = new RegistrarOng(ongRepositorio, senhaCrypto)
 new RegistrarOngController(app, reristarOng)
+
+//excluir

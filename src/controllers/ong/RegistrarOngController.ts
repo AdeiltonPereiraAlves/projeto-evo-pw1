@@ -16,6 +16,12 @@ export default class RegistrarOngController{
     // areaAtuacao: AreaAtuacao[]
     // endereco: string
          try {
+          let imagemUp
+            if(req.file){
+                imagemUp = req.file.filename
+            }else{
+                imagemUp = "public/images/profile.png"
+            }
             const {nome,email, tipo,imagem, senha, cnpj, descricao, visao, missao,areaAtuacao,endereco } = req.body
             console.log("chegou no controler ong")
             const o = await this.casoDeUso.executar(
