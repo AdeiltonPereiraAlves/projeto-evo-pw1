@@ -8,7 +8,7 @@ import Bcrypt from "./adptadores/auth/BcryptAdapter";
 import LoginUsuarioController from "./controllers/usuario/LoginUsuarioController";
 import LoginVoluntario from "./core/useCase/usuario/LoginUsuario";
 import JwtAdapter from "./adptadores/auth/JwtAdapter";
-import buscarVoluntariosControllers from "./controllers/voluntario/BuscarVoluntariosControllers";
+import buscarVoluntariosControllers from "./controllers/usuario/BuscarUsuarioControllers";
 import UserAuthentication from "./adptadores/middleware/UserAuthentication";
 import BuscarVoluntarios from "./core/useCase/Voluntario/BuscarVoluntarios";
 import imagemUpload from "./adptadores/middleware/ImagemUpload";
