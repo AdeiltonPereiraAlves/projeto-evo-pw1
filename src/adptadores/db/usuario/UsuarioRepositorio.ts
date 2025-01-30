@@ -29,7 +29,7 @@ export default class UsurioRepositorio implements UsuarioRepo{
             return voluntarioV;
           }
           else if(voluntario!.tipo ==="ONG"){
-              ong = await prismaDb.ong.findUnique({where:{usuarioId: voluntario.id}, include:{usuario:true}})
+              ong = await prismaDb.ong.findUnique({where:{usuarioId: voluntario!.id}, include:{usuario:true}})
               
               return ong
           }

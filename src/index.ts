@@ -15,7 +15,7 @@ import imagemUpload from "./adptadores/middleware/ImagemUpload";
 import EditarFotoController from "./controllers/voluntario/EditarFotoController";
 import EditarFotoPerfil from "./core/useCase/Voluntario/EditarFotoPerfil";
 import ExcluirVoluntario from "./core/useCase/Voluntario/ExcluirVoluntario";
-import ExcluirVoluntarioController from "./controllers/voluntario/ExcluirVoluntarioController";
+import ExcluirVoluntarioController from "./controllers/usuario/ExcluirUsuarioController";
 import EditarVoluntario from "./core/useCase/Voluntario/EditarVoluntario";
 import EditarVoluntarioController from "./controllers/voluntario/EditarVoluntarioController";
 import UsuarioAutorizacao from "./adptadores/middleware/UsuarioAutorizacao"
@@ -54,8 +54,9 @@ new LoginUsuarioController(app,loginVoluntario)
 
 
 const buscarVoluntarios = new BuscarVoluntarios(voluntarioDb)
-new buscarVoluntariosControllers(app,buscarVoluntarios,UserAuthentication(usuarioDb, provedorToken),UsuarioAutorizacao(["VOLUNTARIO","ONG"]))// rota permitida para ong e voluntarios
+new buscarVoluntariosControllers(app,buscarVoluntarios)// rota permitida para ong e voluntarios
 // UsuarioAutorizacao(["VOLUNTARIO"]) 
+//,UserAuthentication(usuarioDb, provedorToken)
 
 // atualiza foto perfil voluntario
 const editarFoto = new EditarFotoPerfil(voluntarioDb)
@@ -66,7 +67,7 @@ const ongRepositorio = new OngRepositorio()
 
 const excluirVoluntario = new ExcluirVoluntario(voluntarioDb)
 const excluirOng = new ExcluirOng(ongRepositorio)
-new ExcluirVoluntarioController(app, excluirVoluntario,excluirOng,UserAuthentication(voluntarioDb, provedorToken),middlewareValidador)
+new ExcluirVoluntarioController(app, excluirVoluntario,excluirOng,UserAuthentication(usuarioDb, provedorToken),UsuarioAutorizacao(["VOLUNTARIO","ONG"]),middlewareValidador)
 
 
 //editar voluntario
