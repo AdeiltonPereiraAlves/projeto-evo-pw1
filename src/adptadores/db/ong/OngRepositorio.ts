@@ -3,6 +3,7 @@ import Ong from "../../../core/model/ong/Ong";
 import OngRepositorioPort from "../../../core/useCase/Ong/OngRepositorioPort";
 import prismaDb from "../../prismaDb/Prisma";
 import fs from 'fs/promises';
+import OngType from "../../../@types/OngType";
 export default class OngRepositorio implements OngRepositorioPort  {
     constructor(){}
   async deletar(id: string) {
@@ -60,7 +61,7 @@ export default class OngRepositorio implements OngRepositorioPort  {
       console.error("Erro ao buscar voluntario pelo id:", error);
       return { error: "Erro ao buscar voluntario" };
     }
-    throw new Error("Method not implemented.");
+   
   }
     async registrar(ong:Ong){
          try {
@@ -122,6 +123,27 @@ export default class OngRepositorio implements OngRepositorioPort  {
       } catch (error) {
         console.error("Erro ao editar da ong:", error);
         return { error: "Erro ao editar ong" };
+      }
+    }
+
+    // buscar ongs
+    async buscarOngs(){
+      try {
+        const ong = await prismaDb.ong.findMany({
+          include: {
+            usuario: {
+              select: {
+                nome: true,
+                email: true,
+                tipo: true,
+                imagem: true,
+              },
+            },
+          },
+        });
+        return ong;
+      } catch (error) {
+        throw new Error("Erro no buscar ongs");
       }
     }
 }

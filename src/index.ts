@@ -27,6 +27,7 @@ import { RegistrarOng } from "./core/useCase/Ong/RegistrarOng";
 import RegistrarOngController from "./controllers/ong/RegistrarOngController";
 import ExcluirOng from "./core/useCase/Ong/ExcluirOng";
 import EditarFotoPerfilOng from "./core/useCase/Ong/EditarFotoPerfilOng";
+import BuscarOngs from "./core/useCase/Ong/BuscarOngs";
 
 
 
@@ -55,14 +56,14 @@ const middlewareImagem = imagemUpload.single("imagem")
 new RegistrarVoluntarioController(app,registrarVoluntario,middlewareValidador,middlewareImagem )
 new LoginUsuarioController(app,loginVoluntario)
 
-
+const ongRepositorio = new OngRepositorio()
+const buscarOngs =  new BuscarOngs(ongRepositorio)
 const buscarVoluntarios = new BuscarVoluntarios(voluntarioDb)
-new buscarVoluntariosControllers(app,buscarVoluntarios)// rota permitida para ong e voluntarios
+new buscarVoluntariosControllers(app,buscarVoluntarios,buscarOngs, UserAuthentication(usuarioDb, provedorToken))// rota permitida para ong e voluntarios
 // UsuarioAutorizacao(["VOLUNTARIO"]) 
 //,UserAuthentication(usuarioDb, provedorToken)
 
 // atualiza foto perfil voluntario
-const ongRepositorio = new OngRepositorio()
 
 const editarFoto = new EditarFotoPerfil(voluntarioDb)
 const editarFotoOng = new EditarFotoPerfilOng(ongRepositorio)

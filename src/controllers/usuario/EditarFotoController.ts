@@ -22,12 +22,7 @@ export default class EditarFotoController{
                 console.log("chegou no atualiza perfil", usuario)
                 let imagemUp = ""
                 console.log(req.file, "req.file")
-                // if(req.file){
-                //     imagemUp = req.file.filename
-                // }
-                // else{
-                //     imagemUp = usuario.usuario.imagem
-                // }
+            
 
                 req.file? imagemUp= req.file.fieldname: imagemUp = usuario.usuario.imagem
                 const fotoDto: fotoDto = {
