@@ -19,9 +19,9 @@ const imageStore = multer.diskStorage({
         
         console.log(usuario, "no midleware ")
         let pasta = ""
-        if(usuario?.tipo === "VOLUNTARIO"){
+        if(usuario?.usuario.tipo === "VOLUNTARIO"){
              pasta = "voluntarios"
-        }else if(usuario?.tipo === "ONG"){
+        }else if(usuario?.usuario.tipo === "ONG"){
               pasta = "ongs"
         }
 

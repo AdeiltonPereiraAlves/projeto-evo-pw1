@@ -95,4 +95,33 @@ export default class OngRepositorio implements OngRepositorioPort  {
             throw new Error("erro no banco da ong.");
          }
     }
+
+    // editar foto
+    async editarFoto(novaImagem: string, id: string) {
+      try {
+        const ong = await this.buscarPorId(id);
+        if ("error" in ong) {
+          throw new Error(ong.error);
+        }
+  
+        const ongFotoAtualizada = await prismaDb.usuario.update({
+          where: {
+            id: ong.id,
+          },
+          select: {
+            id: true,
+            nome: true,
+            email: true,
+            imagem: true,
+            tipo: true,
+          },
+          data: { imagem: novaImagem },
+        });
+  
+        return ongFotoAtualizada;
+      } catch (error) {
+        console.error("Erro ao editar da ong:", error);
+        return { error: "Erro ao editar ong" };
+      }
+    }
 }

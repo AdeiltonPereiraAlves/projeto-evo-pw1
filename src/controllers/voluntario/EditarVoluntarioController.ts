@@ -11,7 +11,7 @@ export default class EditarVoluntarioController{
               try {
                  const usuario = req.usuario
                  console.log(usuario,"usuario controller")
-                 const id = usuario?.id
+                 const id = usuario?.usuario.id
                  if (!id) {
                     res.status(400).json({ error: "ID é obrigatório" });
                     return

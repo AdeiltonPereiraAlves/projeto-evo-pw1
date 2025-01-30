@@ -12,7 +12,9 @@ import buscarVoluntariosControllers from "./controllers/voluntario/BuscarVolunta
 import UserAuthentication from "./adptadores/middleware/UserAuthentication";
 import BuscarVoluntarios from "./core/useCase/Voluntario/BuscarVoluntarios";
 import imagemUpload from "./adptadores/middleware/ImagemUpload";
-import EditarFotoController from "./controllers/voluntario/EditarFotoController";
+
+import EditarFotoController from "./controllers/usuario/EditarFotoController";
+
 import EditarFotoPerfil from "./core/useCase/Voluntario/EditarFotoPerfil";
 import ExcluirVoluntario from "./core/useCase/Voluntario/ExcluirVoluntario";
 import ExcluirVoluntarioController from "./controllers/usuario/ExcluirUsuarioController";
@@ -24,6 +26,7 @@ import OngRepositorio from "./adptadores/db/ong/OngRepositorio";
 import { RegistrarOng } from "./core/useCase/Ong/RegistrarOng";
 import RegistrarOngController from "./controllers/ong/RegistrarOngController";
 import ExcluirOng from "./core/useCase/Ong/ExcluirOng";
+import EditarFotoPerfilOng from "./core/useCase/Ong/EditarFotoPerfilOng";
 
 
 
@@ -59,11 +62,13 @@ new buscarVoluntariosControllers(app,buscarVoluntarios)// rota permitida para on
 //,UserAuthentication(usuarioDb, provedorToken)
 
 // atualiza foto perfil voluntario
+const ongRepositorio = new OngRepositorio()
+
 const editarFoto = new EditarFotoPerfil(voluntarioDb)
-new EditarFotoController(app,editarFoto,UserAuthentication(voluntarioDb, provedorToken), middlewareImagem)
+const editarFotoOng = new EditarFotoPerfilOng(ongRepositorio)
+new EditarFotoController(app,editarFoto,editarFotoOng,UserAuthentication(usuarioDb, provedorToken),UsuarioAutorizacao(["VOLUNTARIO","ONG"]), middlewareImagem)
 
 //excluir voluntario
-const ongRepositorio = new OngRepositorio()
 
 const excluirVoluntario = new ExcluirVoluntario(voluntarioDb)
 const excluirOng = new ExcluirOng(ongRepositorio)
@@ -73,7 +78,7 @@ new ExcluirVoluntarioController(app, excluirVoluntario,excluirOng,UserAuthentica
 //editar voluntario
 
 const editarVoluntario = new EditarVoluntario(voluntarioDb)
-new EditarVoluntarioController(app,editarVoluntario, middlewareValidador,middlewareImagem,UserAuthentication(voluntarioDb, provedorToken) )
+new EditarVoluntarioController(app,editarVoluntario, middlewareValidador,UserAuthentication(usuarioDb, provedorToken),middlewareImagem )
 
 
 // ong
