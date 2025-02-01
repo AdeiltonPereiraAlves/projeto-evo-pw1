@@ -8,10 +8,18 @@ import VoluntarioType from "../../../@types/VoluntarioType";
 import imagemUpload from "../../middleware/ImagemUpload";
 import path from "path";
 import fs from 'fs/promises';
+import BaseUsuarioRepositorio from "../usuario/UsuarioRepositorio";
 
-export default class VoluntarioRepositorio implements VoluntarioDb {
-  constructor() {}
-  async buscarVoluntarios() {
+export default class VoluntarioRepositorio extends BaseUsuarioRepositorio <VoluntarioDb>{
+
+ 
+  
+  
+  constructor() {
+    super("VOLUNTARIO","as")
+  }
+
+  async buscarTodos() {
     try {
       const voluntarios = await prismaDb.voluntario.findMany({
         include: {
@@ -30,7 +38,7 @@ export default class VoluntarioRepositorio implements VoluntarioDb {
       throw new Error("Erro no buscar voluntarios");
     }
   }
-  async inserirUsuario(voluntario: Voluntario): Promise<any> {
+  async registrar(voluntario: Voluntario): Promise<any> {
     console.log("chegou no banco");
 
     console.log(voluntario.getImagem(), "Imagem no banco");
@@ -61,87 +69,10 @@ export default class VoluntarioRepositorio implements VoluntarioDb {
   }
 
   // buscar por email
-  async buscarPorEmail(email: string) {
-
-    console.log(email, "email no db do voluntario")
-    try {
-      const voluntario = await prismaDb.usuario.findUnique({
-        where: {
-          email:email,
-        },
-        include: {
-          voluntario: true, // Inclui os dados do voluntário
-        },
-      });
-      // if (!voluntario) {
-      //   return { error: "Usuário não encontrado" };
-      // }
-      // console.log(voluntario,"usuario db")
-      // let voluntarioV: any
-      // let ong:any
-      // if(voluntario!.tipo === "VOLUNTARIO"){
-      //   voluntarioV = prismaDb.voluntario.findUnique({where:{usuarioId: voluntario!.id}})
-      //   return voluntarioV;
-      // }
-      // else if(voluntario!.tipo ==="ONG"){
-      //     ong = prismaDb.ong.findUnique({where:{usuarioId: voluntario.id}})
-      //     return ong
-      // }
-
-      return voluntario
-    } catch (error) {
-      console.error("Erro ao buscar usuário pelo email:", error);
-      return { error: "Erro ao buscar usuário" };
-    }
-  }
-  async buscarPorId(id: string) {
-    try {
-      if (!id) {
-        throw new Error("ID não foi fornecido");
-      }
-      const voluntario = await prismaDb.usuario.findUnique({
-        where: { id },
-        include: { voluntario: true },
-      });
-
-      if (!voluntario) {
-        return { error: "Id nao encontrado" };
-      }
-      return voluntario;
-    } catch (error) {
-      console.error("Erro ao buscar voluntario pelo id:", error);
-      return { error: "Erro ao buscar voluntario" };
-    }
-  }
-  async editarFoto(novaImagem: string, id: string) {
-    try {
-      const voluntario = await this.buscarPorId(id);
-      if ("error" in voluntario) {
-        throw new Error(voluntario.error);
-      }
-
-      const voluntarioFotoAtualizada = await prismaDb.usuario.update({
-        where: {
-          id: voluntario.id,
-        },
-        select: {
-          id: true,
-          nome: true,
-          email: true,
-          imagem: true,
-          tipo: true,
-        },
-        data: { imagem: novaImagem },
-      });
-
-      return voluntarioFotoAtualizada;
-    } catch (error) {
-      console.error("Erro ao editar foto do voluntario:", error);
-      return { error: "Erro ao editar voluntario" };
-    }
-  }
+ 
+ 
   //excluir voluntario
-  async excluirVoluntario(id: string) {
+  async excluir(id: string):Promise<any>{
     try {
       const  resposta = await this.buscarPorId(id);
       let usuarioId = ""
@@ -174,11 +105,11 @@ export default class VoluntarioRepositorio implements VoluntarioDb {
       return true
     } catch (error) {
       console.error("Erro aodeletar  voluntario:", error);
-      return { error: "Erro ao deletar voluntario" };
+      
     }
   }
   
-  async editarVoluntario(voluntario:any){
+  async atualizar(voluntario:any):Promise<any>{
      try { 
      
         const voluntarioAtual = await this.buscarPorId(voluntario.id)
@@ -210,7 +141,7 @@ export default class VoluntarioRepositorio implements VoluntarioDb {
         }
      } catch (error) {
       console.error("Erro ao alterar  voluntario:", error);
-      return { error: "Erro ao alterar voluntario" };
+      
      }
   }
 }

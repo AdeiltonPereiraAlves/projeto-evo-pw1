@@ -24,7 +24,7 @@ export default class LoginVoluntario implements CasoDeUso<Dto, any> {
     }
 
     // Compara a senha fornecida com a armazenada
-    const senhaCrypto = usuarioExistente.usuario.senha;
+    const senhaCrypto = usuarioExistente.senha;
     console.log(dto.senha, senhaCrypto);
 
     const mesmaSenha = await this.bcrypt.compararSenha(dto.senha, senhaCrypto);
@@ -35,16 +35,16 @@ export default class LoginVoluntario implements CasoDeUso<Dto, any> {
     }
 
     // Remove a senha do retorno do usuário
-    const { senha, ...usuarioSemSenha } = usuarioExistente.usuario;
+    const { senha, ...usuarioSemSenha } = usuarioExistente.voluntario;
 
-    console.log(usuarioExistente.usuario.nome, "usuarionome")
+    console.log(usuarioExistente.nome, "usuarionome")
 
     // Gera o token JWT
     const token = this.provedorToken.gerar({
-      id: usuarioExistente.usuario.id,
-      nome: usuarioExistente.usuario.nome,
-      email: usuarioExistente.usuario.email,
-      tipo: usuarioExistente.usuario.tipo,
+      id: usuarioExistente.id,
+      nome: usuarioExistente.nome,
+      email: usuarioExistente.email,
+      tipo: usuarioExistente.tipo,
     });
 
     // Retorna o usuário e o token

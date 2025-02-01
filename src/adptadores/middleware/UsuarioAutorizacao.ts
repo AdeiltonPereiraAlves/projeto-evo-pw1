@@ -13,8 +13,8 @@ import UsuarioType from '../../@types/UsuarioType';
       return res.status(401).json({ message: 'Usuário não autenticado.' });
     }
 
-    console.log(usuario.usuario, "Usuario")
-    const tipoUsuario = usuario.usuario.tipo;
+    console.log(usuario, "Usuario")
+    const tipoUsuario = usuario.tipo;
 
     console.log(tipoUsuario, "tipo usuario")
     if (!usuarios.includes(tipoUsuario)) {

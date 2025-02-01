@@ -22,6 +22,9 @@ import UsuarioAutorizacao from "./adptadores/middleware/UsuarioAutorizacao"
 import UsuarioRepositorio from "./adptadores/db/usuario/UsuarioRepositorio";
 
 
+//
+import UsuarioRepo from "./core/portas/usuario/UsuarioRepo";
+
 
 const app = express();
 const port = process.env.PORT
@@ -41,8 +44,8 @@ const middlewareValidador = middlewareValidator
 const provedorToken = new  JwtAdapter(secret!)
 
 console.log(provedorToken,"provedor token")
-const usuarioDb = new UsuarioRepositorio() //usuariodb
-const loginVoluntario = new LoginVoluntario(usuarioDb, provedorToken  ,senhaCrypto)
+// const usuarioDb = new UsuarioRepositorio() //usuariodb
+const loginVoluntario = new LoginVoluntario(voluntarioDb, provedorToken  ,senhaCrypto)
 
 const middlewareImagem = imagemUpload.single("imagem")
 new RegistrarVoluntarioController(app,registrarVoluntario,middlewareValidador,middlewareImagem )
@@ -50,20 +53,21 @@ new LoginVoluntarioController(app,loginVoluntario)
 
 
 const buscarVoluntarios = new BuscarVoluntarios(voluntarioDb)
-new buscarVoluntariosControllers(app,buscarVoluntarios,UserAuthentication(usuarioDb, provedorToken),UsuarioAutorizacao(["VOLUNTARIO"]))
+new buscarVoluntariosControllers(app,buscarVoluntarios,UserAuthentication(voluntarioDb, provedorToken),UsuarioAutorizacao(["VOLUNTARIO"]) )
 // UsuarioAutorizacao(["VOLUNTARIO"]) 
+//UserAuthentication(voluntarioDb, provedorToken)
 
-// atualiza foto perfil voluntario
-const editarFoto = new EditarFotoPerfil(voluntarioDb)
-new EditarFotoController(app,editarFoto,UserAuthentication(voluntarioDb, provedorToken), middlewareImagem)
+// // atualiza foto perfil voluntario
+// const editarFoto = new EditarFotoPerfil(voluntarioDb)
+// new EditarFotoController(app,editarFoto,UserAuthentication(voluntarioDb, provedorToken), middlewareImagem)
 
-//excluir voluntario
+// //excluir voluntario
 
-const excluirVoluntario = new ExcluirVoluntario(voluntarioDb)
-new ExcluirVoluntarioController(app, excluirVoluntario,UserAuthentication(voluntarioDb, provedorToken),middlewareValidador)
+// const excluirVoluntario = new ExcluirVoluntario(voluntarioDb)
+// new ExcluirVoluntarioController(app, excluirVoluntario,UserAuthentication(voluntarioDb, provedorToken),middlewareValidador)
 
 
-//editar voluntario
+// //editar voluntario
 
-const editarVoluntario = new EditarVoluntario(voluntarioDb)
-new EditarVoluntarioController(app,editarVoluntario, middlewareValidador,middlewareImagem,UserAuthentication(voluntarioDb, provedorToken) )
+// const editarVoluntario = new EditarVoluntario(voluntarioDb)
+// new EditarVoluntarioController(app,editarVoluntario, middlewareValidador,middlewareImagem,UserAuthentication(voluntarioDb, provedorToken) )

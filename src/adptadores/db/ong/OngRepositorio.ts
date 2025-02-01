@@ -1,39 +1,48 @@
+import OngType from "../../../@types/OngType";
 import Ong from "../../../core/model/ong/Ong";
-import OngRepositorioPort from "../../../core/useCase/Ong/OngRepositorioPort";
-import prismaDb from "../../prismaDb/Prisma";
+import  UsuarioRepositorio  from "../usuario/UsuarioRepositorio";
 
-export default class OngRepositorio implements OngRepositorioPort  {
-    constructor(){}
-    async registrar(ong:Ong){
-         try {
-           const resposta =  await prismaDb.ong.create({
-                data: {
-                    cnpj:ong.getCnpj(),
-                    descricao: ong.getDescricao(),
-                    endereco: ong.getEndereco(),
-                    misao: ong.getMissao(),
-                    visao: ong.getVisao(),
-                    areaAtuacao: ong.getAreaAtuacao(),
-                    usuario: {
-                        create: {
-                          id: ong.getId(),
-                          nome: ong.getNome(),
-                          email: ong.getEmail(),
-                          senha: ong.getSenha(),
-                          imagem: ong.getImagem(),
-                          tipo: ong.getTipo(),
-                        },
-                      },
+// OngRepositorio.ts
+export class OngRepositorio extends UsuarioRepositorio<Ong> {
+  buscarTodos() {
+    throw new Error("Method not implemented.");
+  }
+  atualizar(id: string, dados: Partial<Ong>): Promise<Ong> {
+    throw new Error("Method not implemented.");
+  }
+  constructor() {
+    super("ONG",'///');
+  }
+  excluir(id: string): Promise<boolean> {
+    throw new Error("Method not implemented.");
+  }
 
-                    
+  async registrar(ong: Ong): Promise<any> {
+    return await this.prisma.ong.create({
+    
+        data: {
+          cnpj:ong.getCnpj(),
+          descricao: ong.getDescricao(),
+          endereco: ong.getEndereco(),
+          misao: ong.getMissao(),
+          visao: ong.getVisao(),
+          areaAtuacao: ong.getAreaAtuacao(),
+          usuario: {
+              create: {
+                id: ong.getId(),
+                nome: ong.getNome(),
+                email: ong.getEmail(),
+                senha: ong.getSenha(),
+                imagem: ong.getImagem(),
+                tipo: ong.getTipo(),
+              },
+            },
+      },
+      include: { usuario: true }
+    });
+  }
 
-
-                }
-            })
-
-            return resposta
-         } catch (error) {
-            throw new Error("erro no banco da ong.");
-         }
-    }
+  // async excluir(id: string): Promise<boolean> {
+  //   // Lógica específica para exclusão de ONG
+  // }
 }

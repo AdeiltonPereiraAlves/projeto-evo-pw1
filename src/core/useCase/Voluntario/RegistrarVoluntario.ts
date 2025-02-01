@@ -7,11 +7,12 @@ import Voluntario from "../../model/voluntario/Voluntario";
 import Id from "../../shared/Id";
 import SenhaCriptografada from "../../portas/SenhaCriptografada";
 import VoluntarioType from "../../../@types/VoluntarioType";
+import UsuarioRepo from "../../portas/usuario/UsuarioRepo";
 
 
 export default class RegistrarVoluntario implements CasoDeUso<VoluntarioType,Voluntario>{
 
-    constructor(private voluntarioDb: VoluntarioDb, private senhaCrypto: SenhaCriptografada){
+    constructor(private voluntarioDb: UsuarioRepo, private senhaCrypto: SenhaCriptografada){
 
     }
     async executar(dto: VoluntarioType){
@@ -32,7 +33,7 @@ export default class RegistrarVoluntario implements CasoDeUso<VoluntarioType,Vol
     
             )
             console.log(voluntario, "voluntario")
-            const newVoluntario = await this.voluntarioDb.inserirUsuario(voluntario)
+            const newVoluntario = await this.voluntarioDb.registrar(voluntario)
             return newVoluntario
         //  }
           throw new Error("Erro voluntario")
