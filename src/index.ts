@@ -33,7 +33,10 @@ import BuscarOngs from "./core/useCase/Ong/BuscarOngs";
 import BuscarOngController from "./controllers/ong/BuscarOngs";
 import LonginUsuario from "./core/useCase/auth/LonginUsuario";
 import LoginUsuarioController from "./controllers/usuario/LoginUsuarioController";
-
+import BuscarUsuario from "./adptadores/db/usuario/UsuarioAutenticao";
+import UsuarioAutenticao from "./adptadores/db/usuario/UsuarioAutenticao";
+import EditarFotoPerfilOng from "./core/useCase/Ong/EditarFotoPerfilOng";
+import EditarFotoPerfilController from "./controllers/ong/EditarFotoController"
 
 const app = express();
 const port = process.env.PORT
@@ -62,15 +65,16 @@ const middlewareImagem = imagemUpload.single("imagem")
 new RegistrarVoluntarioController(app,registrarVoluntario,middlewareValidador,middlewareImagem )
 new LoginUsuarioController(app,loginVoluntario)
 
-
+const usuarioAutenticaoDb = new UsuarioAutenticao() // altentica o usuario dinamicamente retornando dados para o payload de uma ong ou voluntario
 const buscarVoluntarios = new BuscarVoluntarios(voluntarioDb)
-new buscarVoluntariosControllers(app,buscarVoluntarios,UserAuthentication(voluntarioDb, provedorToken),UsuarioAutorizacao(["VOLUNTARIO"]) )
+new buscarVoluntariosControllers(app,buscarVoluntarios,UserAuthentication(usuarioAutenticaoDb, provedorToken),UsuarioAutorizacao(["VOLUNTARIO","ONG"]) )
 // UsuarioAutorizacao(["VOLUNTARIO"]) 
 //UserAuthentication(voluntarioDb, provedorToken)
 
 // atualiza foto perfil voluntario
-const editarFoto = new EditarFotoPerfil(voluntarioDb)
-new EditarFotoController(app,editarFoto,UserAuthentication(voluntarioDb, provedorToken), middlewareImagem)
+const usuarioDb = new UsuarioRepositorio("VOLUNTARIO","//")
+const editarFoto = new EditarFotoPerfil(usuarioDb)
+new EditarFotoController(app,editarFoto,UserAuthentication(usuarioAutenticaoDb, provedorToken), middlewareImagem)
 
 // //excluir voluntario
 
@@ -102,3 +106,9 @@ new ExcluirOngController(app, excluirOng, middlewareValidador)
 
 const buscarOngs = new BuscarOngs(ongDb)
 new BuscarOngController(app, buscarOngs)
+
+// editar foto ong
+const ongRepo = new UsuarioRepositorio("ONG","//")
+const editarFotoOng = new EditarFotoPerfilOng(ongRepo)
+
+new EditarFotoPerfilController(app, editarFotoOng, UserAuthentication(usuarioAutenticaoDb, provedorToken),  middlewareImagem)

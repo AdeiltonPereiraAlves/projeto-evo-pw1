@@ -14,7 +14,7 @@ import UsuarioType from '../../@types/UsuarioType';
     }
 
     console.log(usuario, "Usuario")
-    const tipoUsuario = usuario.tipo;
+    const tipoUsuario = usuario.usuario.tipo;
 
     console.log(tipoUsuario, "tipo usuario")
     if (!usuarios.includes(tipoUsuario)) {

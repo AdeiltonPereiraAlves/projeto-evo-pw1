@@ -2,8 +2,9 @@
 import { PrismaClient } from "@prisma/client";
 
 import  UsuarioType  from "../../../@types/UsuarioType";
+import UsuarioRepo from "../../../core/portas/usuario/UsuarioRepo";
 
-export default abstract class BaseUsuarioRepositorio<T> {
+export default  class BaseUsuarioRepositorio<T> implements UsuarioRepo {
   protected prisma: PrismaClient;
   protected tipo: "ONG" | "VOLUNTARIO";
   protected pastaImagens: string; 
@@ -12,6 +13,18 @@ export default abstract class BaseUsuarioRepositorio<T> {
     this.prisma = new PrismaClient();
     this.tipo = tipo;
     this.pastaImagens = pastaImagens;
+  }
+  excluir(id: string): Promise<boolean> {
+    throw new Error("Method not implemented.");
+  }
+  registrar(entidade: any): Promise<any> {
+    throw new Error("Method not implemented.");
+  }
+  atualizar(id: string, dados: Partial<any>): Promise<any> {
+    throw new Error("Method not implemented.");
+  }
+  buscarTodos() {
+    throw new Error("Method not implemented.");
   }
 
 
@@ -36,19 +49,22 @@ export default abstract class BaseUsuarioRepositorio<T> {
   }
 
   async editarFoto(id: string, novaImagem: string): Promise<any> {
+
     const usuario = await this.prisma.usuario.update({
       where: { id },
       data: { imagem: novaImagem },
       include: { [this.tipo.toLowerCase()]: true },
     }) as any
+
+    console.log(usuario, "usuario edtarfoto")
     return usuario
   }
 
-  abstract excluir(id: string): Promise<boolean>
+  //  excluir(id: string): Promise<boolean>
 
-  abstract registrar(entidade: any): Promise<T>;
-  abstract atualizar(id: string, dados: Partial<T>): Promise<T>;
-  abstract buscarTodos():any
+  //  registrar(entidade: any): Promise<T>;
+  //  atualizar(id: string, dados: Partial<T>): Promise<T>;
+  // buscarTodos():any
   // --------------------------
   // Métodos Protegidos (Reuso Interno)
   // --------------------------

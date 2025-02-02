@@ -13,7 +13,7 @@ declare global {
       }
     }
 }
-export default function UserAuthentication(_usuarioDb: UsuarioRepo, _token: jwtPort){
+export default function UserAuthentication(_usuarioDb: Partial<UsuarioRepo>, _token: jwtPort){
      return  async (req:Request, res: Response, next: NextFunction) => {
 
         console.log("Chegou no middlware")
@@ -32,7 +32,7 @@ export default function UserAuthentication(_usuarioDb: UsuarioRepo, _token: jwtP
         const email = tokenPayload.email; // Acessa diretamente o email do payload
 
         console.log(email, "email")
-        const usuario = await _usuarioDb.buscarPorEmail(email);
+        const usuario = await _usuarioDb.buscarPorEmail!(email);
   
         console.log(usuario, "Usuaraio no auth")
         if(!usuario){
