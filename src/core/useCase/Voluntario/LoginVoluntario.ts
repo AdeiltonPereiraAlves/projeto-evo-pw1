@@ -2,6 +2,7 @@ import CasoDeUso from "../../../@types/CasoDeUso";
 import jwtPort from "../../portas/JwtPort";
 import SenhaCriptografada from "../../portas/SenhaCriptografada";
 import UsuarioRepo from "../../portas/usuario/UsuarioRepo";
+import BuscarPorEmail from "./BuscarPorEmail";
 
 export type Dto = { email: string; senha: string };
 
@@ -16,7 +17,8 @@ export default class LoginVoluntario implements CasoDeUso<Dto, any> {
     console.log("Chegou no caso de uso");
 
     // Busca o usuário pelo e-mail
-    const usuarioExistente = await this.voluntarioDb.buscarPorEmail(dto.email);
+    const buscarEmail = new BuscarPorEmail(this.voluntarioDb)
+    const usuarioExistente = await buscarEmail.executar(dto.email);
     console.log(usuarioExistente, "Usuário existente");
 
     if (!usuarioExistente) {

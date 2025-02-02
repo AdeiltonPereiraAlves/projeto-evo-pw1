@@ -10,13 +10,13 @@ import path from "path";
 import fs from 'fs/promises';
 import BaseUsuarioRepositorio from "../usuario/UsuarioRepositorio";
 
-export default class VoluntarioRepositorio extends BaseUsuarioRepositorio <VoluntarioDb>{
+export default class VoluntarioRepositorio extends BaseUsuarioRepositorio<any> implements VoluntarioDb{
 
  
   
   
   constructor() {
-    super("VOLUNTARIO","as")
+    super("VOLUNTARIO","public/images/voluntario")
   }
 
   async buscarTodos() {
@@ -74,14 +74,15 @@ export default class VoluntarioRepositorio extends BaseUsuarioRepositorio <Volun
   //excluir voluntario
   async excluir(id: string):Promise<any>{
     try {
+      console.log(id,"id")
       const  resposta = await this.buscarPorId(id);
+      console.log(resposta, "resposta")
       let usuarioId = ""
       let idV =""
       if (!resposta) {
        throw new Error("Voluntario Nao encontrado")
       }
-      console.log(resposta, "resposta")
-      if ('voluntario' in resposta && resposta.voluntario !== null) {
+     
         usuarioId = resposta.voluntario.usuarioId;
         idV = resposta.voluntario.id
 
@@ -89,9 +90,8 @@ export default class VoluntarioRepositorio extends BaseUsuarioRepositorio <Volun
         const imagePath = path.resolve(`public/images/voluntarios/${resposta.imagem}`);
         await fs.unlink(imagePath).catch(() => console.log('Imagem já foi excluída.'));
         console.log('ID do usuário:', usuarioId);
-    } else {
-        console.log('Erro: não há dados do voluntário ou a resposta é de erro');
-    }
+   
+  
    
       await prismaDb.voluntario.delete({
         where: { id: idV},
@@ -111,16 +111,19 @@ export default class VoluntarioRepositorio extends BaseUsuarioRepositorio <Volun
   
   async atualizar(voluntario:any):Promise<any>{
      try { 
-     
+       console.log(voluntario.id, "id do voluntario")
         const voluntarioAtual = await this.buscarPorId(voluntario.id)
 
         if(!voluntario){
           throw new Error("Voluntario Nao encontrado")
         }
         let idUsuario = ""
-        if ('voluntario' in voluntarioAtual && voluntarioAtual.voluntario !== null){
+        console.log(voluntarioAtual, "voluntario atual")
+       
 
            idUsuario = voluntarioAtual.voluntario.usuarioId 
+
+           console.log(idUsuario,"id usuario")
            const usuarioAtualizado = await prismaDb.usuario.update({
              where: { id: idUsuario },
              data: {
@@ -138,7 +141,7 @@ export default class VoluntarioRepositorio extends BaseUsuarioRepositorio <Volun
              },
            });
            return usuarioAtualizado
-        }
+        
      } catch (error) {
       console.error("Erro ao alterar  voluntario:", error);
       

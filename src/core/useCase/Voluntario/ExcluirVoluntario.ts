@@ -6,7 +6,7 @@ export default class ExcluirVoluntario implements CasoDeUso<string, void>{
         private voluntarioDb: VoluntarioDb
     ){}
     async executar(id:string): Promise<void> {
-        const resposta = await this.voluntarioDb.excluirVoluntario(id)
+        const resposta = await this.voluntarioDb.excluir(id)
         return resposta;
         
     }

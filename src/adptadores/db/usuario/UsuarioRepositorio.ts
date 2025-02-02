@@ -6,7 +6,7 @@ import  UsuarioType  from "../../../@types/UsuarioType";
 export default abstract class BaseUsuarioRepositorio<T> {
   protected prisma: PrismaClient;
   protected tipo: "ONG" | "VOLUNTARIO";
-  protected pastaImagens: string; // Ex: "ongs" ou "voluntarios"
+  protected pastaImagens: string; 
 
   constructor(tipo: "ONG" | "VOLUNTARIO", pastaImagens: string) {
     this.prisma = new PrismaClient();
@@ -14,9 +14,7 @@ export default abstract class BaseUsuarioRepositorio<T> {
     this.pastaImagens = pastaImagens;
   }
 
-  // --------------------------
-  // Métodos Totalmente Compartilhados
-  // --------------------------
+
   async buscarPorEmail(email: string): Promise<any>  {
     const usuario =  await this.prisma.usuario.findUnique({
       where: { email, tipo: this.tipo },
@@ -41,14 +39,9 @@ export default abstract class BaseUsuarioRepositorio<T> {
     }) as any
     return usuario
   }
-  // --------------------------
-  // Métodos Parcialmente Compartilhados (Implementação Base)
-  // --------------------------
+
   abstract excluir(id: string): Promise<boolean>
 
-  // --------------------------
-  // Métodos Abstratos (Customização Obrigatória)
-  // --------------------------
   abstract registrar(entidade: any): Promise<T>;
   abstract atualizar(id: string, dados: Partial<T>): Promise<T>;
   abstract buscarTodos():any

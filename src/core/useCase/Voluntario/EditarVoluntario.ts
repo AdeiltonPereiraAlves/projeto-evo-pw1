@@ -19,7 +19,7 @@ export default class EditarVoluntario implements CasoDeUso<editarVoluntarioDto,a
 
     }
     async executar(dto: editarVoluntarioDto){
-       const resposta = await this.voluntario.editarVoluntario(dto)
+       const resposta = await this.voluntario.atualizar(dto)
        return resposta
     }
 }
