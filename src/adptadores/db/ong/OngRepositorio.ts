@@ -3,8 +3,9 @@ import OngType from "../../../@types/OngType";
 import Ong from "../../../core/model/ong/Ong";
 import  UsuarioRepositorio  from "../usuario/UsuarioRepositorio";
 import fs from 'fs/promises';
+import OngRepositorioPort from "../../../core/useCase/Ong/OngRepositorioPort";
 // OngRepositorio.ts
-export class OngRepositorio extends UsuarioRepositorio<Ong> {
+export class OngRepositorio extends UsuarioRepositorio<any> implements OngRepositorioPort {
   constructor() {
     super("ONG",'public/images/ong');
   }

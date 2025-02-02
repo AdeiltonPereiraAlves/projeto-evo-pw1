@@ -16,10 +16,14 @@ export default abstract class BaseUsuarioRepositorio<T> {
 
 
   async buscarPorEmail(email: string): Promise<any>  {
+
+    console.log(email,this.tipo, "email")
     const usuario =  await this.prisma.usuario.findUnique({
       where: { email, tipo: this.tipo },
       include: { [this.tipo.toLowerCase()]: true },
     }) as any;
+
+    console.log(usuario,"usuariodb")
     return usuario
   }
 

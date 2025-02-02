@@ -5,8 +5,8 @@ import RegistrarVoluntarioController from "./controllers/voluntario/RegistrarVol
 import ValidateReq from "./adptadores/middleware/handleValidation";
 import middlewareValidator from "./adptadores/middleware/handleValidation";
 import Bcrypt from "./adptadores/auth/BcryptAdapter";
-import LoginVoluntarioController from "./controllers/voluntario/LoginVoluntarioController";
-import LoginVoluntario from "./core/useCase/Voluntario/LoginVoluntario";
+import LoginVoluntarioController from "./controllers/usuario/LoginUsuarioController";
+import LoginVoluntario from "./core/useCase/auth/LonginUsuario";
 import JwtAdapter from "./adptadores/auth/JwtAdapter";
 import buscarVoluntariosControllers from "./controllers/voluntario/BuscarVoluntariosControllers";
 import UserAuthentication from "./adptadores/middleware/UserAuthentication";
@@ -24,6 +24,15 @@ import UsuarioRepositorio from "./adptadores/db/usuario/UsuarioRepositorio";
 
 //
 import UsuarioRepo from "./core/portas/usuario/UsuarioRepo";
+import { RegistrarOng } from "./core/useCase/Ong/RegistrarOng";
+import { OngRepositorio } from "./adptadores/db/ong/OngRepositorio";
+import RegistrarOngController from "./controllers/ong/RegistrarOngController";
+import ExcluirOngController from "./controllers/ong/ExcluirOngController";
+import ExcluirOng from "./core/useCase/Ong/ExcluirOng";
+import BuscarOngs from "./core/useCase/Ong/BuscarOngs";
+import BuscarOngController from "./controllers/ong/BuscarOngs";
+import LonginUsuario from "./core/useCase/auth/LonginUsuario";
+import LoginUsuarioController from "./controllers/usuario/LoginUsuarioController";
 
 
 const app = express();
@@ -37,6 +46,7 @@ app.listen(port, () => {
     console.log("servidor rodando")
 } )
 
+
 const senhaCrypto = new Bcrypt()
 const voluntarioDb = new VoluntarioRepositorio();
 const registrarVoluntario = new RegistrarVoluntario(voluntarioDb,senhaCrypto)
@@ -45,11 +55,12 @@ const provedorToken = new  JwtAdapter(secret!)
 
 console.log(provedorToken,"provedor token")
 // const usuarioDb = new UsuarioRepositorio() //usuariodb
-const loginVoluntario = new LoginVoluntario(voluntarioDb, provedorToken  ,senhaCrypto)
+const ongDb = new OngRepositorio()
+const loginVoluntario = new LonginUsuario(voluntarioDb,ongDb, provedorToken  ,senhaCrypto)
 
 const middlewareImagem = imagemUpload.single("imagem")
 new RegistrarVoluntarioController(app,registrarVoluntario,middlewareValidador,middlewareImagem )
-new LoginVoluntarioController(app,loginVoluntario)
+new LoginUsuarioController(app,loginVoluntario)
 
 
 const buscarVoluntarios = new BuscarVoluntarios(voluntarioDb)
@@ -72,3 +83,22 @@ new ExcluirVoluntarioController(app, excluirVoluntario,middlewareValidador)
 
 const editarVoluntario = new EditarVoluntario(voluntarioDb)
 new EditarVoluntarioController(app,editarVoluntario, middlewareValidador,middlewareImagem,UserAuthentication(voluntarioDb, provedorToken) )
+
+
+// rotas para ong
+
+//registrar
+const registrarOng = new RegistrarOng(ongDb,senhaCrypto )
+
+new RegistrarOngController(app, registrarOng )
+//login
+// const login = new LonginUsuario(ongDb,provedorToken  ,senhaCrypto )
+// new LoginUsuarioController(app, login, )
+// //excluir
+const excluirOng = new ExcluirOng(ongDb)
+new ExcluirOngController(app, excluirOng, middlewareValidador)
+
+//buscar ongs
+
+const buscarOngs = new BuscarOngs(ongDb)
+new BuscarOngController(app, buscarOngs)

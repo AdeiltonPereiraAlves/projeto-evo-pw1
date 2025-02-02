@@ -1,10 +1,15 @@
 import { triggerAsyncId } from "async_hooks";
-import LoginVoluntario from "../../core/useCase/Voluntario/LoginVoluntario";
+import LoginVoluntario from "../../core/useCase/auth/LonginUsuario";
 import { Request, Response, Express } from "express";
-export default class LoginvoluntarioController{
+import LonginUsuario from "../../core/useCase/auth/LonginUsuario";
+import { Voluntario } from "@prisma/client";
+import OngRepositorioPort from "../../core/useCase/Ong/OngRepositorioPort";
+import VoluntarioDb from "../../core/portas/VoluntarioDb";
+export default class LoginUsuarioController{
     constructor(
         private servidor: Express,
-        private casoDeuso: LoginVoluntario
+        private casoDeuso: LonginUsuario,
+       
     ){
         this.servidor.post('/login', async (req:Request, res:Response ) => {
             try {
@@ -15,7 +20,8 @@ export default class LoginvoluntarioController{
                 console.log(login, "login")
                 const resposta = await this.casoDeuso.executar(login)
                
-                res.status(200).json(resposta)
+                    res.status(200).json(resposta)
+
             } catch (error:any) {
                 res.status(403).send(error.message)
             }
