@@ -43,6 +43,7 @@ export default class RegistrarOngController{
             )
             console.log(o, "o")
             res.status(201).json(o)
+            return
          } catch (error:any) {
             res.status(400).send(error.message)
          }

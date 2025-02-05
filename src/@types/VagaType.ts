@@ -11,4 +11,6 @@ export default interface Vagatype {
   tipoTrabalho: TipoTrabalho;
   latitude: number;
   longitude: number;
+  ongId: string,
+  voluntarioId: string
 }

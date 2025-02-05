@@ -93,7 +93,7 @@ model Ong {
   usuario     Usuario  @relation(fields: [usuarioId], references: [id])
   cnpj        String   @unique
   descricao   String
-  misao       String
+  missao       String
   visao       String
   areaAtuacao AreaAtuacao[]
   endereco    String

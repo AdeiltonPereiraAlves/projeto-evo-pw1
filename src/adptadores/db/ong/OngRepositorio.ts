@@ -4,6 +4,7 @@ import Ong from "../../../core/model/ong/Ong";
 import  UsuarioRepositorio  from "../usuario/UsuarioRepositorio";
 import fs from 'fs/promises';
 import OngRepositorioPort from "../../../core/useCase/Ong/OngRepositorioPort";
+import Erros from "../../../core/constants/Erros";
 // OngRepositorio.ts
 export class OngRepositorio extends UsuarioRepositorio<any> implements OngRepositorioPort {
   constructor() {
@@ -29,9 +30,49 @@ export class OngRepositorio extends UsuarioRepositorio<any> implements OngReposi
     }
     
   }
-  atualizar(id: string, dados: Partial<Ong>): Promise<Ong> {
-    throw new Error("Method not implemented.");
-  }
+  async atualizar(ong:any): Promise<any> {
+    try { 
+      console.log(ong.id, "id do ong")
+       const ongAtual = await this.buscarPorId(ong.id)
+
+       if(!ong){
+         throw new Error("ong Nao encontrado")
+       }
+       let idUsuario = ""
+       console.log(ongAtual, "ong atual")
+      
+
+          idUsuario = ongAtual.ong.usuarioId 
+
+          console.log(idUsuario,"id usuario")
+          const usuarioAtualizado = await this.prisma.usuario.update({
+            where: { id: idUsuario },
+            data: {
+              nome: ong.nome ?? ongAtual.nome, // Mantém o valor atual se não for fornecido
+              email: ong.email ?? ongAtual.email,
+              tipo: ong.tipo ?? ongAtual.tipo,
+              imagem: ong.imagem ?? ongAtual.imagem,
+              ong: {
+                update: {
+                    misao: ong.misao?? ongAtual.misao,
+                    cnpj: ong.email?? ongAtual.cnpj,
+                    descricao: ong.descricao?? ongAtual.descricao,
+                    visao: ong.visao?? ongAtual.visao,
+                    areaAtuacao: ong.AreaAtuacao?? ongAtual.areaAtuacao,
+                    endereco: ong.endereco?? ongAtual.endereco, 
+                },
+              },
+            },
+          });
+          return usuarioAtualizado
+       
+    } catch (error) {
+     console.error("Erro ao alterar  ong:", error);
+     
+    }
+ }
+    
+  
   async excluir(id: string):Promise<boolean> {
     try {
       const  resposta = await this.buscarPorId(id);
@@ -64,14 +105,16 @@ export class OngRepositorio extends UsuarioRepositorio<any> implements OngReposi
 
       return true
     } catch (error) {
-      console.error("Erro aodeletar  voluntario:", error);
+      console.error("Erro aodeletar  ong:", error);
       return false
     }
     
   }
 
   async registrar(ong: Ong): Promise<any> {
-    return await this.prisma.ong.create({
+
+    try {
+      const ongRegistrada = await this.prisma.ong.create({
     
         data: {
           cnpj:ong.getCnpj(),
@@ -93,6 +136,13 @@ export class OngRepositorio extends UsuarioRepositorio<any> implements OngReposi
       },
       include: { usuario: true }
     });
+    return ongRegistrada
+    } catch (error) {
+      // console.error("Erro ao cadastrar  ong:", error);
+      // return { error: "Erro ao registrar ong" }
+      throw new Error("Erro ao registrar ong")
+    }
+    
   }
   async editarFoto(novaImagem: string, id: string) {
     try {
