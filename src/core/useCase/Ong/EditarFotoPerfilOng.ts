@@ -4,6 +4,7 @@ import OngRepositorioPort from "./OngRepositorioPort";
 import { fotoDto } from "../Voluntario/EditarFotoPerfil";
 import UsuarioRepo from "../../portas/usuario/UsuarioRepo";
 
+
 export default class EditarFotoPerfilOng implements CasoDeUso<fotoDto, void>{
     constructor(
         private ongDb: UsuarioRepo

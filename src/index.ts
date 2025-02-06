@@ -37,6 +37,8 @@ import BuscarUsuario from "./adptadores/db/usuario/UsuarioAutenticao";
 import UsuarioAutenticao from "./adptadores/db/usuario/UsuarioAutenticao";
 import EditarFotoPerfilOng from "./core/useCase/Ong/EditarFotoPerfilOng";
 import EditarFotoPerfilController from "./controllers/ong/EditarFotoController"
+import EditarOng from "./core/useCase/Ong/EditarOng";
+import EditarOngController from "./controllers/ong/EditarOngController";
 
 const app = express();
 const port = process.env.PORT
@@ -105,10 +107,16 @@ new ExcluirOngController(app, excluirOng, middlewareValidador)
 //buscar ongs
 
 const buscarOngs = new BuscarOngs(ongDb)
-new BuscarOngController(app, buscarOngs)
+new BuscarOngController(app, buscarOngs,UserAuthentication(usuarioAutenticaoDb, provedorToken))
 
 // editar foto ong
 const ongRepo = new UsuarioRepositorio("ONG","//")
 const editarFotoOng = new EditarFotoPerfilOng(ongRepo)
 
 new EditarFotoPerfilController(app, editarFotoOng, UserAuthentication(usuarioAutenticaoDb, provedorToken),  middlewareImagem)
+
+
+//editar ong
+
+const editar = new EditarOng(ongDb)
+new EditarOngController(app,editar, UserAuthentication(usuarioAutenticaoDb, provedorToken),middlewareImagem)

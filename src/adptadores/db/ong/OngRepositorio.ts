@@ -32,7 +32,7 @@ export class OngRepositorio extends UsuarioRepositorio<any> implements OngReposi
   }
   async atualizar(ong:any): Promise<any> {
     try { 
-      console.log(ong.id, "id do ong")
+      console.log(ong.id,ong, "id do ong")
        const ongAtual = await this.buscarPorId(ong.id)
 
        if(!ong){
@@ -50,19 +50,19 @@ export class OngRepositorio extends UsuarioRepositorio<any> implements OngReposi
             data: {
               nome: ong.nome ?? ongAtual.nome, // Mantém o valor atual se não for fornecido
               email: ong.email ?? ongAtual.email,
-              tipo: ong.tipo ?? ongAtual.tipo,
               imagem: ong.imagem ?? ongAtual.imagem,
               ong: {
                 update: {
-                    misao: ong.misao?? ongAtual.misao,
-                    cnpj: ong.email?? ongAtual.cnpj,
+                    cnpj: ong.cnpj?? ongAtual.cnpj,
                     descricao: ong.descricao?? ongAtual.descricao,
+                    missao: ong.missao?? ongAtual.missao,
                     visao: ong.visao?? ongAtual.visao,
-                    areaAtuacao: ong.AreaAtuacao?? ongAtual.areaAtuacao,
+                    areaAtuacao: ong.areaAtuacao?? ongAtual.areaAtuacao,
                     endereco: ong.endereco?? ongAtual.endereco, 
                 },
               },
             },
+            include: {ong:true}
           });
           return usuarioAtualizado
        
@@ -120,7 +120,7 @@ export class OngRepositorio extends UsuarioRepositorio<any> implements OngReposi
           cnpj:ong.getCnpj(),
           descricao: ong.getDescricao(),
           endereco: ong.getEndereco(),
-          misao: ong.getMissao(),
+          missao: ong.getMissao(),
           visao: ong.getVisao(),
           areaAtuacao: ong.getAreaAtuacao(),
           usuario: {

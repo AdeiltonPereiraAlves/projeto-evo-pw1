@@ -9,6 +9,7 @@ export default class BuscarOngController{
         const buscar = async(req:Request, res: Response) =>{
             try {
                 const ongs = await this.casoDeUso.executar()
+                console.log(ongs, "ongs")
                 res.status(200).json(ongs)
             } catch (error:any) {
                 res.status(403).send(error.message)

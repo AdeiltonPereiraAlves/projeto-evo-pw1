@@ -5,6 +5,9 @@ CREATE TYPE "TipoUsuario" AS ENUM ('VOLUNTARIO', 'ONG');
 CREATE TYPE "Status" AS ENUM ('ENCERRADO', 'ABERTO');
 
 -- CreateEnum
+CREATE TYPE "Disponibilidade" AS ENUM ('manha', 'tarde', 'noite', 'integral');
+
+-- CreateEnum
 CREATE TYPE "AreaAtuacao" AS ENUM ('EDUCACAO', 'SAUDE', 'AMBIENTE', 'TECNOLOGIA', 'CULTURA', 'DIREITOS_HUMANOS', 'FOME', 'POBREZA', 'ANIMAL', 'CRIANCA', 'MULHER', 'IGUALDADE', 'IDOSO', 'LGBTQIA', 'REFUGIADOS', 'EDUCACAO_INFANTIL', 'EMPREGO', 'VOLUNTARIADO', 'ESPORTES', 'ARTE', 'FAMILIA', 'SAUDE_MENTAL', 'REABILITACAO', 'JUSTICA_SOCIAL', 'SEGURANCA_ALIMENTAR', 'DESENVOLVIMENTO_SUSTENTAVEL', 'INFRAESTRUTURA', 'EMPODERAMENTO', 'TECNOLOGIA_SOCIAL');
 
 -- CreateEnum
@@ -30,7 +33,7 @@ CREATE TABLE "Voluntario" (
     "usuarioId" TEXT NOT NULL,
     "interesses" TEXT[],
     "habilidades" TEXT[],
-    "disponibilidade" TEXT NOT NULL,
+    "disponibilidade" "Disponibilidade"[],
 
     CONSTRAINT "Voluntario_pkey" PRIMARY KEY ("id")
 );
@@ -41,7 +44,7 @@ CREATE TABLE "Ong" (
     "usuarioId" TEXT NOT NULL,
     "cnpj" TEXT NOT NULL,
     "descricao" TEXT NOT NULL,
-    "misao" TEXT NOT NULL,
+    "missao" TEXT NOT NULL,
     "visao" TEXT NOT NULL,
     "areaAtuacao" "AreaAtuacao"[],
     "endereco" TEXT NOT NULL,
@@ -95,6 +98,9 @@ CREATE TABLE "Avaliacao" (
 
     CONSTRAINT "Avaliacao_pkey" PRIMARY KEY ("id")
 );
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Usuario_email_key" ON "Usuario"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Voluntario_usuarioId_key" ON "Voluntario"("usuarioId");
