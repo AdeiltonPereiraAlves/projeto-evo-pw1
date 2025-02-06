@@ -8,6 +8,7 @@ export default class VagaRepositorio implements VagaRepositorioPort {
             const vagaRegistrada = await prismaDb.vaga.create({
                 data: {
                     id:vaga.id,
+                    titulo: vaga.titulo,
                     descricao: vaga.descricao,
                     requisitos:vaga.requisitos,
                     status: vaga.status,

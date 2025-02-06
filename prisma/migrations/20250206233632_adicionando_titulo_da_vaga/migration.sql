@@ -56,6 +56,7 @@ CREATE TABLE "Ong" (
 CREATE TABLE "Vaga" (
     "id" TEXT NOT NULL,
     "ongId" TEXT NOT NULL,
+    "titulo" TEXT NOT NULL,
     "descricao" TEXT NOT NULL,
     "requisitos" TEXT[],
     "status" "Status" NOT NULL,

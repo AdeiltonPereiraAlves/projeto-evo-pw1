@@ -3,6 +3,7 @@ import TipoTrabalho from "./TipoTrabalho";
 
 export default interface Vagatype {
   id?: string;
+  titulo: string;
   descricao: string;
   requisitos: string[];
   status: Status;

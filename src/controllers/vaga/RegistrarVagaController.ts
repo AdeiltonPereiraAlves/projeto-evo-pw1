@@ -17,7 +17,7 @@ export default class RegistrarVagaController{
                 
                 console.log(ongId, "ongid");
                 const vaga:VagaType = {
-                    
+                    titulo: req.body.titulo,
                     descricao: req.body.descricao,
                     requisitos:req.body.requisitos,
                     status: req.body.status,

@@ -110,6 +110,7 @@ enum TipoTrabalho {
 model Vaga{
   id String @id @default(uuid())
   ongId String
+  titulo String
   descricao String
   requisitos String[]
   status Status

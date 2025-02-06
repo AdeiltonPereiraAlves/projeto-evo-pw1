@@ -130,4 +130,4 @@ new EditarOngController(app,editar, UserAuthentication(usuarioAutenticaoDb, prov
 const vagaRepositorio = new VagaRepositorio()
 const registrarVaga = new RegistrarVaga(vagaRepositorio)
 
-new RegistrarVagaController(app, registrarVaga, UserAuthentication(usuarioAutenticaoDb, provedorToken))
+new RegistrarVagaController(app, registrarVaga, UserAuthentication(usuarioAutenticaoDb, provedorToken),UsuarioAutorizacao(["ONG"]) )

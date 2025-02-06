@@ -9,6 +9,7 @@ export default class RegistrarVaga implements CasoDeUso<Vagatype, any>{
         try {
             const vaga ={
                 id: Id.gerarId(),
+                titulo: dto.titulo,
                 descricao: dto.descricao,
                 requisitos:dto.requisitos,
                 status: dto.status,
