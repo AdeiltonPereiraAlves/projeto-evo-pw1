@@ -1,5 +1,5 @@
 enum Status{
-    ENCERRADO = "encerrado",
-    ABERTO = "aberto"
+    ENCERRADO="ENCERRADO" ,
+    ABERTO="ABERTO"
 }
 export default Status

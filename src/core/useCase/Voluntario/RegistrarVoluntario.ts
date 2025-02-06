@@ -12,7 +12,7 @@ import UsuarioRepo from "../../portas/usuario/UsuarioRepo";
 
 export default class RegistrarVoluntario implements CasoDeUso<VoluntarioType,Voluntario>{
 
-    constructor(private voluntarioDb: UsuarioRepo, private senhaCrypto: SenhaCriptografada){
+    constructor(private voluntarioDb: VoluntarioDb, private senhaCrypto: SenhaCriptografada){
 
     }
     async executar(dto: VoluntarioType){

@@ -7,7 +7,7 @@ export type fotoDto = {
 }
 export default class EditarFotoPerfil implements CasoDeUso<fotoDto,void>{ 
     constructor(
-        private VoluntarioDb: UsuarioRepo,
+        private VoluntarioDb: VoluntarioDb,
        
     ){}
     async executar(dto: fotoDto){

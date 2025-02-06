@@ -3,7 +3,7 @@ import UsuarioRepo from "../../portas/usuario/UsuarioRepo";
 import VoluntarioDb from "../../portas/VoluntarioDb";
 
 export default class buscarVoluntarios implements CasoDeUso<void, any> {
-    constructor(private voluntarioDb: UsuarioRepo){}
+    constructor(private voluntarioDb: VoluntarioDb){}
      async executar(){
         const voluntarios = await this.voluntarioDb.buscarTodos()
         return voluntarios

@@ -39,6 +39,9 @@ import EditarFotoPerfilOng from "./core/useCase/Ong/EditarFotoPerfilOng";
 import EditarFotoPerfilController from "./controllers/ong/EditarFotoController"
 import EditarOng from "./core/useCase/Ong/EditarOng";
 import EditarOngController from "./controllers/ong/EditarOngController";
+import VagaRepositorio from "./adptadores/db/vaga/VagaRepositorio";
+import RegistrarVaga from "./core/useCase/vaga/RegistrarVaga";
+import RegistrarVagaController from "./controllers/vaga/RegistrarVagaController";
 
 const app = express();
 const port = process.env.PORT
@@ -75,7 +78,7 @@ new buscarVoluntariosControllers(app,buscarVoluntarios,UserAuthentication(usuari
 
 // atualiza foto perfil voluntario
 const usuarioDb = new UsuarioRepositorio("VOLUNTARIO","//")
-const editarFoto = new EditarFotoPerfil(usuarioDb)
+const editarFoto = new EditarFotoPerfil(voluntarioDb)
 new EditarFotoController(app,editarFoto,UserAuthentication(usuarioAutenticaoDb, provedorToken), middlewareImagem)
 
 // //excluir voluntario
@@ -107,7 +110,7 @@ new ExcluirOngController(app, excluirOng, middlewareValidador)
 //buscar ongs
 
 const buscarOngs = new BuscarOngs(ongDb)
-new BuscarOngController(app, buscarOngs,UserAuthentication(usuarioAutenticaoDb, provedorToken))
+new BuscarOngController(app, buscarOngs,UserAuthentication(usuarioAutenticaoDb, provedorToken),UsuarioAutorizacao(["VOLUNTARIO","ONG"]))
 
 // editar foto ong
 const ongRepo = new UsuarioRepositorio("ONG","//")
@@ -120,3 +123,11 @@ new EditarFotoPerfilController(app, editarFotoOng, UserAuthentication(usuarioAut
 
 const editar = new EditarOng(ongDb)
 new EditarOngController(app,editar, UserAuthentication(usuarioAutenticaoDb, provedorToken),middlewareImagem)
+
+
+// registrar vaga
+
+const vagaRepositorio = new VagaRepositorio()
+const registrarVaga = new RegistrarVaga(vagaRepositorio)
+
+new RegistrarVagaController(app, registrarVaga, UserAuthentication(usuarioAutenticaoDb, provedorToken))

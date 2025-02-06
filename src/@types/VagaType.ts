@@ -12,5 +12,7 @@ export default interface Vagatype {
   latitude: number;
   longitude: number;
   ongId: string,
-  voluntarioId: string
+  createdAt?: Date; // Mantido opcional, pois o banco pode preencher automaticamente
+  updatedAt?: Date;
+  
 }
