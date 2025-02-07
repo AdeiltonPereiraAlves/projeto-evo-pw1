@@ -22,6 +22,6 @@ export default class ExcluirOngController{
              }
         }
 
-        this.servidor.delete("/delete/:id",...middleware, excluirOng)
+        this.servidor.delete("/deletar/:id",...middleware, excluirOng)
     }
 }

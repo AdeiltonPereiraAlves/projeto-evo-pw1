@@ -42,6 +42,8 @@ import EditarOngController from "./controllers/ong/EditarOngController";
 import VagaRepositorio from "./adptadores/db/vaga/VagaRepositorio";
 import RegistrarVaga from "./core/useCase/vaga/RegistrarVaga";
 import RegistrarVagaController from "./controllers/vaga/RegistrarVagaController";
+import ListarVagas from "./core/useCase/vaga/ListarVagas";
+import ListarVagasController from "./controllers/vaga/ListarVagasController";
 
 const app = express();
 const port = process.env.PORT
@@ -63,6 +65,9 @@ const provedorToken = new  JwtAdapter(secret!)
 
 console.log(provedorToken,"provedor token")
 // const usuarioDb = new UsuarioRepositorio() //usuariodb
+
+
+//--------------------------------VOLUNTARIO------------------------------------------------------------------------------------------------------
 const ongDb = new OngRepositorio()
 const loginVoluntario = new LonginUsuario(voluntarioDb,ongDb, provedorToken  ,senhaCrypto)
 
@@ -94,6 +99,7 @@ const editarVoluntario = new EditarVoluntario(voluntarioDb)
 new EditarVoluntarioController(app,editarVoluntario, middlewareValidador,middlewareImagem,UserAuthentication(voluntarioDb, provedorToken), UsuarioAutorizacao(["VOLUNTARIO"]))
 
 
+//------------------------------------------------ONG----------------------------------------------------------------------------------------------------
 // rotas para ong
 
 //registrar
@@ -125,9 +131,17 @@ const editar = new EditarOng(ongDb)
 new EditarOngController(app,editar, UserAuthentication(usuarioAutenticaoDb, provedorToken),middlewareImagem)
 
 
+
+
+//--------------------------------------------------VAGA-----------------------------------------------------------------------------------------
 // registrar vaga
 
 const vagaRepositorio = new VagaRepositorio()
 const registrarVaga = new RegistrarVaga(vagaRepositorio)
 
 new RegistrarVagaController(app, registrarVaga, UserAuthentication(usuarioAutenticaoDb, provedorToken),UsuarioAutorizacao(["ONG"]) )
+
+// buscar vagas
+
+const listarVagas = new ListarVagas(vagaRepositorio)
+new ListarVagasController(app, listarVagas,)

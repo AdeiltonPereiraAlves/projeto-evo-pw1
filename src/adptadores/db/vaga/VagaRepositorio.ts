@@ -1,4 +1,5 @@
 import Vagatype from "../../../@types/VagaType";
+import Usuario from "../../../core/model/usuario/Usuario";
 import VagaRepositorioPort from "../../../core/model/vaga/VagaRepositorio";
 import prismaDb from "../../prismaDb/Prisma";
 export default class VagaRepositorio implements VagaRepositorioPort {
@@ -19,7 +20,8 @@ export default class VagaRepositorio implements VagaRepositorioPort {
                     longitude: vaga.longitude,
                     ongId: vaga.ongId,
 
-                }
+                },
+               
             })
             
             console.log(vagaRegistrada, "vaga registrada")
@@ -30,7 +32,17 @@ export default class VagaRepositorio implements VagaRepositorioPort {
         }
     }
     async buscar() {
-        throw new Error("Method not implemented.");
+        try {
+            const vagas = await prismaDb.vaga.findMany({include:{
+                ong:{include:{usuario:true}},
+               
+            }})
+
+            return vagas;
+        } catch (error) {
+            
+            throw new Error("erro ao buscar vagas.");
+        }
     }
     
     
