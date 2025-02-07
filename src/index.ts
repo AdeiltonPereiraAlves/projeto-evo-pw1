@@ -79,7 +79,7 @@ new buscarVoluntariosControllers(app,buscarVoluntarios,UserAuthentication(usuari
 // atualiza foto perfil voluntario
 const usuarioDb = new UsuarioRepositorio("VOLUNTARIO","//")
 const editarFoto = new EditarFotoPerfil(voluntarioDb)
-new EditarFotoController(app,editarFoto,UserAuthentication(usuarioAutenticaoDb, provedorToken), middlewareImagem)
+new EditarFotoController(app,editarFoto,UserAuthentication(usuarioAutenticaoDb, provedorToken), middlewareImagem, UsuarioAutorizacao(["VOLUNTARIO"]))
 
 // //excluir voluntario
 
@@ -91,7 +91,7 @@ new ExcluirVoluntarioController(app, excluirVoluntario,middlewareValidador)
 // //editar voluntario
 
 const editarVoluntario = new EditarVoluntario(voluntarioDb)
-new EditarVoluntarioController(app,editarVoluntario, middlewareValidador,middlewareImagem,UserAuthentication(voluntarioDb, provedorToken) )
+new EditarVoluntarioController(app,editarVoluntario, middlewareValidador,middlewareImagem,UserAuthentication(voluntarioDb, provedorToken), UsuarioAutorizacao(["VOLUNTARIO"]))
 
 
 // rotas para ong
@@ -116,7 +116,7 @@ new BuscarOngController(app, buscarOngs,UserAuthentication(usuarioAutenticaoDb, 
 const ongRepo = new UsuarioRepositorio("ONG","//")
 const editarFotoOng = new EditarFotoPerfilOng(ongRepo)
 
-new EditarFotoPerfilController(app, editarFotoOng, UserAuthentication(usuarioAutenticaoDb, provedorToken),  middlewareImagem)
+new EditarFotoPerfilController(app, editarFotoOng, UserAuthentication(usuarioAutenticaoDb, provedorToken),  middlewareImagem,UsuarioAutorizacao(["ONG"]))
 
 
 //editar ong

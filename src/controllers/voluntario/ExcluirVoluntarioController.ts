@@ -14,7 +14,7 @@ export default class ExcluirVoluntarioController{
                  const resposta =await this.casoDeUso.executar(id)
                  res.status(200).json(resposta)
             } catch (error:any) {
-                res.status(403).send(error.message)
+                res.status(400).send(error.message)
             }
         }
         this.servidor.delete("/voluntario/excluir/:id", ...middleware, excluirVoluntario)

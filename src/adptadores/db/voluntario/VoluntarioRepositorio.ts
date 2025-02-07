@@ -105,6 +105,7 @@ export default class VoluntarioRepositorio extends BaseUsuarioRepositorio<any> i
       return true
     } catch (error) {
       console.error("Erro aodeletar  voluntario:", error);
+      throw new Error("Erro ao excluir Voluntario")
       
     }
   }
@@ -144,6 +145,7 @@ export default class VoluntarioRepositorio extends BaseUsuarioRepositorio<any> i
         
      } catch (error) {
       console.error("Erro ao alterar  voluntario:", error);
+      throw new Error("erro ao atualizar voluntario")
       
      }
   }
