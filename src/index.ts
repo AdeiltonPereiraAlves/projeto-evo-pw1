@@ -44,6 +44,8 @@ import RegistrarVaga from "./core/useCase/vaga/RegistrarVaga";
 import RegistrarVagaController from "./controllers/vaga/RegistrarVagaController";
 import ListarVagas from "./core/useCase/vaga/ListarVagas";
 import ListarVagasController from "./controllers/vaga/ListarVagasController";
+import ExcluirVaga from "./core/useCase/vaga/ExcluirVaga";
+import ExcluirVagaController from "./controllers/vaga/ExcluirVagaController";
 
 const app = express();
 const port = process.env.PORT
@@ -145,3 +147,8 @@ new RegistrarVagaController(app, registrarVaga, UserAuthentication(usuarioAutent
 
 const listarVagas = new ListarVagas(vagaRepositorio)
 new ListarVagasController(app, listarVagas,)
+
+//deletar vaga
+
+const excluirVaga = new ExcluirVaga(vagaRepositorio)
+new ExcluirVagaController(app, excluirVaga)

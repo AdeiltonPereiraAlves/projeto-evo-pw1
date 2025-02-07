@@ -1,9 +1,27 @@
-import Vagatype from "../../../@types/VagaType";
+import VagaType from "../../../@types/VagaType";
 import Usuario from "../../../core/model/usuario/Usuario";
-import VagaRepositorioPort from "../../../core/model/vaga/VagaRepositorio";
+import VagaRepositorioPort from "../../../core/useCase/vaga/VagaRepositorio";
 import prismaDb from "../../prismaDb/Prisma";
 export default class VagaRepositorio implements VagaRepositorioPort {
-    async registrar(vaga: Vagatype) {
+    async excluir(id:string): Promise<any> {
+        try {
+            const vagaExistente = await this.buscarPorId(id)
+            if(!vagaExistente){
+            throw new Error("ID nao existe")
+            }
+            const resultado = await prismaDb.vaga.delete({where:{id}})
+
+            if(!resultado){
+                throw new Error("Erro ao deletar vaga")
+            }
+            return resultado
+        } catch (error) {
+            throw new Error("Erro ao deletar vaga")
+            
+        }
+        
+    }
+    async registrar(vaga: VagaType) {
         try {
             console.log(vaga, "vaga repo")
             const vagaRegistrada = await prismaDb.vaga.create({
@@ -31,7 +49,7 @@ export default class VagaRepositorio implements VagaRepositorioPort {
             throw new Error("erro no banco.");
         }
     }
-    async buscar() {
+    async buscar():Promise<VagaType[]| any> {
         try {
             const vagas = await prismaDb.vaga.findMany({include:{
                 ong:{include:{usuario:true}},
@@ -42,6 +60,14 @@ export default class VagaRepositorio implements VagaRepositorioPort {
         } catch (error) {
             
             throw new Error("erro ao buscar vagas.");
+        }
+    }
+    async buscarPorId(id:string){
+        try {
+            const existeVaga = await prismaDb.vaga.findUnique({where:{id}})
+            return existeVaga
+        } catch (error) {
+            throw new Error("erro ao buscar vaga por id.");
         }
     }
     
