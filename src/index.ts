@@ -50,6 +50,8 @@ import EditarVaga from "./core/useCase/vaga/EditarVaga";
 import EditarVagaController from "./controllers/vaga/EditarVagaController";
 import BuscarVagaPorId from "./core/useCase/vaga/BuscarVagaPorId";
 import BuscarVagaPorIdController from "./controllers/vaga/BuscarVagaPorIdController";
+import filtrarVagas from "./core/useCase/vaga/FiltrarVagas";
+import FiltrarVagaController from "./controllers/vaga/FiltrarVagasController";
 
 const app = express();
 const port = process.env.PORT
@@ -165,3 +167,8 @@ new ExcluirVagaController(app, excluirVaga)
 //atualizar vaga 
 const editarVaga = new EditarVaga(vagaRepositorio)
 new EditarVagaController(app, editarVaga, UserAuthentication(usuarioAutenticaoDb,provedorToken), UsuarioAutorizacao(["ONG"]), middlewareValidador)
+
+// filtrar vaga 
+
+const filtrarVaga = new filtrarVagas(vagaRepositorio)
+new FiltrarVagaController(app, filtrarVaga)

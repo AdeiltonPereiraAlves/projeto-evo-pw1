@@ -6,5 +6,6 @@ export default interface VagaRepositorioPort {
     excluir(id:string):Promise<any>
     buscarPorId(id:string):any
     editar(vaga:VagaType):any
+    filtrarVagas(termo: string):any
 
 }

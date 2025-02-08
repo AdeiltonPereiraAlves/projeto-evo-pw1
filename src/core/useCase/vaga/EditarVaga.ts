@@ -29,7 +29,7 @@ export default class EditarVaga implements CasoDeUso<any,VagaType>{
             if (vaga.ongId !== existeVaga.ongId) {
                 throw new Error("Id da ONG inválido");
             }
-            const vagaAtualizada = {
+            const vagaAtualizada = { 
                 ...existeVaga,
                 ...vaga
 
