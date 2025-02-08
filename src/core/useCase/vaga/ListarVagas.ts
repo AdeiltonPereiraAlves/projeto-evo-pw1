@@ -1,5 +1,5 @@
 import CasoDeUso from "../../../@types/CasoDeUso";
-import VagaRepositorioPort from "./VagaRepositorio";
+import VagaRepositorioPort from "./VagaRepositorioPort";
 import VagaType from "../../../@types/VagaType";
 export default class ListarVagas implements CasoDeUso<void, VagaType[]> {
     constructor(

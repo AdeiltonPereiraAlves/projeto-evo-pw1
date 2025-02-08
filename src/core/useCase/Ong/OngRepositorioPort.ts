@@ -6,6 +6,10 @@ export default interface OngRepositorioPort extends UsuarioRepo{
     excluir(id:string):any
     atualizar(voluntario:any):any
     buscarTodos():any
+    buscarVagasDeOng(id:string):any
+    
+
+
    
 }
  

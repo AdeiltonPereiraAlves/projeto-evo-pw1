@@ -1,6 +1,6 @@
 import CasoDeUso from "../../../@types/CasoDeUso";
 import Vagatype from "../../../@types/VagaType";
-import VagaRepositorioPort from "./VagaRepositorio";
+import VagaRepositorioPort from "./VagaRepositorioPort";
 import Id from "../../shared/Id";
 
 export default class RegistrarVaga implements CasoDeUso<Vagatype, any>{

@@ -1,6 +1,6 @@
 import VagaType from "../../../@types/VagaType";
 import Usuario from "../../../core/model/usuario/Usuario";
-import VagaRepositorioPort from "../../../core/useCase/vaga/VagaRepositorio";
+import VagaRepositorioPort from "../../../core/useCase/vaga/VagaRepositorioPort";
 import prismaDb from "../../prismaDb/Prisma";
 export default class VagaRepositorio implements VagaRepositorioPort {
     async excluir(id:string): Promise<any> {
@@ -68,6 +68,33 @@ export default class VagaRepositorio implements VagaRepositorioPort {
             return existeVaga
         } catch (error) {
             throw new Error("erro ao buscar vaga por id.");
+        }
+    }
+    async editar(vaga: VagaType){
+        try {
+           
+            const vagaAtualizada = await prismaDb.vaga.update({where: {
+               id:vaga.id
+            },
+            data:{
+                
+                
+                    titulo: vaga.titulo,
+                    descricao: vaga.descricao,
+                    requisitos: vaga.requisitos,
+                    status: vaga.status,
+                    duracao: vaga.duracao,
+                    localizacao: vaga.localizacao,
+                    tipoTrabalho: vaga.tipoTrabalho,
+                    latitude: vaga.latitude,
+                    longitude: vaga.longitude,
+                  
+                
+            }
+        })
+        return vagaAtualizada
+        } catch (error) {
+            throw new Error("Erro ao editar uma vaga")
         }
     }
     

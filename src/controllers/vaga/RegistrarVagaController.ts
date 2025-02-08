@@ -33,7 +33,7 @@ export default class RegistrarVagaController{
                 res.status(200).json(novaVaga)
              } catch (error:any) {
                  console.log(error)
-                throw new Error("erro ao registrar vaga")
+                 res.status(400).json({messagem: "Erro ao registrar vaga"})
              }
        }
        this.servidor.post("/cadastrar/vaga",...middleware, registrar)

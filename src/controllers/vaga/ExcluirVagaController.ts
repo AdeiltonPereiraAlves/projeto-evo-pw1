@@ -14,7 +14,7 @@ export default class ExcluirVagaController{
                 res.status(200).json(resultado)
 
             } catch (error) {
-                throw new Error("Erro ao deletar vaga")
+               res.status(400).json({messagem: "Erro ao deletar vaga"})
             }
         }
         this.servidor.delete("/deletar/vaga/:id", ...middleware, excluir)

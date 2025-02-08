@@ -46,6 +46,10 @@ import ListarVagas from "./core/useCase/vaga/ListarVagas";
 import ListarVagasController from "./controllers/vaga/ListarVagasController";
 import ExcluirVaga from "./core/useCase/vaga/ExcluirVaga";
 import ExcluirVagaController from "./controllers/vaga/ExcluirVagaController";
+import EditarVaga from "./core/useCase/vaga/EditarVaga";
+import EditarVagaController from "./controllers/vaga/EditarVagaController";
+import BuscarVagaPorId from "./core/useCase/vaga/BuscarVagaPorId";
+import BuscarVagaPorIdController from "./controllers/vaga/BuscarVagaPorIdController";
 
 const app = express();
 const port = process.env.PORT
@@ -148,7 +152,16 @@ new RegistrarVagaController(app, registrarVaga, UserAuthentication(usuarioAutent
 const listarVagas = new ListarVagas(vagaRepositorio)
 new ListarVagasController(app, listarVagas,)
 
+//listar vaga por id
+
+const buscarVagaPorId = new BuscarVagaPorId(vagaRepositorio)
+new BuscarVagaPorIdController(app, buscarVagaPorId, UserAuthentication(usuarioAutenticaoDb,provedorToken), UsuarioAutorizacao(["ONG","VOLUNTARIO"]))
+
 //deletar vaga
 
 const excluirVaga = new ExcluirVaga(vagaRepositorio)
 new ExcluirVagaController(app, excluirVaga)
+
+//atualizar vaga 
+const editarVaga = new EditarVaga(vagaRepositorio)
+new EditarVagaController(app, editarVaga, UserAuthentication(usuarioAutenticaoDb,provedorToken), UsuarioAutorizacao(["ONG"]), middlewareValidador)

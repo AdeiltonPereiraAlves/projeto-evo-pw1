@@ -22,6 +22,11 @@ export class OngRepositorio extends UsuarioRepositorio<any> implements OngReposi
               imagem: true,
             },
           },
+          vagas:{
+            include: {
+              inscricoes:true
+            }
+          }
         },
       });
       return ong;
@@ -30,6 +35,7 @@ export class OngRepositorio extends UsuarioRepositorio<any> implements OngReposi
     }
     
   }
+
   async atualizar(ong:any): Promise<any> {
     try { 
       console.log(ong.id,ong, "id do ong")
@@ -170,6 +176,24 @@ export class OngRepositorio extends UsuarioRepositorio<any> implements OngReposi
       console.error("Erro ao editar da ong:", error);
       return { error: "Erro ao editar ong" };
     }
+  }
+  async buscarVagasDeOng(id:string){
+     try {
+        const ongComVagas = await this.prisma.ong.findUnique({
+          where: {id},
+          include: {
+            usuario: true, 
+            vagas: {
+              include: {
+                inscricoes: true
+              },
+            },
+          },
+        })
+        return ongComVagas
+     } catch (error) {
+      throw new Error("Erro ao ong com vagas")
+     }
   }
  
 }
