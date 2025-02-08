@@ -104,4 +104,5 @@ export default class VagaRepositorio implements VagaRepositorioPort {
       },
     });
   }
+ 
 }

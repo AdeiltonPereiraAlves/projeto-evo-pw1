@@ -21,5 +21,32 @@ export default class InscricaoRepositorio implements InscricaoRepositorioPort{
             throw new Error("Method not implemented.");
         }
     }
+    async listaInscricoesDeVoluntario(id:string){
+        console.log("chegou no db insc", id)
+        try {
+         const inscricoes =  await prismaDb.inscricao.findFirst(
+            {where:{
+            voluntarioId: id
+          },
+          include:{
+            vaga:{
+                include:{
+                    ong:{
+                        include:{
+                            usuario:true
+                        }
+                    }
+                }
+            }
+          }
+        })
+        return inscricoes
+        } catch (error) {
+            console.log(error, "error")
+            throw new Error("Method not implemented.");
+        }
+    }
+   
+
     
 }
