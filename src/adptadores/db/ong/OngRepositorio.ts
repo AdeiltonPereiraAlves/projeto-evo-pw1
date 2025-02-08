@@ -195,5 +195,34 @@ export class OngRepositorio extends UsuarioRepositorio<any> implements OngReposi
       throw new Error("Erro ao ong com vagas")
      }
   }
+  async aprovarVoluntario(aprovacao:any){
+    try {
+      const res = await this.prisma.inscricao.update({
+        where: {id: aprovacao.id},
+        data:{
+           resultado:aprovacao.resultado
+        }
+      })
+      return res
+    } catch (error){
+      throw new Error("Erro ao aprovar ")
+    }
+  }
+
+  async listarVagas(ong:any){
+      try {
+        const vagasDeUmaOng = await this.prisma.vaga.findUnique(
+          {
+            where: {
+              id: ong.vagaId,
+              ongId: ong.id
+            }
+          }
+        )
+        return vagasDeUmaOng
+      } catch (error) {
+        throw new Error("Erro ao retonar vagas ")
+      }
+  }
  
 }

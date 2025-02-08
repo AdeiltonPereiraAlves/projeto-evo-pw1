@@ -7,9 +7,7 @@ export default interface OngRepositorioPort extends UsuarioRepo{
     atualizar(voluntario:any):any
     buscarTodos():any
     buscarVagasDeOng(id:string):any
-    
-
-
-   
+    aprovarVoluntario(aprovacao:any):any
+    listarVagas(ong:any):any
 }
  
