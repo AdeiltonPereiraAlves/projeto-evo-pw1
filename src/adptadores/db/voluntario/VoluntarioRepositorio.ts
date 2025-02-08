@@ -7,16 +7,15 @@ import UsuarioType from "../../../@types/UsuarioType";
 import VoluntarioType from "../../../@types/VoluntarioType";
 import imagemUpload from "../../middleware/ImagemUpload";
 import path from "path";
-import fs from 'fs/promises';
+import fs from "fs/promises";
 import BaseUsuarioRepositorio from "../usuario/UsuarioRepositorio";
 
-export default class VoluntarioRepositorio extends BaseUsuarioRepositorio<any> implements VoluntarioDb{
-
- 
-  
-  
+export default class VoluntarioRepositorio
+  extends BaseUsuarioRepositorio<any>
+  implements VoluntarioDb
+{
   constructor() {
-    super("VOLUNTARIO","public/images/voluntario")
+    super("VOLUNTARIO", "public/images/voluntario");
   }
 
   async buscarTodos() {
@@ -69,32 +68,33 @@ export default class VoluntarioRepositorio extends BaseUsuarioRepositorio<any> i
   }
 
   // buscar por email
- 
- 
-  //excluir voluntario
-  async excluir(id: string):Promise<any>{
-    try {
-      console.log(id,"id")
-      const  resposta = await this.buscarPorId(id);
-      console.log(resposta, "resposta")
-      let usuarioId = ""
-      let idV =""
-      if (!resposta) {
-       throw new Error("Voluntario Nao encontrado")
-      }
-     
-        usuarioId = resposta.voluntario.usuarioId;
-        idV = resposta.voluntario.id
 
-        console.log(idV, "idv")
-        const imagePath = path.resolve(`public/images/voluntarios/${resposta.imagem}`);
-        await fs.unlink(imagePath).catch(() => console.log('Imagem já foi excluída.'));
-        console.log('ID do usuário:', usuarioId);
-   
-  
-   
+  //excluir voluntario
+  async excluir(id: string): Promise<any> {
+    try {
+      console.log(id, "id");
+      const resposta = await this.buscarPorId(id);
+      console.log(resposta, "resposta");
+      let usuarioId = "";
+      let idV = "";
+      if (!resposta) {
+        throw new Error("Voluntario Nao encontrado");
+      }
+
+      usuarioId = resposta.voluntario.usuarioId;
+      idV = resposta.voluntario.id;
+
+      console.log(idV, "idv");
+      const imagePath = path.resolve(
+        `public/images/voluntarios/${resposta.imagem}`
+      );
+      await fs
+        .unlink(imagePath)
+        .catch(() => console.log("Imagem já foi excluída."));
+      console.log("ID do usuário:", usuarioId);
+
       await prismaDb.voluntario.delete({
-        where: { id: idV},
+        where: { id: idV },
       });
 
       // Excluir o usuário
@@ -102,51 +102,65 @@ export default class VoluntarioRepositorio extends BaseUsuarioRepositorio<any> i
         where: { id: usuarioId },
       });
 
-      return true
+      return true;
     } catch (error) {
       console.error("Erro aodeletar  voluntario:", error);
-      throw new Error("Erro ao excluir Voluntario")
-      
+      throw new Error("Erro ao excluir Voluntario");
     }
   }
-  
-  async atualizar(voluntario:any):Promise<any>{
-     try { 
-       console.log(voluntario.id, "id do voluntario")
-        const voluntarioAtual = await this.buscarPorId(voluntario.id)
 
-        if(!voluntario){
-          throw new Error("Voluntario Nao encontrado")
-        }
-        let idUsuario = ""
-        console.log(voluntarioAtual, "voluntario atual")
-       
+  async atualizar(voluntario: any): Promise<any> {
+    try {
+      console.log(voluntario.id, "id do voluntario");
+      const voluntarioAtual = await this.buscarPorId(voluntario.id);
 
-           idUsuario = voluntarioAtual.voluntario.usuarioId 
+      if (!voluntario) {
+        throw new Error("Voluntario Nao encontrado");
+      }
+      let idUsuario = "";
+      console.log(voluntarioAtual, "voluntario atual");
 
-           console.log(idUsuario,"id usuario")
-           const usuarioAtualizado = await prismaDb.usuario.update({
-             where: { id: idUsuario },
-             data: {
-               nome: voluntario.nome ?? voluntarioAtual.nome, // Mantém o valor atual se não for fornecido
-               email: voluntario.email ?? voluntarioAtual.email,
-               tipo: voluntario.tipo ?? voluntarioAtual.tipo,
-               imagem: voluntario.imagem ?? voluntarioAtual.imagem,
-               voluntario: {
-                 update: {
-                   habilidades: voluntario.habilidades ?? voluntarioAtual.voluntario.habilidades,
-                   interesses: voluntario.interesses ?? voluntarioAtual.voluntario.interesses,
-                   disponibilidade: voluntario.disponibilidade ?? voluntarioAtual.voluntario.disponibilidade,
-                 },
-               },
-             },
-           });
-           return usuarioAtualizado
-        
-     } catch (error) {
+      idUsuario = voluntarioAtual.voluntario.usuarioId;
+
+      console.log(idUsuario, "id usuario");
+      const usuarioAtualizado = await prismaDb.usuario.update({
+        where: { id: idUsuario },
+        data: {
+          nome: voluntario.nome ?? voluntarioAtual.nome, // Mantém o valor atual se não for fornecido
+          email: voluntario.email ?? voluntarioAtual.email,
+          tipo: voluntario.tipo ?? voluntarioAtual.tipo,
+          imagem: voluntario.imagem ?? voluntarioAtual.imagem,
+          voluntario: {
+            update: {
+              habilidades:
+                voluntario.habilidades ??
+                voluntarioAtual.voluntario.habilidades,
+              interesses:
+                voluntario.interesses ?? voluntarioAtual.voluntario.interesses,
+              disponibilidade:
+                voluntario.disponibilidade ??
+                voluntarioAtual.voluntario.disponibilidade,
+            },
+          },
+        },
+      });
+      return usuarioAtualizado;
+    } catch (error) {
       console.error("Erro ao alterar  voluntario:", error);
-      throw new Error("erro ao atualizar voluntario")
-      
-     }
+      throw new Error("erro ao atualizar voluntario");
+    }
+  }
+  async buscarVoluntarioPorId(id: string) {
+    try {
+      const voluntario = await prismaDb.voluntario.findUnique({
+        where: { id },
+        include: {
+          usuario: true,
+        },
+      });
+      return voluntario;
+    } catch (error) {
+      throw new Error("erro ao buscar vaga por id.");
+    }
   }
 }

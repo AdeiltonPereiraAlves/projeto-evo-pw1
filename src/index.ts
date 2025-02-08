@@ -52,6 +52,9 @@ import BuscarVagaPorId from "./core/useCase/vaga/BuscarVagaPorId";
 import BuscarVagaPorIdController from "./controllers/vaga/BuscarVagaPorIdController";
 import filtrarVagas from "./core/useCase/vaga/FiltrarVagas";
 import FiltrarVagaController from "./controllers/vaga/FiltrarVagasController";
+import RegistrarInscricao from "./core/useCase/inscricoes/RegistrarInscricao";
+import InscricaoRepositorio from "./adptadores/db/inscricao/InscricaoRepositorio";
+import RegistrarInscricaoController from "./controllers/inscricao/RegistrarInscricaoController";
 
 const app = express();
 const port = process.env.PORT
@@ -172,3 +175,12 @@ new EditarVagaController(app, editarVaga, UserAuthentication(usuarioAutenticaoDb
 
 const filtrarVaga = new filtrarVagas(vagaRepositorio)
 new FiltrarVagaController(app, filtrarVaga)
+
+
+//---------------------------------------------------------------INSCRIÇÃO-------------------------------------------------------------------------------------------
+
+// registrar inscricao
+const inscricaoRepositorio = new InscricaoRepositorio()
+const registrarInscricao = new RegistrarInscricao(inscricaoRepositorio, vagaRepositorio, voluntarioDb)
+
+new RegistrarInscricaoController(app, registrarInscricao, UserAuthentication(usuarioAutenticaoDb,provedorToken), UsuarioAutorizacao(["VOLUNTARIO"]))

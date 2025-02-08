@@ -8,5 +8,7 @@ export default interface VoluntarioDb extends UsuarioRepo{
     excluir(id: string): any
     atualizar(voluntario:any):any
     buscarTodos():any
+   
+    buscarVoluntarioPorId(id: string):any
 
 }
