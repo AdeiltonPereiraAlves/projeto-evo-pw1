@@ -57,6 +57,8 @@ import InscricaoRepositorio from "./adptadores/db/inscricao/InscricaoRepositorio
 import RegistrarInscricaoController from "./controllers/inscricao/RegistrarInscricaoController";
 import ListarInscricoesVoluntario from "./core/useCase/Voluntario/ListarInscricoesVoluntario";
 import ListarInscricoesVoluntarioControllers from "./controllers/voluntario/ListarInscricoesVoluntarioController";
+import ExcluirIncricao from "./core/useCase/inscricoes/ExcluirInscricao";
+import ExcluirInscricaoController from "./controllers/inscricao/ExcluirInscricaoController";
 
 const app = express();
 const port = process.env.PORT
@@ -194,3 +196,8 @@ new RegistrarInscricaoController(app, registrarInscricao, UserAuthentication(usu
 const listarInscricoes = new ListarInscricoesVoluntario(voluntarioDb, inscricaoRepositorio)
 
 new ListarInscricoesVoluntarioControllers(app, listarInscricoes, UserAuthentication(usuarioAutenticaoDb,provedorToken))
+
+//excluir inscricao
+
+const excluirInscricao = new ExcluirIncricao(inscricaoRepositorio)
+new ExcluirInscricaoController(app,excluirInscricao, UserAuthentication(usuarioAutenticaoDb,provedorToken))

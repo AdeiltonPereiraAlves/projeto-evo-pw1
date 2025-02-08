@@ -2,6 +2,28 @@ import InscricaoRepositorioPort from "../../../core/useCase/inscricoes/Incricoes
 import prismaDb from "../../prismaDb/Prisma";
 
 export default class InscricaoRepositorio implements InscricaoRepositorioPort{
+    async buscarPorId(id: string) {
+        try {
+            const inscricao = await  prismaDb.inscricao.findUnique({where:{id}})
+            return inscricao
+        } catch (error) {
+            
+            throw new Error("Method not implemented.");
+        }
+    }
+   async excluir(dto:any) {
+        try {
+            const inscricaoExcluida = await prismaDb.inscricao.delete({
+                where:{id:dto.id, voluntarioId:dto.voluntarioId},
+                
+
+            })
+            return inscricaoExcluida
+        } catch (error) {
+            
+            throw new Error("Erro ao excluir inscrião");
+        }
+    }
     async registrar(inscricao: any) {
         console.log("chegou no banco")
         try {
@@ -32,9 +54,21 @@ export default class InscricaoRepositorio implements InscricaoRepositorioPort{
             vaga:{
                 include:{
                     ong:{
-                        include:{
-                            usuario:true
-                        }
+                        select:{
+                            id:true,
+                            cnpj: true,
+                            areaAtuacao:true,
+
+                            usuario:{
+                                select: {
+                                    id:true,
+                                    nome: true,
+    
+                                }
+                            }
+                        },
+                      
+                        
                     }
                 }
             }
