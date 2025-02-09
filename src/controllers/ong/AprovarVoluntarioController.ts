@@ -9,11 +9,17 @@ export default class AprovarVoluntarioController{
     ){
         const aprovar = async(req:Request, res: Response) =>{
             try {
+                const ong = req.usuario
+                const ongId = ong?.id!
                 const {id} = req.params
                 const aprovar:aprovarDto = {
-                    id,
-                    aprovado: req.body
+                    
+                    aprovado: req.body,
+                    ongId,
+                    vagaId: id
+                    
                 }
+                console.log(aprovar, "Aprovar")
                 const resultado = await this.casoDeUso.executar(aprovar)
                 console.log(resultado, "resultado")
                 res.status(200).json(resultado)

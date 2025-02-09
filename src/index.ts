@@ -59,6 +59,10 @@ import ListarInscricoesVoluntario from "./core/useCase/Voluntario/ListarInscrico
 import ListarInscricoesVoluntarioControllers from "./controllers/voluntario/ListarInscricoesVoluntarioController";
 import ExcluirIncricao from "./core/useCase/inscricoes/ExcluirInscricao";
 import ExcluirInscricaoController from "./controllers/inscricao/ExcluirInscricaoController";
+import ListarVagasOng from "./core/useCase/Ong/ListarVagasOng";
+import ListarVagasOngController from "./controllers/ong/ListarVagasOngController";
+import AprovarVoluntario from "./core/useCase/Ong/AprovarVoluntario";
+import AprovarVoluntarioController from "./controllers/ong/AprovarVoluntarioController";
 
 const app = express();
 const port = process.env.PORT
@@ -147,7 +151,14 @@ new EditarFotoPerfilController(app, editarFotoOng, UserAuthentication(usuarioAut
 const editar = new EditarOng(ongDb)
 new EditarOngController(app,editar, UserAuthentication(usuarioAutenticaoDb, provedorToken),middlewareImagem)
 
+// listar vagas ong
+const listarVagasOng = new ListarVagasOng(ongDb)
+new ListarVagasOngController(app, listarVagasOng, UserAuthentication(usuarioAutenticaoDb, provedorToken),UsuarioAutorizacao(["ONG"]))
 
+
+// aprovar voluntairo
+const aprovarVoluntario = new AprovarVoluntario(ongDb)
+new AprovarVoluntarioController(app, aprovarVoluntario, UserAuthentication(usuarioAutenticaoDb, provedorToken), UsuarioAutorizacao(["ONG"]))
 
 
 //--------------------------------------------------VAGA-----------------------------------------------------------------------------------------

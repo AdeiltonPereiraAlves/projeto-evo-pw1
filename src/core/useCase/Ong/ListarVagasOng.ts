@@ -1,15 +1,14 @@
 import CasoDeUso from "../../../@types/CasoDeUso";
 import OngRepositorioPort from "./OngRepositorioPort";
-export type vagasOngDto = {
-    id: string,
-    ongId: string
-}
-export default class ListarVagasOng implements CasoDeUso<void, any> {
+
+export default class ListarVagasOng implements CasoDeUso<string, any> {
   constructor(private ongDb: OngRepositorioPort) {}
-  async executar(): Promise<any> {
+  async executar(id:string): Promise<any> {
     try {
-      const ongs = await this.ongDb.listarVagas();
-      return ongs;
-    } catch (error) {}
+      const vagasDeUmaOng = await this.ongDb.buscarVagasDeOng(id!);
+      return vagasDeUmaOng
+    } catch (error) {
+       throw new Error("Erro ao lista vagas de uma ong")
+    }
   }
 }

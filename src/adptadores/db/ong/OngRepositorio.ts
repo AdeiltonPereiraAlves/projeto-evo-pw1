@@ -197,19 +197,25 @@ export class OngRepositorio extends UsuarioRepositorio<any> implements OngReposi
   }
   async aprovarVoluntario(aprovacao:any){
     try {
-      const res = await this.prisma.inscricao.update({
-        where: {id: aprovacao.id},
-        data:{
-           resultado:aprovacao.resultado
+
+      console.log(aprovacao, "aprovacao")
+      const res = await this.prisma.inscricao.updateMany({
+        where: {vagaId: aprovacao.vagaId},
+
+        data: {
+           resultado: aprovacao.aprovado.aprovado
         }
       })
+      console.log(res, "res")
       return res
     } catch (error){
+      console.log(error,"erro")
       throw new Error("Erro ao aprovar ")
     }
   }
 
-  async listarVagas(ong:any){
+  async listarVagaDeUmaOng(ong:any){ // talves nao precise desse metodo
+    console.log(ong, "ong")
       try {
         const vagasDeUmaOng = await this.prisma.vaga.findUnique(
           {
