@@ -1,46 +1,42 @@
-import { PrismaClient } from '@prisma/client';
-const prisma = new PrismaClient();
+import Status from "../../../@types/Status";
 
-export class Inscricao {
-  private _id: string;
-  private _voluntarioId: string;
-  private _vagaId: string;
-  private _status: 'pendente' | 'aprovado' | 'rejeitado';
-  private _criadoEm: Date;
+export default class Inscricao {
+  private id: string;
+  private voluntarioId: string;
+  private vagaId: string;
+  private data: Date;
+  private status: Status;//alterar para StatusInscricao depois
+  private createdAt: Date;
+  private updatedAt: Date;
 
-  constructor(id: string, voluntarioId: string, vagaId: string, status: 'pendente' | 'aprovado' | 'rejeitado') {
-    this._id = id; 
-    this._voluntarioId = voluntarioId;
-    this._vagaId = vagaId;
-    this._status = status;
-    this._criadoEm = new Date();
+  constructor(id: string, voluntarioId: string, vagaId: string, status: Status) {
+    this.id = id;
+    this.voluntarioId = voluntarioId;
+    this.vagaId = vagaId;
+    this.status = status;
+    this.data = new Date();
+    this.createdAt = new Date();
+    this.updatedAt = new Date();
   }
 
-  get id(): string {
-    return this._id;
+  getId() {
+    return this.id;
   }
 
-  get voluntarioId(): string {
-    return this._voluntarioId;
+  getVoluntarioId() {
+    return this.voluntarioId;
   }
 
-  get vagaId(): string {
-    return this._vagaId;
+  getVagaId() {
+    return this.vagaId;
   }
 
-  get status(): 'pendente' | 'aprovado' | 'rejeitado' {
-    return this._status;
+  getStatus() {
+    return this.status;
   }
 
-  set status(novoStatus: 'pendente' | 'aprovado' | 'rejeitado') {
-    this._status = novoStatus;
-  }
-
-  get criadoEm(): Date {
-    return this._criadoEm;
-  }
-
-  static async criar(inscricao: Omit<Inscricao, 'id' | 'criadoEm'>) {
-    return prisma.inscricao.create({ data: { ...inscricao, criadoEm: new Date() } });
+  setStatus(status: Status) {
+    this.status = status;
+    this.updatedAt = new Date();
   }
 }

@@ -1,4 +1,6 @@
 import express from "express";
+import dotenv from 'dotenv';
+dotenv.config();
 import RegistrarVoluntario from "./core/useCase/Voluntario/RegistrarVoluntario";
 import VoluntarioRepositorio from "./adptadores/db/voluntario/VoluntarioRepositorio";
 import RegistrarVoluntarioController from "./controllers/voluntario/RegistrarVoluntarioController";
@@ -53,6 +55,28 @@ import BuscarVagaPorIdController from "./controllers/vaga/BuscarVagaPorIdControl
 import filtrarVagas from "./core/useCase/vaga/FiltrarVagas";
 import FiltrarVagaController from "./controllers/vaga/FiltrarVagasController";
 
+
+// Novos imports para Inscricao e Avaliacao
+// Repositórios
+import InscricaoRepositorio from "./adptadores/db/inscricao/InscricaoRepositorio";
+import AvaliacaoRepositorio from "./adptadores/db/avaliacao/AvaliacaoRepositorio";
+
+// Casos de Uso para Inscricao
+import RegistrarInscricao from "./core/useCase/Inscricao/RegistrarInscricao";
+import BuscarInscricaoPorId from "./core/useCase/Inscricao/BuscarInscricaoPorId";
+import AtualizarInscricao from "./core/useCase/Inscricao/AtualizarInscricao";
+import ExcluirInscricao from "./core/useCase/Inscricao/ExcluirInscricao";
+
+// Casos de Uso para Avaliacao
+import RegistrarAvaliacao from "./core/useCase/Avaliacao/RegistrarAvaliacao";
+import BuscarAvaliacaoPorId from "./core/useCase/Avaliacao/BuscarAvaliacaoPorId";
+import AtualizarAvaliacao from "./core/useCase/Avaliacao/AtualizarAvaliacao";
+import ExcluirAvaliacao from "./core/useCase/Avaliacao/ExcluirAvaliacao";
+
+// Controladores
+import InscricaoController from "./controllers/inscricao/InscricaoController";
+import AvaliacaoController from "./controllers/avaliacao/AvaliacaoController";
+
 const app = express();
 const port = process.env.PORT
 const secret = process.env.JWTSECRET
@@ -61,7 +85,7 @@ app.use(express.urlencoded({extended:true}))
 
 
 app.listen(port, () => {
-    console.log("servidor rodando")
+    console.log("servidor rodando"+port)
 } )
 
 
@@ -172,3 +196,40 @@ new EditarVagaController(app, editarVaga, UserAuthentication(usuarioAutenticaoDb
 
 const filtrarVaga = new filtrarVagas(vagaRepositorio)
 new FiltrarVagaController(app, filtrarVaga)
+
+
+
+//--------------------------------------------------INSCRICAO E AVALIACAO-----------------------------------------------------------------------------------------
+// Inscricao
+const inscricaoRepositorio = new InscricaoRepositorio();
+const registrarInscricao = new RegistrarInscricao(inscricaoRepositorio);
+const buscarInscricaoPorId = new BuscarInscricaoPorId(inscricaoRepositorio);
+const atualizarInscricao = new AtualizarInscricao(inscricaoRepositorio);
+const excluirInscricao = new ExcluirInscricao(inscricaoRepositorio);
+
+new InscricaoController(
+  app,
+  registrarInscricao,
+  buscarInscricaoPorId,
+  atualizarInscricao,
+  excluirInscricao,
+  UserAuthentication(usuarioAutenticaoDb, provedorToken),
+  UsuarioAutorizacao(["VOLUNTARIO", "ONG"])
+);
+
+// Avaliacao
+const avaliacaoRepositorio = new AvaliacaoRepositorio();
+const registrarAvaliacao = new RegistrarAvaliacao(avaliacaoRepositorio);
+const buscarAvaliacaoPorId = new BuscarAvaliacaoPorId(avaliacaoRepositorio);
+const atualizarAvaliacao = new AtualizarAvaliacao(avaliacaoRepositorio);
+const excluirAvaliacao = new ExcluirAvaliacao(avaliacaoRepositorio);
+
+new AvaliacaoController(
+  app,
+  registrarAvaliacao,
+  buscarAvaliacaoPorId,
+  atualizarAvaliacao,
+  excluirAvaliacao,
+  UserAuthentication(usuarioAutenticaoDb, provedorToken),
+  UsuarioAutorizacao(["VOLUNTARIO", "ONG"])
+);

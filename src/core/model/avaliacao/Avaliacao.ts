@@ -1,56 +1,56 @@
-import { PrismaClient } from '@prisma/client';
-const prisma = new PrismaClient();
+import Tipo from "../../../@types/Tipo";
 
-export class Avaliacao {
-  private _id: string;
-  private _voluntarioId: string;
-  private _ongId: string;
-  private _nota: number;
-  private _comentario?: string;
-  private _criadoEm: Date;
+export default class Avaliacao {
+  private id: string;
+  private voluntarioId: string;
+  private ongId: string;
+  private data: Date;
+  private comentario: string;
+  private frequecia: String;
+  private nota: number;
+  private tipo: Tipo;
+  private createdAt: Date;
+  private updatedAt: Date;
 
-  constructor( id: string, voluntarioId: string, ongId: string, nota: number, comentario?: string,) {
-    this._id = id;
-    this._voluntarioId = voluntarioId;
-    this._ongId = ongId;
-    this._nota = 0;
+  constructor(id: string, voluntarioId: string, ongId: string, comentario: string, frequencia: string, nota: number, tipo: Tipo) {
+    this.id = id;
+    this.voluntarioId = voluntarioId;
+    this.ongId = ongId;
+    this.comentario = comentario;
+    this.frequecia = frequencia;
     this.nota = nota;
-    this._comentario = comentario;
-    this._criadoEm = new Date();
+    this.tipo = tipo;
+    this.data = new Date();
+    this.createdAt = new Date();
+    this.updatedAt = new Date();
   }
 
-  get id(): string {
-    return this._id;
+  getId() {
+    return this.id;
   }
 
-  get voluntarioId(): string {
-    return this._voluntarioId;
+  getVoluntarioId() {
+    return this.voluntarioId;
   }
 
-  get ongId(): string {
-    return this._ongId;
+  getOngId() {
+    return this.ongId;
   }
 
-  get nota(): number {
-    return this._nota;
+  getComentario() {
+    return this.comentario;
   }
 
-  set nota(valor: number) {
-    if (valor < 0 || valor > 5) {
-      throw new Error('A nota deve estar entre 0 e 5');
-    }
-    this._nota = valor;
+  getFrequencia(){
+    return this.frequecia;
   }
 
-  get comentario(): string | undefined {
-    return this._comentario;
+  getNota() {
+    return this.nota;
   }
 
-  get criadoEm(): Date {
-    return this._criadoEm;
-  }
-
-  static async criar(avaliacao: Omit<Avaliacao, 'id' | 'criadoEm'>) {
-    return prisma.avaliacao.create({ data: { ...avaliacao, criadoEm: new Date() } });
+  setNota(nota: number) {
+    this.nota = nota;
+    this.updatedAt = new Date();
   }
 }
