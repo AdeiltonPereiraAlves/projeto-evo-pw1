@@ -128,7 +128,7 @@ new ExcluirVoluntarioController(app, excluirVoluntario,middlewareValidador)
 // //editar voluntario
 
 const editarVoluntario = new EditarVoluntario(voluntarioDb)
-new EditarVoluntarioController(app,editarVoluntario, middlewareValidador,middlewareImagem,UserAuthentication(voluntarioDb, provedorToken), UsuarioAutorizacao(["VOLUNTARIO"]))
+new EditarVoluntarioController(app,editarVoluntario, middlewareValidador,UserAuthentication(usuarioAutenticaoDb, provedorToken),middlewareImagem, UsuarioAutorizacao(["VOLUNTARIO"]))
 
 
 //------------------------------------------------ONG----------------------------------------------------------------------------------------------------

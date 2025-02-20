@@ -8,7 +8,7 @@ import BuscarPorEmail from "../Voluntario/BuscarPorEmail";
 import BuscarPorEmailOng from "../Ong/BuscarPorEmail"
 export type Dto = { email: string; senha: string };
 
-export default class LonginUsuario implements CasoDeUso<Dto, any> {
+export default class LonginUsuario implements CasoDeUso<Dto, Object> {
   constructor(
     private usuarioDb: VoluntarioDb,
     private ongDb: OngRepositorioPort,

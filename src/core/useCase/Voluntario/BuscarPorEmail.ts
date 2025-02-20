@@ -1,15 +1,15 @@
 import CasoDeUso from "../../../@types/CasoDeUso";
-import UsuarioRepo from "../../portas/usuario/UsuarioRepo";
+import VoluntarioType from "../../../@types/VoluntarioType";
 import VoluntarioDb from "../../portas/VoluntarioDb";
 
-export default class BuscarPorEmail implements CasoDeUso<string, any>{
+export default class BuscarPorEmail implements CasoDeUso<string,VoluntarioType>{
     constructor(
-        private usuarioDb: VoluntarioDb
+        private voluntarioDB: VoluntarioDb
     ){}
-    async executar(email: string): Promise<any> {
-       const usuario =await this.usuarioDb.buscarPorEmail(email)
-       console.log(usuario, "usuario buscar")
-       return usuario
+    async executar(email: string){
+       const voluntario =await this.voluntarioDB.buscarPorEmail(email)
+       console.log(voluntario, "usuario buscar")
+       return voluntario
     }
     
 }

@@ -1,11 +1,12 @@
 import CasoDeUso from "../../../@types/CasoDeUso";
+import VoluntarioType from "../../../@types/VoluntarioType";
 import UsuarioRepo from "../../portas/usuario/UsuarioRepo";
 import VoluntarioDb from "../../portas/VoluntarioDb";
 export type fotoDto = {
     imagem: string,
     id?:string
 }
-export default class EditarFotoPerfil implements CasoDeUso<fotoDto,void>{ 
+export default class EditarFotoPerfil implements CasoDeUso<fotoDto,VoluntarioType>{ 
     constructor(
         private VoluntarioDb: VoluntarioDb,
        

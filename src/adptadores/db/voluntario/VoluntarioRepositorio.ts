@@ -10,7 +10,7 @@ import path from "path";
 import fs from 'fs/promises';
 import BaseUsuarioRepositorio from "../usuario/UsuarioRepositorio";
 
-export default class VoluntarioRepositorio extends BaseUsuarioRepositorio<any> implements VoluntarioDb{
+export default class VoluntarioRepositorio extends BaseUsuarioRepositorio implements VoluntarioDb{
 
  
   
@@ -72,7 +72,7 @@ export default class VoluntarioRepositorio extends BaseUsuarioRepositorio<any> i
  
  
   //excluir voluntario
-  async excluir(id: string):Promise<any>{
+  async excluir(id: string):Promise<boolean>{
     try {
       console.log(id,"id")
       const  resposta = await this.buscarPorId(id);
@@ -110,36 +110,13 @@ export default class VoluntarioRepositorio extends BaseUsuarioRepositorio<any> i
     }
   }
   
-  async atualizar(voluntario:any):Promise<any>{
+  async atualizar(voluntario:VoluntarioType):Promise<VoluntarioType| any>{
      try { 
-       console.log(voluntario.id, "id do voluntario")
-        const voluntarioAtual = await this.buscarPorId(voluntario.id)
-
-        if(!voluntario){
-          throw new Error("Voluntario Nao encontrado")
-        }
-        let idUsuario = ""
-        console.log(voluntarioAtual, "voluntario atual")
        
-
-           idUsuario = voluntarioAtual.voluntario.usuarioId 
-
-           console.log(idUsuario,"id usuario")
            const usuarioAtualizado = await prismaDb.usuario.update({
-             where: { id: idUsuario },
-             data: {
-               nome: voluntario.nome ?? voluntarioAtual.nome, // Mantém o valor atual se não for fornecido
-               email: voluntario.email ?? voluntarioAtual.email,
-               tipo: voluntario.tipo ?? voluntarioAtual.tipo,
-               imagem: voluntario.imagem ?? voluntarioAtual.imagem,
-               voluntario: {
-                 update: {
-                   habilidades: voluntario.habilidades ?? voluntarioAtual.voluntario.habilidades,
-                   interesses: voluntario.interesses ?? voluntarioAtual.voluntario.interesses,
-                   disponibilidade: voluntario.disponibilidade ?? voluntarioAtual.voluntario.disponibilidade,
-                 },
-               },
-             },
+             where: { id: voluntario.id },
+            
+             data: {...voluntario }
            });
            return usuarioAtualizado
         

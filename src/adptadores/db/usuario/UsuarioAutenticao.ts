@@ -13,9 +13,7 @@ export default class UsuarioAutenticao implements Partial<UsuarioRepo>{
             where: {
               email:email,
             },
-            // include: {
-            //   voluntario: true, // Inclui os dados do voluntário
-            // },
+            
           });
           console.log(voluntario, "voluntario")
           if (!voluntario) {

@@ -5,8 +5,9 @@ import  UsuarioRepositorio  from "../usuario/UsuarioRepositorio";
 import fs from 'fs/promises';
 import OngRepositorioPort from "../../../core/useCase/Ong/OngRepositorioPort";
 import Erros from "../../../core/constants/Erros";
+import UsuarioType from "../../../@types/UsuarioType";
 // OngRepositorio.ts
-export class OngRepositorio extends UsuarioRepositorio<any> implements OngRepositorioPort {
+export class OngRepositorio extends UsuarioRepositorio implements OngRepositorioPort {
   constructor() {
     super("ONG",'public/images/ong');
   }
@@ -149,33 +150,6 @@ export class OngRepositorio extends UsuarioRepositorio<any> implements OngReposi
       throw new Error("Erro ao registrar ong")
     }
     
-  }
-  async editarFoto(novaImagem: string, id: string) {
-    try {
-      const ong = await this.buscarPorId(id);
-      if ("error" in ong) {
-        throw new Error(ong.error);
-      }
-
-      const ongFotoAtualizada = await this.prisma.usuario.update({
-        where: {
-          id: ong.id,
-        },
-        select: {
-          id: true,
-          nome: true,
-          email: true,
-          imagem: true,
-          tipo: true,
-        },
-        data: { imagem: novaImagem },
-      });
-
-      return ongFotoAtualizada;
-    } catch (error) {
-      console.error("Erro ao editar da ong:", error);
-      return { error: "Erro ao editar ong" };
-    }
   }
   async buscarVagasDeOng(id:string){
      try {

@@ -11,7 +11,8 @@ export default class EditarVoluntarioController{
               try {
                  const usuario = req.usuario
                  console.log(usuario,"usuario controller")
-                 const id = usuario?.id
+                 
+                 const id = usuario?.usuario.id
                  if (!id) {
                     res.status(400).json({ error: "ID é obrigatório" });
                     return
@@ -21,12 +22,13 @@ export default class EditarVoluntarioController{
                     imagemUp = req.file.filename
                 }
                 console.log(req.body,"req body")
-                 const {nome, email, habilidades, interesses,disponibilidade} = req.body 
+                 const {nome, email, habilidades,tipo, interesses,disponibilidade} = req.body 
                   const voluntarioEditavel:editarVoluntarioDto = {
                     id,
                     nome,
                     email,
                     imagem:imagemUp|| usuario.imagem,
+                    tipo,
                     habilidades,
                     interesses,
                     disponibilidade
@@ -39,6 +41,7 @@ export default class EditarVoluntarioController{
                  
                 res.status(200).json(voluntarioEditado)
               } catch (error:any) {
+                console.log(error, "erro msg")
                 res.status(400).send(error.message)
               }
         }

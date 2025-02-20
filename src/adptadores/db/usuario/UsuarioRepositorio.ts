@@ -4,7 +4,7 @@ import { PrismaClient } from "@prisma/client";
 import  UsuarioType  from "../../../@types/UsuarioType";
 import UsuarioRepo from "../../../core/portas/usuario/UsuarioRepo";
 
-export default  class BaseUsuarioRepositorio<T>  implements UsuarioRepo{
+export default  class BaseUsuarioRepositorio  implements UsuarioRepo{
   protected prisma: PrismaClient;
   protected tipo: "ONG" | "VOLUNTARIO";
   protected pastaImagens: string; 
@@ -14,20 +14,7 @@ export default  class BaseUsuarioRepositorio<T>  implements UsuarioRepo{
     this.tipo = tipo;
     this.pastaImagens = pastaImagens;
   }
-  // excluir(id: string): Promise<boolean> {
-  //   throw new Error("Method not implemented.");
-  // }
-  // registrar(entidade: any): Promise<any> {
-  //   throw new Error("Method not implemented.");
-  // }
-  // atualizar(id: string, dados: Partial<any>): Promise<any> {
-  //   throw new Error("Method not implemented.");
-  // }
-  // buscarTodos() {
-  //   throw new Error("Method not implemented.");
-  // }
-  
-
+ 
 
   async buscarPorEmail(email: string): Promise<any>  {
 
@@ -49,7 +36,7 @@ export default  class BaseUsuarioRepositorio<T>  implements UsuarioRepo{
     return usuario
   }
 
-  async editarFoto(id: string, novaImagem: string): Promise<any> {
+  async editarFoto(id: string, novaImagem: string): Promise<UsuarioType> {
 
     const usuario = await this.prisma.usuario.update({
       where: { id },
