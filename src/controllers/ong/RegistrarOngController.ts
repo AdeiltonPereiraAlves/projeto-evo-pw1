@@ -2,6 +2,7 @@ import Id from "../../core/shared/Id";
 import OngRepositorioPort from "../../core/useCase/Ong/OngRepositorioPort";
 import { Express, Request, Response } from "express";
 import { RegistrarOng } from "../../core/useCase/Ong/RegistrarOng";
+import OngType from "../../@types/OngType";
 export default class RegistrarOngController{
     constructor(
       private servidor: Express,
@@ -16,15 +17,10 @@ export default class RegistrarOngController{
     // areaAtuacao: AreaAtuacao[]
     // endereco: string
          try {
-          let imagemUp
-            if(req.file){
-                imagemUp = req.file.filename
-            }else{
-                imagemUp = "public/images/profile.png"
-            }
-            const {nome,email, tipo,imagem, senha, cnpj, descricao, visao, missao,areaAtuacao,endereco } = req.body
+          
+            const {nome,email, tipo, senha, cnpj, descricao, visao, missao,areaAtuacao,endereco } = req.body
             console.log("chegou no controler ong")
-            const o = await this.casoDeUso.executar(
+            const ong = await this.casoDeUso.executar(
                 {  
                     nome,
                     email,
@@ -36,13 +32,13 @@ export default class RegistrarOngController{
                     areaAtuacao,
                     endereco,
                     senha,
-                    imagem,
+                   
 
 
-                }
+                } as OngType
             )
-            console.log(o, "o")
-            res.status(201).json(o)
+            console.log(ong, "o")
+            res.status(201).json(ong)
             return
          } catch (error:any) {
             res.status(400).send(error.message)

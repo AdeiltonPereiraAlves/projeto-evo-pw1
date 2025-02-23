@@ -1,35 +1,18 @@
 import path from "path";
 import OngType from "../../../@types/OngType";
 import Ong from "../../../core/model/ong/Ong";
+import prismaDb from "../../prismaDb/Prisma";
 import  UsuarioRepositorio  from "../usuario/UsuarioRepositorio";
 import fs from 'fs/promises';
 import OngRepositorioPort from "../../../core/useCase/Ong/OngRepositorioPort";
 import Erros from "../../../core/constants/Erros";
 import UsuarioType from "../../../@types/UsuarioType";
 // OngRepositorio.ts
-export class OngRepositorio extends UsuarioRepositorio implements OngRepositorioPort {
-  constructor() {
-    super("ONG",'public/images/ong');
-  }
+export class OngRepositorio implements OngRepositorioPort {
+  
   async buscarTodos() {
     try {
-      const ong = await this.prisma.ong.findMany({
-        include: {
-          usuario: {
-            select: {
-              nome: true,
-              email: true,
-              tipo: true,
-              imagem: true,
-            },
-          },
-          vagas:{
-            include: {
-              inscricoes:true
-            }
-          }
-        },
-      });
+      const ong = await prismaDb.ong.findMany();
       return ong;
     } catch (error) {
       throw new Error("Erro no buscar ongs");
@@ -118,30 +101,16 @@ export class OngRepositorio extends UsuarioRepositorio implements OngRepositorio
     
   }
 
-  async registrar(ong: Ong): Promise<any> {
+  async registrar(ong: OngType): Promise<any> {
 
     try {
       const ongRegistrada = await this.prisma.ong.create({
     
         data: {
-          cnpj:ong.getCnpj(),
-          descricao: ong.getDescricao(),
-          endereco: ong.getEndereco(),
-          missao: ong.getMissao(),
-          visao: ong.getVisao(),
-          areaAtuacao: ong.getAreaAtuacao(),
-          usuario: {
-              create: {
-                id: ong.getId(),
-                nome: ong.getNome(),
-                email: ong.getEmail(),
-                senha: ong.getSenha(),
-                imagem: ong.getImagem(),
-                tipo: ong.getTipo(),
-              },
-            },
+        ...ong
+           
       },
-      include: { usuario: true }
+     
     });
     return ongRegistrada
     } catch (error) {
@@ -168,6 +137,18 @@ export class OngRepositorio extends UsuarioRepositorio implements OngRepositorio
      } catch (error) {
       throw new Error("Erro ao ong com vagas")
      }
+  }
+
+  async buscarPorEmail(email: string): Promise<any>  {
+
+    console.log(email, "email")
+    const ong =  await prismaDb.ong.findUnique({
+      where: { email},
+     
+    }) 
+
+    console.log(ong,"ong")
+    return ong
   }
  
 }

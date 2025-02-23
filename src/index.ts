@@ -134,21 +134,21 @@ new buscarVoluntariosControllers(app,buscarVoluntarios,UserAuthentication(volunt
 // //------------------------------------------------ONG----------------------------------------------------------------------------------------------------
 // // rotas para ong
 
-// //registrar
-// const registrarOng = new RegistrarOng(ongDb,senhaCrypto )
+//registrar
+const registrarOng = new RegistrarOng(ongDb,senhaCrypto )
 
-// new RegistrarOngController(app, registrarOng )
-// //login
-// // const login = new LonginUsuario(ongDb,provedorToken  ,senhaCrypto )
-// // new LoginUsuarioController(app, login, )
+new RegistrarOngController(app, registrarOng )
+//login
+const login = new LonginUsuario(voluntarioDb,ongDb,provedorToken  ,senhaCrypto )
+new LoginUsuarioController(app, login, )
 // // //excluir
 // const excluirOng = new ExcluirOng(ongDb)
 // new ExcluirOngController(app, excluirOng, middlewareValidador)
 
 // //buscar ongs
 
-// const buscarOngs = new BuscarOngs(ongDb)
-// new BuscarOngController(app, buscarOngs,UserAuthentication(usuarioAutenticaoDb, provedorToken),UsuarioAutorizacao(["VOLUNTARIO","ONG"]))
+const buscarOngs = new BuscarOngs(ongDb)
+new BuscarOngController(app, buscarOngs,UserAuthentication(voluntarioDb, ongDb, provedorToken),UsuarioAutorizacao(["VOLUNTARIO","ONG"]))
 
 // // editar foto ong
 // const ongRepo = new UsuarioRepositorio("ONG","//")

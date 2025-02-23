@@ -14,20 +14,20 @@ export class RegistrarOng implements CasoDeUso<OngType, void>{
     async executar(dto: OngType): Promise<void> {
         const senhaCrypto = this.incryptarSenha.criptarSenha(dto.senha!)
         senhaCrypto?? Erros.SENHA_INVALIDA
-         const ong =  new Ong(
-            Id.gerarId(),
-            dto.nome,
-            dto.email,
-            dto.tipo,
-            dto.missao,
-            dto.cnpj,
-            dto.descricao,
-            dto.visao,
-            dto.areaAtuacao,
-            dto.endereco,
-            senhaCrypto,
-            dto.imagem
-         )
+         const ong = {
+            id: Id.gerarId(),
+            nome:dto.nome,
+            email: dto.email,
+            tipo: dto.tipo,
+            missao: dto.missao,
+            cnpj: dto.cnpj,
+            descricao: dto.descricao,
+            visao: dto.visao,
+            areaAtuacao: dto.areaAtuacao,
+            endereco: dto.endereco,
+            senha:senhaCrypto,
+           
+         }
         return await this.ongDb.registrar(ong)
 
         
