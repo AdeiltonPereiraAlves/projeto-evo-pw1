@@ -1,5 +1,5 @@
 import CasoDeUso from "../../../@types/CasoDeUso";
-import VoluntarioDb from "../../portas/VoluntarioDb";
+import VoluntarioDb from "./VoluntarioDb";
 
 export default class BuscarPorId implements CasoDeUso<string,any>{
     constructor(private voluntarioRepositorio: VoluntarioDb){}

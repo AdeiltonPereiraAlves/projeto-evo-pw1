@@ -18,13 +18,15 @@ export default class RegistrarVoluntarioController{
             }else{
                 imagemUp = "public/images/profile.png"
             }
-            const {nome, email, tipo, habilidades, interesses,disponibilidade,senha} = req.body 
+            const {nome, email, tipo,contato, cpf, habilidades, interesses,disponibilidade,senha} = req.body 
            
             try {
                 await this.casoDeUso.executar({
                     nome,
                     email,
                     tipo,
+                    contato,
+                    cpf,
                     habilidades,
                     interesses,
                     disponibilidade,

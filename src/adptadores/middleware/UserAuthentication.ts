@@ -1,9 +1,9 @@
 import { Request,Response, NextFunction } from "express";
-import UsuarioDb from "../../core/portas/VoluntarioDb";
+import UsuarioDb from "../../core/useCase/Voluntario/VoluntarioDb";
 import jwtPort from "../../core/portas/JwtPort";
 import JwtAdapter from "../auth/JwtAdapter";
 import Usuario from "../../core/model/usuario/Usuario";
-import VoluntarioDb from "../../core/portas/VoluntarioDb";
+import VoluntarioDb from "../../core/useCase/Voluntario/VoluntarioDb";
 import UsuarioType from "../../@types/UsuarioType";
 import UsuarioRepo from "../../core/portas/usuario/UsuarioRepo";
 declare global {

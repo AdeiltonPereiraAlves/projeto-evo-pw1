@@ -13,18 +13,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Usuario {
-  id         String      @id @default(uuid())
-  nome       String
-  email      String  @unique
-  senha      String?
-  imagem     String
-  tipo       TipoUsuario
-  voluntario Voluntario?
-  ong        Ong?
-   createdAt  DateTime @default(now()) // Criado automaticamente na inserção
-  updatedAt  DateTime @updatedAt      // Atualizado automaticamente na modificação
-}
 
 enum TipoUsuario {
   VOLUNTARIO
@@ -77,8 +65,13 @@ enum AreaAtuacao {
 
 model Voluntario {
   id              String            @id @default(uuid())
-  usuarioId       String            @unique
-  usuario         Usuario           @relation(fields: [usuarioId], references: [id])
+  nome       String
+  email      String  @unique
+  senha      String?
+  imagem     String
+  tipo       TipoUsuario
+  contato String
+  cpf String  @unique
   interesses      String[]
   habilidades     String[]
   disponibilidade Disponibilidade[]
@@ -89,8 +82,10 @@ model Voluntario {
 
 model Ong {
   id          String   @id @default(uuid())
-  usuarioId   String   @unique
-  usuario     Usuario  @relation(fields: [usuarioId], references: [id])
+  nome       String
+  email      String  @unique
+  senha      String?
+  tipo       TipoUsuario
   cnpj        String   @unique
   descricao   String
   missao       String
@@ -113,6 +108,7 @@ model Vaga{
   titulo String
   descricao String
   requisitos String[]
+  quantidade Int
   status Status
   duracao String
   localizacao String

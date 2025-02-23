@@ -4,7 +4,7 @@ import { Request, Response, Express } from "express";
 import LonginUsuario from "../../core/useCase/auth/LonginUsuario";
 import { Voluntario } from "@prisma/client";
 import OngRepositorioPort from "../../core/useCase/Ong/OngRepositorioPort";
-import VoluntarioDb from "../../core/portas/VoluntarioDb";
+import VoluntarioDb from "../../core/useCase/Voluntario/VoluntarioDb";
 export default class LoginUsuarioController{
     constructor(
         private servidor: Express,

@@ -1,6 +1,6 @@
-import Disponibilidade from "./Disponibilidade";
-import Tipo from "./Tipo";
-import UsuarioType from "./UsuarioType";
+import Disponibilidade from "../../../@types/Disponibilidade";
+import Tipo from "../../../@types/Tipo";
+
 
 export default interface VoluntarioType{
     id?: string;
