@@ -1,19 +1,17 @@
 import { Request,Response, NextFunction } from "express";
-import UsuarioDb from "../../core/useCase/Voluntario/VoluntarioDb";
+import voluntarioDb from "../../core/useCase/Voluntario/VoluntarioDb";
 import jwtPort from "../../core/portas/JwtPort";
 import JwtAdapter from "../auth/JwtAdapter";
-import Usuario from "../../core/model/usuario/Usuario";
 import VoluntarioDb from "../../core/useCase/Voluntario/VoluntarioDb";
-import UsuarioType from "../../@types/UsuarioType";
-import UsuarioRepo from "../../core/portas/usuario/UsuarioRepo";
+import OngRepositorioPort from "../../core/useCase/Ong/OngRepositorioPort";
 declare global {
     namespace Express {
       interface Request {
-        usuario?:UsuarioType; // Adicione a propriedade 'usuario'
+        usuario?:any; // Adicione a propriedade 'voluntario'
       }
     }
 }
-export default function UserAuthentication(_usuarioDb: Partial<UsuarioRepo>, _token: jwtPort){
+export default function UserAuthentication(voluntarioDb: VoluntarioDb,ongDb:OngRepositorioPort, _token: jwtPort){
      return  async (req:Request, res: Response, next: NextFunction) => {
 
         console.log("Chegou no middlware")
@@ -32,16 +30,22 @@ export default function UserAuthentication(_usuarioDb: Partial<UsuarioRepo>, _to
         const email = tokenPayload.email; // Acessa diretamente o email do payload
 
         console.log(email, "email")
-        const usuario = await _usuarioDb.buscarPorEmail!(email);
+        const voluntario = await voluntarioDb.buscarPorEmail!(email);
   
-        console.log(usuario, "Usuaraio no auth")
-        if(!usuario){
-            res.status(404).json("Token invalido")
-            return
+        console.log(voluntario, "Usuaraio no auth")
+        if(voluntario){
+            req.usuario= voluntario
+            next()
+            
+        }else if(!voluntario){
+            const ong = await ongDb.buscarPorEmail!(email);
+            req.usuario = ong
+            next()
+        }
+        else{
+            res.status(404).json("erro n aautenticacao")
         }
          
-        req.usuario = usuario
-        next()
         } catch (error) {
             res.status(404).json("Token invalido")
         } 

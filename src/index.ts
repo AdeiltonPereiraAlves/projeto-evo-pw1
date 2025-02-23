@@ -109,7 +109,7 @@ new LoginUsuarioController(app,loginVoluntario)
 
 const usuarioAutenticaoDb = new UsuarioAutenticao() // altentica o usuario dinamicamente retornando dados para o payload de uma ong ou voluntario
 const buscarVoluntarios = new BuscarVoluntarios(voluntarioDb)
-new buscarVoluntariosControllers(app,buscarVoluntarios,UserAuthentication(usuarioAutenticaoDb, provedorToken),UsuarioAutorizacao(["VOLUNTARIO","ONG"]) )
+new buscarVoluntariosControllers(app,buscarVoluntarios,UserAuthentication(voluntarioDb, ongDb, provedorToken),UsuarioAutorizacao(["VOLUNTARIO","ONG"]) )
 // UsuarioAutorizacao(["VOLUNTARIO"]) 
 //UserAuthentication(voluntarioDb, provedorToken)
 

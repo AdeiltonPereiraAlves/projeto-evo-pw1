@@ -54,6 +54,8 @@ export default class LonginUsuario implements CasoDeUso<Dto, Object> {
       nome: usuarioExistente.nome,
       email: usuarioExistente.email,
       tipo: usuarioExistente.tipo,
+      
+
     });
 
 

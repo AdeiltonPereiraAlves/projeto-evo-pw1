@@ -8,6 +8,7 @@ export default interface VoluntarioDb {
     // editarFoto(novaImagem: string,id: string| undefined): any
     excluir(id: string): any
     atualizar(voluntario:any):any
+    buscarPorEmail(email:string):any
     buscarTodos():any
 
 }

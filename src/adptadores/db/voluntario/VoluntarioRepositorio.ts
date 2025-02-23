@@ -1,10 +1,8 @@
-import { log } from "console";
+
 
 import VoluntarioDb from "../../../core/useCase/Voluntario/VoluntarioDb";
 import prismaDb from "../../prismaDb/Prisma";
-import UsuarioType from "../../../@types/UsuarioType";
 import VoluntarioType from "../../../@types/VoluntarioType";
-import imagemUpload from "../../middleware/ImagemUpload";
 import path from "path";
 import fs from 'fs/promises';
 
@@ -61,6 +59,18 @@ export default class VoluntarioRepositorio  implements VoluntarioDb{
 
   // buscar por email
  
+
+  async buscarPorEmail(email: string): Promise<any>  {
+
+    console.log(email, "email")
+    const voluntario =  await prismaDb.voluntario.findUnique({
+      where: { email},
+     
+    }) 
+
+    console.log(voluntario,"voluntario")
+    return voluntario
+  }
  
   //excluir voluntario
   async excluir(id: string):Promise<boolean>{
