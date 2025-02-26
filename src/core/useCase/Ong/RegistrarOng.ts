@@ -11,7 +11,7 @@ import OngRepositorioPort from "./OngRepositorioPort";
 export class RegistrarOng implements CasoDeUso<OngType, void>{
     constructor(private ongDb: OngRepositorioPort, private incryptarSenha: SenhaCriptografada){}
 
-    async executar(dto: OngType): Promise<void> {
+    async executar(dto: OngType) {
         const senhaCrypto = this.incryptarSenha.criptarSenha(dto.senha!)
         senhaCrypto?? Erros.SENHA_INVALIDA
          const ong = {
@@ -28,6 +28,7 @@ export class RegistrarOng implements CasoDeUso<OngType, void>{
             senha:senhaCrypto,
            
          }
+         console.log(ong,"ong" )
         return await this.ongDb.registrar(ong)
 
         

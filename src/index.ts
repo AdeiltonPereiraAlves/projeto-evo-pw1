@@ -37,8 +37,7 @@ import LonginUsuario from "./core/useCase/auth/LonginUsuario";
 import LoginUsuarioController from "./controllers/usuario/LoginUsuarioController";
 import BuscarUsuario from "./adptadores/db/usuario/UsuarioAutenticao";
 import UsuarioAutenticao from "./adptadores/db/usuario/UsuarioAutenticao";
-import EditarFotoPerfilOng from "./core/useCase/Ong/EditarFotoPerfilOng";
-import EditarFotoPerfilController from "./controllers/ong/EditarFotoController"
+
 import EditarOng from "./core/useCase/Ong/EditarOng";
 import EditarOngController from "./controllers/ong/EditarOngController";
 import VagaRepositorio from "./adptadores/db/vaga/VagaRepositorio";
@@ -163,10 +162,10 @@ new BuscarOngController(app, buscarOngs,UserAuthentication(voluntarioRepositorio
 // new EditarFotoPerfilController(app, editarFotoOng, UserAuthentication(usuarioAutenticaoDb, provedorToken),  middlewareImagem,UsuarioAutorizacao(["ONG"]))
 
 
-// //editar ong
+//editar ong
 
-// const editar = new EditarOng(ongRepositorio)
-// new EditarOngController(app,editar, UserAuthentication(usuarioAutenticaoDb, provedorToken),middlewareImagem)
+const editar = new EditarOng(ongRepositorio)
+new EditarOngController(app,editar, UserAuthentication(voluntarioRepositorio, ongRepositorio, provedorToken),middlewareImagem)
 
 
 

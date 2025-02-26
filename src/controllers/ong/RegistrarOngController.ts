@@ -19,7 +19,7 @@ export default class RegistrarOngController{
          try {
           
             const {nome,email, tipo, senha, cnpj, descricao, visao, missao,areaAtuacao,endereco } = req.body
-            console.log("chegou no controler ong")
+            console.log(req.body,"chegou no controler ong")
             const ong = await this.casoDeUso.executar(
                 {  
                     nome,

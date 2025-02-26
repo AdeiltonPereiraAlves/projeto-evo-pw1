@@ -19,41 +19,22 @@ export class OngRepositorio implements OngRepositorioPort {
     }
     
   }
+  async buscarPorId(id: string): Promise<any> {
+    const ong = await prismaDb.ong.findUnique({
+      where: { id },
+    
+    }) 
+    return ong
+  }
 
   async atualizar(ong:any): Promise<any> {
     try { 
-      console.log(ong.id,ong, "id do ong")
-       const ongAtual = await this.buscarPorId(ong.id)
-
-       if(!ong){
-         throw new Error("ong Nao encontrado")
-       }
-       let idUsuario = ""
-       console.log(ongAtual, "ong atual")
-      
-
-          idUsuario = ongAtual.ong.usuarioId 
-
-          console.log(idUsuario,"id usuario")
-          const usuarioAtualizado = await this.prisma.usuario.update({
-            where: { id: idUsuario },
+   
+          const usuarioAtualizado = await prismaDb.ong.update({
+            where: { id:ong.id },
             data: {
-              nome: ong.nome ?? ongAtual.nome, // Mantém o valor atual se não for fornecido
-              email: ong.email ?? ongAtual.email,
-              imagem: ong.imagem ?? ongAtual.imagem,
-              ong: {
-                update: {
-                    cnpj: ong.cnpj?? ongAtual.cnpj,
-                    descricao: ong.descricao?? ongAtual.descricao,
-                    missao: ong.missao?? ongAtual.missao,
-                    visao: ong.visao?? ongAtual.visao,
-                    areaAtuacao: ong.areaAtuacao?? ongAtual.areaAtuacao,
-                    endereco: ong.endereco?? ongAtual.endereco, 
-                },
-              },
-            },
-            include: {ong:true}
-          });
+              ...ong
+          }});
           return usuarioAtualizado
        
     } catch (error) {
@@ -84,14 +65,12 @@ export class OngRepositorio implements OngRepositorioPort {
         console.log('Erro: não há dados do voluntário ou a resposta é de erro');
     }
    
-      await this.prisma.ong.delete({
+      await prismaDb.ong.delete({
         where: { id: idV},
       });
 
       // Excluir o usuário
-      await this.prisma.usuario.delete({
-        where: { id: usuarioId },
-      });
+    
 
       return true
     } catch (error) {
@@ -104,7 +83,7 @@ export class OngRepositorio implements OngRepositorioPort {
   async registrar(ong: OngType): Promise<any> {
 
     try {
-      const ongRegistrada = await this.prisma.ong.create({
+      const ongRegistrada = await prismaDb.ong.create({
     
         data: {
         ...ong
@@ -122,10 +101,10 @@ export class OngRepositorio implements OngRepositorioPort {
   }
   async buscarVagasDeOng(id:string){
      try {
-        const ongComVagas = await this.prisma.ong.findUnique({
+        const ongComVagas = await prismaDb.ong.findUnique({
           where: {id},
           include: {
-            usuario: true, 
+            
             vagas: {
               include: {
                 inscricoes: true
@@ -150,5 +129,6 @@ export class OngRepositorio implements OngRepositorioPort {
     console.log(ong,"ong")
     return ong
   }
+ 
  
 }

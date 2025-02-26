@@ -5,10 +5,11 @@ import UsuarioRepo from "../../portas/usuario/UsuarioRepo";
 export default interface OngRepositorioPort {
     registrar(ong:OngType):any
     excluir(id:string):any
-    atualizar(voluntario:any):any
+    atualizar(ong:any):any
     buscarTodos():any
     buscarVagasDeOng(id:string):any
     buscarPorEmail(email:string):any
+    
     
 
 
