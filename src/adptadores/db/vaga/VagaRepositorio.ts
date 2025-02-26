@@ -1,5 +1,4 @@
 import VagaType from "../../../@types/VagaType";
-import Usuario from "../../../core/model/usuario/Usuario";
 import VagaRepositorioPort from "../../../core/useCase/vaga/VagaRepositorioPort";
 import prismaDb from "../../prismaDb/Prisma";
 export default class VagaRepositorio implements VagaRepositorioPort {
@@ -39,7 +38,7 @@ export default class VagaRepositorio implements VagaRepositorioPort {
     try {
       const vagas = await prismaDb.vaga.findMany({
         include: {
-          ong: { include: { usuario: true } },
+          ong: true,
         },
       });
 

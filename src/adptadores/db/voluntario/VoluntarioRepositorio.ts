@@ -3,8 +3,7 @@
 import VoluntarioRepositorioPort from "../../../core/useCase/Voluntario/VoluntarioRepositorioPort";
 import prismaDb from "../../prismaDb/Prisma";
 import VoluntarioType from "../../../@types/VoluntarioType";
-import path from "path";
-import fs from 'fs/promises';
+
 import { Inscricao } from "@prisma/client";
 
 export default class VoluntarioRepositorio  implements VoluntarioRepositorioPort{
