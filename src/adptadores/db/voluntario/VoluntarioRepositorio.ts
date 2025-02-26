@@ -101,12 +101,12 @@ export default class VoluntarioRepositorio  implements VoluntarioDb{
   async atualizar(voluntario:VoluntarioType):Promise<VoluntarioType| any>{
      try { 
        
-           const usuarioAtualizado = await prismaDb.voluntario.update({
+           const voluntarioAtualizado = await prismaDb.voluntario.update({
              where: { id: voluntario.id },
             
              data: {...voluntario }
            });
-           return usuarioAtualizado
+           return voluntarioAtualizado
         
      } catch (error) {
       console.error("Erro ao alterar  voluntario:", error);

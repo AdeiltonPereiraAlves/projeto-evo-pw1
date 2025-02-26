@@ -118,17 +118,17 @@ new buscarVoluntariosControllers(app,buscarVoluntarios,UserAuthentication(volunt
 const editarFoto = new EditarFotoPerfil(voluntarioRepositorio)
 new EditarFotoController(app,editarFoto,UserAuthentication(voluntarioRepositorio, ongRepositorio, provedorToken), middlewareImagem, UsuarioAutorizacao(["VOLUNTARIO"]))
 
-// // //excluir voluntario
+// //excluir voluntario
 
-// const excluirVoluntario = new ExcluirVoluntario(voluntarioRepositorio)
-// new ExcluirVoluntarioController(app, excluirVoluntario,middlewareValidador)
-// //UserAuthentication(voluntarioRepositorio, provedorToken),
+const excluirVoluntario = new ExcluirVoluntario(voluntarioRepositorio)
+new ExcluirVoluntarioController(app, excluirVoluntario,middlewareValidador)
+//UserAuthentication(voluntarioRepositorio, provedorToken),
 
 
-// // //editar voluntario
+// //editar voluntario
 
-// const editarVoluntario = new EditarVoluntario(voluntarioRepositorio)
-// new EditarVoluntarioController(app,editarVoluntario, middlewareValidador,UserAuthentication(usuarioAutenticaoDb, provedorToken),middlewareImagem, UsuarioAutorizacao(["VOLUNTARIO"]))
+const editarVoluntario = new EditarVoluntario(voluntarioRepositorio)
+new EditarVoluntarioController(app,editarVoluntario, middlewareValidador,UserAuthentication(voluntarioRepositorio, ongRepositorio, provedorToken),middlewareImagem, UsuarioAutorizacao(["VOLUNTARIO"]))
 
 
 // //------------------------------------------------ONG----------------------------------------------------------------------------------------------------
