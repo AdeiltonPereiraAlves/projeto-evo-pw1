@@ -20,6 +20,7 @@ export default class RegistrarVagaController{
                     titulo: req.body.titulo,
                     descricao: req.body.descricao,
                     requisitos:req.body.requisitos,
+                    quantidade:req.body.quantidade,
                     status: req.body.status,
                     duracao: req.body.duracao,
                     localizacao: req.body.localizacao,

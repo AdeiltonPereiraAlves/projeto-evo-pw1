@@ -12,6 +12,7 @@ export default class RegistrarVaga implements CasoDeUso<Vagatype, any>{
                 titulo: dto.titulo,
                 descricao: dto.descricao,
                 requisitos:dto.requisitos,
+                quantidade:dto.quantidade,
                 status: dto.status,
                 duracao: dto.duracao,
                 localizacao: dto.localizacao,

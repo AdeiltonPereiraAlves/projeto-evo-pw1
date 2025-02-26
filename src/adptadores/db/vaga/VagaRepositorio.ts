@@ -24,17 +24,7 @@ export default class VagaRepositorio implements VagaRepositorioPort {
       console.log(vaga, "vaga repo");
       const vagaRegistrada = await prismaDb.vaga.create({
         data: {
-          id: vaga.id,
-          titulo: vaga.titulo,
-          descricao: vaga.descricao,
-          requisitos: vaga.requisitos,
-          status: vaga.status,
-          duracao: vaga.duracao,
-          localizacao: vaga.localizacao,
-          tipoTrabalho: vaga.tipoTrabalho,
-          latitude: vaga.latitude,
-          longitude: vaga.longitude,
-          ongId: vaga.ongId,
+        ...vaga
         },
       });
 

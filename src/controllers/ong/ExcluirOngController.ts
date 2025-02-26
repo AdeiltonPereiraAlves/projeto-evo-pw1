@@ -9,7 +9,7 @@ export default class ExcluirOngController{
         const excluirOng = async (req:Request, res:Response) => {
             try {
                 //  const id = req.usuario!.id
-                const {id} = req.params
+                const {id} = req.usuario
                  
                  const respota = await this.casoDeUso.executar(id!)
 
@@ -23,6 +23,6 @@ export default class ExcluirOngController{
              }
         }
 
-        this.servidor.delete("/deletar/:id",...middleware, excluirOng)
+        this.servidor.delete("/deletar",...middleware, excluirOng)
     }
 }

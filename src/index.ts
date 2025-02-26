@@ -148,7 +148,7 @@ const login = new LonginUsuario(voluntarioRepositorio,ongRepositorio,provedorTok
 new LoginUsuarioController(app, login, )
 // // //excluir
 const excluirOng = new ExcluirOng(ongRepositorio)
-new ExcluirOngController(app, excluirOng, middlewareValidador)
+new ExcluirOngController(app, excluirOng, middlewareValidador, UserAuthentication(voluntarioRepositorio, ongRepositorio, provedorToken), UsuarioAutorizacao(["ONG"]))
 
 // //buscar ongs
 
@@ -173,10 +173,10 @@ new EditarOngController(app,editar, UserAuthentication(voluntarioRepositorio, on
 // //--------------------------------------------------VAGA-----------------------------------------------------------------------------------------
 // // registrar vaga
 
-// const vagaRepositorio = new VagaRepositorio()
-// const registrarVaga = new RegistrarVaga(vagaRepositorio)
+const vagaRepositorio = new VagaRepositorio()
+const registrarVaga = new RegistrarVaga(vagaRepositorio)
 
-// new RegistrarVagaController(app, registrarVaga, UserAuthentication(usuarioAutenticaoDb, provedorToken),UsuarioAutorizacao(["ONG"]) )
+new RegistrarVagaController(app, registrarVaga, UserAuthentication(voluntarioRepositorio, ongRepositorio, provedorToken),UsuarioAutorizacao(["ONG"]) )
 
 // // buscar vagas
 

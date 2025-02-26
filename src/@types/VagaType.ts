@@ -6,6 +6,7 @@ export default interface Vagatype {
   titulo: string;
   descricao: string;
   requisitos: string[];
+  quantidade: number;
   status: Status;
   duracao: string;
   localizacao: string;
