@@ -147,8 +147,8 @@ new RegistrarOngController(app, registrarOng )
 const login = new LonginUsuario(voluntarioRepositorio,ongRepositorio,provedorToken  ,senhaCrypto )
 new LoginUsuarioController(app, login, )
 // // //excluir
-// const excluirOng = new ExcluirOng(ongRepositorio)
-// new ExcluirOngController(app, excluirOng, middlewareValidador)
+const excluirOng = new ExcluirOng(ongRepositorio)
+new ExcluirOngController(app, excluirOng, middlewareValidador)
 
 // //buscar ongs
 

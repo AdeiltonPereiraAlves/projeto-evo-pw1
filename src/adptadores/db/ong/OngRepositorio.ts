@@ -46,28 +46,11 @@ export class OngRepositorio implements OngRepositorioPort {
   
   async excluir(id: string):Promise<boolean> {
     try {
-      const  resposta = await this.buscarPorId(id);
-      let usuarioId = ""
-      let idV =""
-      if (!resposta) {
-       throw new Error("ong Nao encontrada")
-      }
-      console.log(resposta, "resposta")
-      if ('ong' in resposta && resposta.ong !== null) {
-        usuarioId = resposta.ong.usuarioId;
-        idV = resposta.ong.id
-
-        console.log(idV, "idv")
-        const imagePath = path.resolve(`public/images/ongs/${resposta.imagem}`);
-        await fs.unlink(imagePath).catch(() => console.log('Imagem já foi excluída.'));
-        console.log('ID do usuário:', usuarioId);
-    } else {
-        console.log('Erro: não há dados do voluntário ou a resposta é de erro');
-    }
+      
    
       await prismaDb.ong.delete({
-        where: { id: idV},
-      });
+        where: { id},
+      }); 
 
       // Excluir o usuário
     

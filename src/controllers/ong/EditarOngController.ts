@@ -37,7 +37,7 @@ export default class EditarOngController {
 
 
                 voluntarioEditado.senha = undefined // deixa a senha undefined
-
+         
                 res.status(200).json(voluntarioEditado)
             } catch (error: any) {
                 res.status(400).send(error.message)

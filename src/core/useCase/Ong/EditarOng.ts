@@ -10,39 +10,39 @@ export type editarOngDto = {
     nome: string,
     email: string,
     descricao: string
-    missao :string
+    missao: string
     visao: string
     areaAtuacao: AreaAtuacao[]
     endereco: string
 }
 
-export default class EditarOng implements CasoDeUso<editarOngDto,any>{
+export default class EditarOng implements CasoDeUso<editarOngDto, any> {
     constructor(
-        private ong:OngRepositorioPort
+        private ong: OngRepositorioPort
     ) {
 
     }
-    async executar(dto: editarOngDto){
-      const buscarOng = new BuscarOngPorId(this.ong)
-      const ong =  await buscarOng.executar(dto.id!)
-     
-       if(!ong) throw new Error("Ong não existe")
+    async executar(dto: editarOngDto) {
+        const buscarOng = new BuscarOngPorId(this.ong)
+        const ong = await buscarOng.executar(dto.id!)
+
+        if (!ong) throw new Error("Ong não existe")
 
         const ongEditar = {
-            id:ong.id!,
+            id: ong.id!,
             nome: dto.nome ?? ong.nome, // Mantém o valor atual se não for fornecido
             email: dto.email ?? ong.email,
-            
-          
-                 
-                  descricao: dto.descricao?? ong.descricao,
-                  missao: dto.missao?? ong.missao,
-                  visao: dto.visao?? ong.visao,
-                  areaAtuacao: dto.areaAtuacao?? ong.areaAtuacao,
-                  endereco: dto.endereco?? ong.endereco, 
-           
+
+
+
+            descricao: dto.descricao ?? ong.descricao,
+            missao: dto.missao ?? ong.missao,
+            visao: dto.visao ?? ong.visao,
+            areaAtuacao: dto.areaAtuacao ?? ong.areaAtuacao,
+            endereco: dto.endereco ?? ong.endereco,
+
         }
-       const resposta = await this.ong.atualizar(ongEditar)
-       return resposta
+        const resposta = await this.ong.atualizar(ongEditar)
+        return resposta
     }
 }
