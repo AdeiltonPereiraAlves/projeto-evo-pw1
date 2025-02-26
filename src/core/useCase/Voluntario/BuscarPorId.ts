@@ -1,15 +1,16 @@
 import CasoDeUso from "../../../@types/CasoDeUso";
-import VoluntarioDb from "../../portas/VoluntarioDb";
+import VoluntarioType from "../../model/voluntario/VoluntarioType";
+import voluntarioRepositorio from "./VoluntarioRepositorio";
 
-export default class BuscarPorId implements CasoDeUso<string,any>{
-    constructor(private voluntarioRepositorio: VoluntarioDb){}
-    async executar(id: string): Promise<any> {
+export default class BuscarPorId implements CasoDeUso<string,VoluntarioType>{
+    constructor(private voluntarioRepositorio: voluntarioRepositorio){}
+    async executar(id: string){
         try {
            const voluntarioExistente = await this.voluntarioRepositorio.buscarPorId(id)
            return voluntarioExistente
         } catch (error) {
             
-            throw new Error("Method not implemented.");
+            throw new Error("Erro ao buscar voluntario por id");
         }
     }
 

@@ -25,7 +25,7 @@ export default class EditarFotoController{
                 }
                 const fotoDto: fotoDto = {
                     imagem: imagemUp,
-                    id: voluntario.usuario.id
+                    id: voluntario.id
                 }
                 const voluntarioAtual = await this.casoDeUso.executar(fotoDto)
                

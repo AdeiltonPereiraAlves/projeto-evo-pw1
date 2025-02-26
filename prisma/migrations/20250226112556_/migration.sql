@@ -13,24 +13,19 @@ CREATE TYPE "AreaAtuacao" AS ENUM ('EDUCACAO', 'SAUDE', 'AMBIENTE', 'TECNOLOGIA'
 -- CreateEnum
 CREATE TYPE "TipoTrabalho" AS ENUM ('PRESENCIAL', 'REMOTO', 'HIBRIDO');
 
+-- CreateEnum
+CREATE TYPE "StatusInscricao" AS ENUM ('pendente', 'aprovado', 'rejeitado');
+
 -- CreateTable
-CREATE TABLE "Usuario" (
+CREATE TABLE "Voluntario" (
     "id" TEXT NOT NULL,
     "nome" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "senha" TEXT,
     "imagem" TEXT NOT NULL,
     "tipo" "TipoUsuario" NOT NULL,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3) NOT NULL,
-
-    CONSTRAINT "Usuario_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "Voluntario" (
-    "id" TEXT NOT NULL,
-    "usuarioId" TEXT NOT NULL,
+    "contato" TEXT NOT NULL,
+    "cpf" TEXT NOT NULL,
     "interesses" TEXT[],
     "habilidades" TEXT[],
     "disponibilidade" "Disponibilidade"[],
@@ -41,7 +36,10 @@ CREATE TABLE "Voluntario" (
 -- CreateTable
 CREATE TABLE "Ong" (
     "id" TEXT NOT NULL,
-    "usuarioId" TEXT NOT NULL,
+    "nome" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
+    "senha" TEXT,
+    "tipo" "TipoUsuario" NOT NULL,
     "cnpj" TEXT NOT NULL,
     "descricao" TEXT NOT NULL,
     "missao" TEXT NOT NULL,
@@ -59,6 +57,7 @@ CREATE TABLE "Vaga" (
     "titulo" TEXT NOT NULL,
     "descricao" TEXT NOT NULL,
     "requisitos" TEXT[],
+    "quantidade" INTEGER NOT NULL,
     "status" "Status" NOT NULL,
     "duracao" TEXT NOT NULL,
     "localizacao" TEXT NOT NULL,
@@ -77,7 +76,7 @@ CREATE TABLE "Inscricao" (
     "voluntarioId" TEXT NOT NULL,
     "vagaId" TEXT NOT NULL,
     "data" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "status" "Status" NOT NULL,
+    "status" "StatusInscricao" NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -101,22 +100,16 @@ CREATE TABLE "Avaliacao" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Usuario_email_key" ON "Usuario"("email");
+CREATE UNIQUE INDEX "Voluntario_email_key" ON "Voluntario"("email");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Voluntario_usuarioId_key" ON "Voluntario"("usuarioId");
+CREATE UNIQUE INDEX "Voluntario_cpf_key" ON "Voluntario"("cpf");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Ong_usuarioId_key" ON "Ong"("usuarioId");
+CREATE UNIQUE INDEX "Ong_email_key" ON "Ong"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Ong_cnpj_key" ON "Ong"("cnpj");
-
--- AddForeignKey
-ALTER TABLE "Voluntario" ADD CONSTRAINT "Voluntario_usuarioId_fkey" FOREIGN KEY ("usuarioId") REFERENCES "Usuario"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "Ong" ADD CONSTRAINT "Ong_usuarioId_fkey" FOREIGN KEY ("usuarioId") REFERENCES "Usuario"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Vaga" ADD CONSTRAINT "Vaga_ongId_fkey" FOREIGN KEY ("ongId") REFERENCES "Ong"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

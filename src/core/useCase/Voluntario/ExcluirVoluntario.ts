@@ -1,5 +1,5 @@
 import CasoDeUso from "../../../@types/CasoDeUso";
-import VoluntarioDb from "../../portas/VoluntarioDb";
+import VoluntarioDb from "./VoluntarioRepositorio";
 
 export default class ExcluirVoluntario implements CasoDeUso<string, void>{
     constructor(

@@ -3,12 +3,14 @@ import path from 'path'
 import fs from "fs";
 import { Request } from "express";
 import UsuarioType from "../../@types/UsuarioType";
+import VoluntarioType from "../../@types/VoluntarioType";
+import OngType from "../../@types/OngType";
 
 declare global {
     namespace Express {
       interface Request {
         file?: Multer.File;
-        usuario?: UsuarioType
+        usuario?:any
       }
     }
   }
@@ -19,9 +21,9 @@ const imageStore = multer.diskStorage({
         
         console.log(usuario, "no midleware ")
         let pasta = ""
-        if(usuario?.usuario!.tipo === "VOLUNTARIO"){
+        if(usuario?.tipo === "VOLUNTARIO"){
              pasta = "voluntarios"
-        }else if(usuario?.usuario!.tipo === "ONG"){
+        }else if(usuario?.tipo === "ONG"){
               pasta = "ongs"
         }
 

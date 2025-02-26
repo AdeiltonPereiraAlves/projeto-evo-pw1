@@ -90,8 +90,8 @@ app.listen(port, () => {
 
 
 const senhaCrypto = new Bcrypt()
-const voluntarioDb = new VoluntarioRepositorio();
-const registrarVoluntario = new RegistrarVoluntario(voluntarioDb,senhaCrypto)
+const voluntarioRepositorio = new VoluntarioRepositorio();
+const registrarVoluntario = new RegistrarVoluntario(voluntarioRepositorio,senhaCrypto)
 const middlewareValidador = middlewareValidator
 const provedorToken = new  JwtAdapter(secret!)
 
@@ -100,136 +100,136 @@ console.log(provedorToken,"provedor token")
 
 
 //--------------------------------VOLUNTARIO------------------------------------------------------------------------------------------------------
-const ongDb = new OngRepositorio()
-const loginVoluntario = new LonginUsuario(voluntarioDb,ongDb, provedorToken  ,senhaCrypto)
+const ongRepositorio = new OngRepositorio()
+const loginVoluntario = new LonginUsuario(voluntarioRepositorio,ongRepositorio, provedorToken  ,senhaCrypto)
 
 const middlewareImagem = imagemUpload.single("imagem")
 new RegistrarVoluntarioController(app,registrarVoluntario,middlewareValidador,middlewareImagem )
 new LoginUsuarioController(app,loginVoluntario)
 
 const usuarioAutenticaoDb = new UsuarioAutenticao() // altentica o usuario dinamicamente retornando dados para o payload de uma ong ou voluntario
-const buscarVoluntarios = new BuscarVoluntarios(voluntarioDb)
-new buscarVoluntariosControllers(app,buscarVoluntarios,UserAuthentication(usuarioAutenticaoDb, provedorToken),UsuarioAutorizacao(["VOLUNTARIO","ONG"]) )
+const buscarVoluntarios = new BuscarVoluntarios(voluntarioRepositorio)
+new buscarVoluntariosControllers(app,buscarVoluntarios,UserAuthentication(voluntarioRepositorio, ongRepositorio, provedorToken),UsuarioAutorizacao(["VOLUNTARIO","ONG"]) )
 // UsuarioAutorizacao(["VOLUNTARIO"]) 
-//UserAuthentication(voluntarioDb, provedorToken)
+//UserAuthentication(voluntarioRepositorio, provedorToken)
 
 // atualiza foto perfil voluntario
-const usuarioDb = new UsuarioRepositorio("VOLUNTARIO","//")
-const editarFoto = new EditarFotoPerfil(voluntarioDb)
-new EditarFotoController(app,editarFoto,UserAuthentication(usuarioAutenticaoDb, provedorToken), middlewareImagem, UsuarioAutorizacao(["VOLUNTARIO"]))
 
-// //excluir voluntario
+const editarFoto = new EditarFotoPerfil(voluntarioRepositorio)
+new EditarFotoController(app,editarFoto,UserAuthentication(voluntarioRepositorio, ongRepositorio, provedorToken), middlewareImagem, UsuarioAutorizacao(["VOLUNTARIO"]))
 
-const excluirVoluntario = new ExcluirVoluntario(voluntarioDb)
-new ExcluirVoluntarioController(app, excluirVoluntario,middlewareValidador)
-//UserAuthentication(voluntarioDb, provedorToken),
+// // //excluir voluntario
 
-
-// //editar voluntario
-
-const editarVoluntario = new EditarVoluntario(voluntarioDb)
-new EditarVoluntarioController(app,editarVoluntario, middlewareValidador,UserAuthentication(usuarioAutenticaoDb, provedorToken),middlewareImagem, UsuarioAutorizacao(["VOLUNTARIO"]))
+// const excluirVoluntario = new ExcluirVoluntario(voluntarioRepositorio)
+// new ExcluirVoluntarioController(app, excluirVoluntario,middlewareValidador)
+// //UserAuthentication(voluntarioRepositorio, provedorToken),
 
 
-//------------------------------------------------ONG----------------------------------------------------------------------------------------------------
-// rotas para ong
+// // //editar voluntario
+
+// const editarVoluntario = new EditarVoluntario(voluntarioRepositorio)
+// new EditarVoluntarioController(app,editarVoluntario, middlewareValidador,UserAuthentication(usuarioAutenticaoDb, provedorToken),middlewareImagem, UsuarioAutorizacao(["VOLUNTARIO"]))
+
+
+// //------------------------------------------------ONG----------------------------------------------------------------------------------------------------
+// // rotas para ong
 
 //registrar
-const registrarOng = new RegistrarOng(ongDb,senhaCrypto )
+const registrarOng = new RegistrarOng(ongRepositorio,senhaCrypto )
 
 new RegistrarOngController(app, registrarOng )
 //login
-// const login = new LonginUsuario(ongDb,provedorToken  ,senhaCrypto )
-// new LoginUsuarioController(app, login, )
-// //excluir
-const excluirOng = new ExcluirOng(ongDb)
-new ExcluirOngController(app, excluirOng, middlewareValidador)
+const login = new LonginUsuario(voluntarioRepositorio,ongRepositorio,provedorToken  ,senhaCrypto )
+new LoginUsuarioController(app, login, )
+// // //excluir
+// const excluirOng = new ExcluirOng(ongRepositorio)
+// new ExcluirOngController(app, excluirOng, middlewareValidador)
 
-//buscar ongs
+// //buscar ongs
 
-const buscarOngs = new BuscarOngs(ongDb)
-new BuscarOngController(app, buscarOngs,UserAuthentication(usuarioAutenticaoDb, provedorToken),UsuarioAutorizacao(["VOLUNTARIO","ONG"]))
+const buscarOngs = new BuscarOngs(ongRepositorio)
+new BuscarOngController(app, buscarOngs,UserAuthentication(voluntarioRepositorio, ongRepositorio, provedorToken),UsuarioAutorizacao(["VOLUNTARIO","ONG"]))
 
-// editar foto ong
-const ongRepo = new UsuarioRepositorio("ONG","//")
-const editarFotoOng = new EditarFotoPerfilOng(ongRepo)
+// // editar foto ong
+// const ongRepo = new UsuarioRepositorio("ONG","//")
+// const editarFotoOng = new EditarFotoPerfilOng(ongRepo)
 
-new EditarFotoPerfilController(app, editarFotoOng, UserAuthentication(usuarioAutenticaoDb, provedorToken),  middlewareImagem,UsuarioAutorizacao(["ONG"]))
-
-
-//editar ong
-
-const editar = new EditarOng(ongDb)
-new EditarOngController(app,editar, UserAuthentication(usuarioAutenticaoDb, provedorToken),middlewareImagem)
+// new EditarFotoPerfilController(app, editarFotoOng, UserAuthentication(usuarioAutenticaoDb, provedorToken),  middlewareImagem,UsuarioAutorizacao(["ONG"]))
 
 
+// //editar ong
 
-
-//--------------------------------------------------VAGA-----------------------------------------------------------------------------------------
-// registrar vaga
-
-const vagaRepositorio = new VagaRepositorio()
-const registrarVaga = new RegistrarVaga(vagaRepositorio)
-
-new RegistrarVagaController(app, registrarVaga, UserAuthentication(usuarioAutenticaoDb, provedorToken),UsuarioAutorizacao(["ONG"]) )
-
-// buscar vagas
-
-const listarVagas = new ListarVagas(vagaRepositorio)
-new ListarVagasController(app, listarVagas,)
-
-//listar vaga por id
-
-const buscarVagaPorId = new BuscarVagaPorId(vagaRepositorio)
-new BuscarVagaPorIdController(app, buscarVagaPorId, UserAuthentication(usuarioAutenticaoDb,provedorToken), UsuarioAutorizacao(["ONG","VOLUNTARIO"]))
-
-//deletar vaga
-
-const excluirVaga = new ExcluirVaga(vagaRepositorio)
-new ExcluirVagaController(app, excluirVaga)
-
-//atualizar vaga 
-const editarVaga = new EditarVaga(vagaRepositorio)
-new EditarVagaController(app, editarVaga, UserAuthentication(usuarioAutenticaoDb,provedorToken), UsuarioAutorizacao(["ONG"]), middlewareValidador)
-
-// filtrar vaga 
-
-const filtrarVaga = new filtrarVagas(vagaRepositorio)
-new FiltrarVagaController(app, filtrarVaga)
+// const editar = new EditarOng(ongRepositorio)
+// new EditarOngController(app,editar, UserAuthentication(usuarioAutenticaoDb, provedorToken),middlewareImagem)
 
 
 
-//--------------------------------------------------INSCRICAO E AVALIACAO-----------------------------------------------------------------------------------------
-// Inscricao
-const inscricaoRepositorio = new InscricaoRepositorio();
-const registrarInscricao = new RegistrarInscricao(inscricaoRepositorio);
-const buscarInscricaoPorId = new BuscarInscricaoPorId(inscricaoRepositorio);
-const atualizarInscricao = new AtualizarInscricao(inscricaoRepositorio);
-const excluirInscricao = new ExcluirInscricao(inscricaoRepositorio);
 
-new InscricaoController(
-  app,
-  registrarInscricao,
-  buscarInscricaoPorId,
-  atualizarInscricao,
-  excluirInscricao,
-  UserAuthentication(usuarioAutenticaoDb, provedorToken),
-  UsuarioAutorizacao(["VOLUNTARIO", "ONG"])
-);
+// //--------------------------------------------------VAGA-----------------------------------------------------------------------------------------
+// // registrar vaga
 
-// Avaliacao
-const avaliacaoRepositorio = new AvaliacaoRepositorio();
-const registrarAvaliacao = new RegistrarAvaliacao(avaliacaoRepositorio);
-const buscarAvaliacaoPorId = new BuscarAvaliacaoPorId(avaliacaoRepositorio);
-const atualizarAvaliacao = new AtualizarAvaliacao(avaliacaoRepositorio);
-const excluirAvaliacao = new ExcluirAvaliacao(avaliacaoRepositorio);
+// const vagaRepositorio = new VagaRepositorio()
+// const registrarVaga = new RegistrarVaga(vagaRepositorio)
 
-new AvaliacaoController(
-  app,
-  registrarAvaliacao,
-  buscarAvaliacaoPorId,
-  atualizarAvaliacao,
-  excluirAvaliacao,
-  UserAuthentication(usuarioAutenticaoDb, provedorToken),
-  UsuarioAutorizacao(["VOLUNTARIO", "ONG"])
-);
+// new RegistrarVagaController(app, registrarVaga, UserAuthentication(usuarioAutenticaoDb, provedorToken),UsuarioAutorizacao(["ONG"]) )
+
+// // buscar vagas
+
+// const listarVagas = new ListarVagas(vagaRepositorio)
+// new ListarVagasController(app, listarVagas,)
+
+// //listar vaga por id
+
+// const buscarVagaPorId = new BuscarVagaPorId(vagaRepositorio)
+// new BuscarVagaPorIdController(app, buscarVagaPorId, UserAuthentication(usuarioAutenticaoDb,provedorToken), UsuarioAutorizacao(["ONG","VOLUNTARIO"]))
+
+// //deletar vaga
+
+// const excluirVaga = new ExcluirVaga(vagaRepositorio)
+// new ExcluirVagaController(app, excluirVaga)
+
+// //atualizar vaga 
+// const editarVaga = new EditarVaga(vagaRepositorio)
+// new EditarVagaController(app, editarVaga, UserAuthentication(usuarioAutenticaoDb,provedorToken), UsuarioAutorizacao(["ONG"]), middlewareValidador)
+
+// // filtrar vaga 
+
+// const filtrarVaga = new filtrarVagas(vagaRepositorio)
+// new FiltrarVagaController(app, filtrarVaga)
+
+
+
+// //--------------------------------------------------INSCRICAO E AVALIACAO-----------------------------------------------------------------------------------------
+// // Inscricao
+// const inscricaoRepositorio = new InscricaoRepositorio();
+// const registrarInscricao = new RegistrarInscricao(inscricaoRepositorio);
+// const buscarInscricaoPorId = new BuscarInscricaoPorId(inscricaoRepositorio);
+// const atualizarInscricao = new AtualizarInscricao(inscricaoRepositorio);
+// const excluirInscricao = new ExcluirInscricao(inscricaoRepositorio);
+
+// new InscricaoController(
+//   app,
+//   registrarInscricao,
+//   buscarInscricaoPorId,
+//   atualizarInscricao,
+//   excluirInscricao,
+//   UserAuthentication(usuarioAutenticaoDb, provedorToken),
+//   UsuarioAutorizacao(["VOLUNTARIO", "ONG"])
+// );
+
+// // Avaliacao
+// const avaliacaoRepositorio = new AvaliacaoRepositorio();
+// const registrarAvaliacao = new RegistrarAvaliacao(avaliacaoRepositorio);
+// const buscarAvaliacaoPorId = new BuscarAvaliacaoPorId(avaliacaoRepositorio);
+// const atualizarAvaliacao = new AtualizarAvaliacao(avaliacaoRepositorio);
+// const excluirAvaliacao = new ExcluirAvaliacao(avaliacaoRepositorio);
+
+// new AvaliacaoController(
+//   app,
+//   registrarAvaliacao,
+//   buscarAvaliacaoPorId,
+//   atualizarAvaliacao,
+//   excluirAvaliacao,
+//   UserAuthentication(usuarioAutenticaoDb, provedorToken),
+//   UsuarioAutorizacao(["VOLUNTARIO", "ONG"])
+// );

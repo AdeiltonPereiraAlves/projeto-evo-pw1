@@ -1,6 +1,6 @@
 import CasoDeUso from "../../../@types/CasoDeUso";
 import Disponibilidade from "../../../@types/Disponibilidade";
-import VoluntarioDb from "../../portas/VoluntarioDb";
+import VoluntarioDb from "./VoluntarioRepositorio";
 import BuscarPorId from "./BuscarPorId";
 
 export type editarVoluntarioDto = {
@@ -10,7 +10,6 @@ export type editarVoluntarioDto = {
     tipo?:any,
     habilidades: string[],
     interesses: string[],
-
     disponibilidade: Disponibilidade[],
     imagem: string 
 }
@@ -34,7 +33,7 @@ export default class EditarVoluntario implements CasoDeUso<editarVoluntarioDto,a
       
        
 
-           id = voluntarioExistente.voluntario.usuarioId 
+           id = voluntarioExistente.id!
            const dados = {
             id,
             nome: dto.nome ?? voluntarioExistente.nome, // Mantém o valor atual se não for fornecido
@@ -43,9 +42,9 @@ export default class EditarVoluntario implements CasoDeUso<editarVoluntarioDto,a
             imagem: dto.imagem ?? voluntarioExistente.imagem,
             voluntario: {
               update: {
-                habilidades: dto.habilidades ?? voluntarioExistente.voluntario.habilidades,
-                interesses: dto.interesses ?? voluntarioExistente.voluntario.interesses,
-                disponibilidade: dto.disponibilidade ?? voluntarioExistente.voluntario.disponibilidade,
+                habilidades: dto.habilidades ?? voluntarioExistente.habilidades,
+                interesses: dto.interesses ?? voluntarioExistente.interesses,
+                disponibilidade: dto.disponibilidade ?? voluntarioExistente.disponibilidade,
               },
             },
            }

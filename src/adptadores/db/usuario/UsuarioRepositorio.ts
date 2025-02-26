@@ -1,10 +1,12 @@
-// BaseUsuarioRepositorio.ts
+// BasevoluntarioRepositorio.ts
 import { PrismaClient } from "@prisma/client";
 
-import  UsuarioType  from "../../../@types/UsuarioType";
-import UsuarioRepo from "../../../core/portas/usuario/UsuarioRepo";
+import  voluntarioType  from "../../../@types/voluntarioType";
+import voluntarioRepo from "../../../core/portas/voluntario/voluntarioRepo";
+import prismaDb from "../../prismaDb/Prisma";
+import VoluntarioType from "../../../@types/VoluntarioType";
 
-export default  class BaseUsuarioRepositorio  implements UsuarioRepo{
+export default  class BasevoluntarioRepositorio  implements voluntarioRepo{
   protected prisma: PrismaClient;
   protected tipo: "ONG" | "VOLUNTARIO";
   protected pastaImagens: string; 
@@ -19,33 +21,33 @@ export default  class BaseUsuarioRepositorio  implements UsuarioRepo{
   async buscarPorEmail(email: string): Promise<any>  {
 
     console.log(email,this.tipo, "email")
-    const usuario =  await this.prisma.usuario.findUnique({
+    const voluntario =  await this.prisma.voluntario.findUnique({
       where: { email, tipo: this.tipo },
       include: { [this.tipo.toLowerCase()]: true },
     }) as any;
 
-    console.log(usuario,"usuariodb")
-    return usuario
+    console.log(voluntario,"voluntariodb")
+    return voluntario
   }
 
   async buscarPorId(id: string): Promise<any> {
-    const usuario = await this.prisma.usuario.findUnique({
-      where: { id, tipo: this.tipo },
-      include: { [this.tipo.toLowerCase()]: true },
-    }) as any
-    return usuario
+    const voluntario = await prismaDb.voluntario.findUnique({
+      where: { id},
+     
+    }) 
+    return voluntario
   }
 
-  async editarFoto(id: string, novaImagem: string): Promise<UsuarioType> {
+  async editarFoto(id: string, novaImagem: string): Promise<VoluntarioType> {
 
-    const usuario = await this.prisma.usuario.update({
+    const voluntario = await prismaDb.voluntario.update({
       where: { id },
       data: { imagem: novaImagem },
-      include: { [this.tipo.toLowerCase()]: true },
-    }) as any
+      
+    }) 
 
-    console.log(usuario, "usuario edtarfoto")
-    return usuario
+    console.log(voluntario, "voluntario edtarfoto")
+    return voluntario
   }
 
   //  excluir(id: string): Promise<boolean>

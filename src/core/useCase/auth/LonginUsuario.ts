@@ -2,7 +2,7 @@ import CasoDeUso from "../../../@types/CasoDeUso";
 import jwtPort from "../../portas/JwtPort";
 import SenhaCriptografada from "../../portas/SenhaCriptografada";
 import UsuarioRepo from "../../portas/usuario/UsuarioRepo";
-import VoluntarioDb from "../../portas/VoluntarioDb";
+import VoluntarioDb from "../Voluntario/VoluntarioRepositorio";
 import OngRepositorioPort from "../Ong/OngRepositorioPort";
 import BuscarPorEmail from "../Voluntario/BuscarPorEmail";
 import BuscarPorEmailOng from "../Ong/BuscarPorEmail"
@@ -54,6 +54,8 @@ export default class LonginUsuario implements CasoDeUso<Dto, Object> {
       nome: usuarioExistente.nome,
       email: usuarioExistente.email,
       tipo: usuarioExistente.tipo,
+      
+
     });
 
 
