@@ -1,8 +1,8 @@
 import { Request,Response, NextFunction } from "express";
-import voluntarioDb from "../../core/useCase/Voluntario/VoluntarioRepositorio";
+import voluntarioDb from "../../core/useCase/Voluntario/VoluntarioRepositorioPort";
 import jwtPort from "../../core/portas/JwtPort";
 import JwtAdapter from "../auth/JwtAdapter";
-import VoluntarioDb from "../../core/useCase/Voluntario/VoluntarioRepositorio";
+import VoluntarioDb from "../../core/useCase/Voluntario/VoluntarioRepositorioPort";
 import OngRepositorioPort from "../../core/useCase/Ong/OngRepositorioPort";
 declare global {
     namespace Express {

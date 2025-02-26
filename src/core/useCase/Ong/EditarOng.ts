@@ -1,7 +1,7 @@
 import AreaAtuacao from "../../../@types/AreaAtuacao";
 import CasoDeUso from "../../../@types/CasoDeUso";
 import Disponibilidade from "../../../@types/Disponibilidade";
-import VoluntarioDb from "../Voluntario/VoluntarioRepositorio";
+import VoluntarioDb from "../Voluntario/VoluntarioRepositorioPort";
 import OngRepositorioPort from "./OngRepositorioPort";
 
 export type editarOngDto = {

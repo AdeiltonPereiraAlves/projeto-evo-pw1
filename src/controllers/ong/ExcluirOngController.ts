@@ -19,6 +19,7 @@ export default class ExcluirOngController{
              } catch (error) {
                 res.status(404).send()
                 console.log(error)
+                throw new Error("Erro ao excluir ong")
              }
         }
 

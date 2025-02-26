@@ -1,12 +1,13 @@
 
 
-import VoluntarioDb from "../../../core/useCase/Voluntario/VoluntarioRepositorio";
+import VoluntarioRepositorioPort from "../../../core/useCase/Voluntario/VoluntarioRepositorioPort";
 import prismaDb from "../../prismaDb/Prisma";
 import VoluntarioType from "../../../@types/VoluntarioType";
 import path from "path";
 import fs from 'fs/promises';
+import { Inscricao } from "@prisma/client";
 
-export default class VoluntarioRepositorio  implements VoluntarioDb{
+export default class VoluntarioRepositorio  implements VoluntarioRepositorioPort{
 
  
   
@@ -65,27 +66,23 @@ export default class VoluntarioRepositorio  implements VoluntarioDb{
   //excluir voluntario
   async excluir(id: string):Promise<boolean>{
     try {
-      console.log(id,"id")
-      const  resposta = await this.buscarPorId(id);
-      console.log(resposta, "resposta")
-      let usuarioId = ""
-      let idV =""
-      if (!resposta) {
-       throw new Error("Voluntario Nao encontrado")
-      }
+      
+      // let usuarioId = ""
+      // let idV =""
      
-        usuarioId = resposta.voluntario.usuarioId;
-        idV = resposta.voluntario.id
+     
+      //   usuarioId = resposta.voluntario.usuarioId;
+      //   idV = resposta.voluntario.id
 
-        console.log(idV, "idv")
-        const imagePath = path.resolve(`public/images/voluntarios/${resposta.imagem}`);
-        await fs.unlink(imagePath).catch(() => console.log('Imagem já foi excluída.'));
-        console.log('ID do usuário:', usuarioId);
+      //   console.log(idV, "idv")
+      //   const imagePath = path.resolve(`public/images/voluntarios/${resposta.imagem}`);
+      //   await fs.unlink(imagePath).catch(() => console.log('Imagem já foi excluída.'));
+      //   console.log('ID do usuário:', usuarioId);
    
   
    
       await prismaDb.voluntario.delete({
-        where: { id: idV},
+        where: { id},
       });
 
      
@@ -124,5 +121,21 @@ export default class VoluntarioRepositorio  implements VoluntarioDb{
 
     
     return voluntario?true: false
+  }
+  async listarInscricoesVoluntario(id: string):Promise<Partial<Inscricao>| null>{
+    try {
+      const inscricoes = await prismaDb.voluntario.findFirst({
+        where:{
+          id,
+        },
+        include:{
+          inscricoes:true
+        }
+      })
+  
+      return inscricoes
+    } catch (error) {
+      throw new Error("Erro ao listar inscricoes")
+    }
   }
 }

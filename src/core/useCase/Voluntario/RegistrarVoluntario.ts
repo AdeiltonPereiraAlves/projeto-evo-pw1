@@ -2,7 +2,7 @@ import CasoDeUso from "../../../@types/CasoDeUso";
 import casoDeUso from "../../../@types/CasoDeUso";
 import Disponibilidade from "../../../@types/Disponibilidade";
 import Tipo from "../../../@types/Tipo";
-import VoluntarioDb from "./VoluntarioRepositorio";
+import voluntarioRepositorio from "./VoluntarioRepositorioPort";
 
 import Id from "../../shared/Id";
 import SenhaCriptografada from "../../portas/SenhaCriptografada";
@@ -12,13 +12,13 @@ import UsuarioRepo from "../../portas/usuario/UsuarioRepo";
 
 export default class RegistrarVoluntario implements CasoDeUso<VoluntarioType,VoluntarioType>{
 
-    constructor(private voluntarioRepositorio: VoluntarioDb, private senhaCrypto: SenhaCriptografada){
+    constructor(private voluntarioRepositorio: voluntarioRepositorio, private senhaCrypto: SenhaCriptografada){
 
     }
     async executar(dto: VoluntarioType){
         console.log(dto.imagem,"imagem no usecase")
         const senhaHash = this.senhaCrypto.criptarSenha(dto.senha!)
-       
+               
 
             const voluntario = {
                 id:Id.gerarId(),

@@ -1,6 +1,6 @@
 import CasoDeUso from "../../../@types/CasoDeUso";
 import VoluntarioType from "../../model/voluntario/VoluntarioType";
-import voluntarioRepositorio from "./VoluntarioRepositorio";
+import voluntarioRepositorio from "./VoluntarioRepositorioPort";
 
 export default class BuscarPorId implements CasoDeUso<string,VoluntarioType>{
     constructor(private voluntarioRepositorio: voluntarioRepositorio){}

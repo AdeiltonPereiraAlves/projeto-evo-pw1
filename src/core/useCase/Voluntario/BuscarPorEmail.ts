@@ -1,6 +1,6 @@
 import CasoDeUso from "../../../@types/CasoDeUso";
 import VoluntarioType from "../../../@types/VoluntarioType";
-import VoluntarioDb from "./VoluntarioRepositorio";
+import VoluntarioDb from "./VoluntarioRepositorioPort";
 
 export default class BuscarPorEmail implements CasoDeUso<string,VoluntarioType>{
     constructor(

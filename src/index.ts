@@ -76,6 +76,8 @@ import ExcluirAvaliacao from "./core/useCase/Avaliacao/ExcluirAvaliacao";
 // Controladores
 import InscricaoController from "./controllers/inscricao/InscricaoController";
 import AvaliacaoController from "./controllers/avaliacao/AvaliacaoController";
+import ListarInscricoesVoluntarioControllers from "./controllers/voluntario/ListarInscricoesVoluntarioController";
+import ListarInscricoesVoluntario from "./core/useCase/Voluntario/ListarInscricoesVoluntario";
 
 const app = express();
 const port = process.env.PORT
@@ -121,7 +123,7 @@ new EditarFotoController(app,editarFoto,UserAuthentication(voluntarioRepositorio
 // //excluir voluntario
 
 const excluirVoluntario = new ExcluirVoluntario(voluntarioRepositorio)
-new ExcluirVoluntarioController(app, excluirVoluntario,middlewareValidador)
+new ExcluirVoluntarioController(app, excluirVoluntario,middlewareValidador, UserAuthentication(voluntarioRepositorio, ongRepositorio, provedorToken),middlewareImagem, UsuarioAutorizacao(["VOLUNTARIO"]))
 //UserAuthentication(voluntarioRepositorio, provedorToken),
 
 
@@ -130,7 +132,11 @@ new ExcluirVoluntarioController(app, excluirVoluntario,middlewareValidador)
 const editarVoluntario = new EditarVoluntario(voluntarioRepositorio)
 new EditarVoluntarioController(app,editarVoluntario, middlewareValidador,UserAuthentication(voluntarioRepositorio, ongRepositorio, provedorToken),middlewareImagem, UsuarioAutorizacao(["VOLUNTARIO"]))
 
+//listar inscricoes
 
+const listarInscricoes = new ListarInscricoesVoluntario(voluntarioRepositorio)
+
+new ListarInscricoesVoluntarioControllers(app, listarInscricoes, UserAuthentication(voluntarioRepositorio, ongRepositorio,provedorToken))
 // //------------------------------------------------ONG----------------------------------------------------------------------------------------------------
 // // rotas para ong
 

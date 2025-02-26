@@ -2,7 +2,7 @@ import CasoDeUso from "../../../@types/CasoDeUso";
 import jwtPort from "../../portas/JwtPort";
 import SenhaCriptografada from "../../portas/SenhaCriptografada";
 import UsuarioRepo from "../../portas/usuario/UsuarioRepo";
-import VoluntarioDb from "../Voluntario/VoluntarioRepositorio";
+import VoluntarioDb from "../Voluntario/VoluntarioRepositorioPort";
 import OngRepositorioPort from "../Ong/OngRepositorioPort";
 import BuscarPorEmail from "../Voluntario/BuscarPorEmail";
 import BuscarPorEmailOng from "../Ong/BuscarPorEmail"

@@ -1,6 +1,6 @@
 import CasoDeUso from "../../../@types/CasoDeUso";
 import Disponibilidade from "../../../@types/Disponibilidade";
-import VoluntarioDb from "./VoluntarioRepositorio";
+import VoluntarioDb from "./VoluntarioRepositorioPort";
 import BuscarPorId from "./BuscarPorId";
 
 export type editarVoluntarioDto = {
