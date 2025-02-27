@@ -1,3 +1,4 @@
+import vagasSaidaArray from "../../../@types/vagasSaidaArray";
 import VagaType from "../../../@types/VagaType";
 import VagaRepositorioPort from "../../../core/useCase/vaga/VagaRepositorioPort";
 import prismaDb from "../../prismaDb/Prisma";
@@ -34,15 +35,15 @@ export default class VagaRepositorio implements VagaRepositorioPort {
       throw new Error("erro no banco.");
     }
   }
-  async buscar(): Promise<VagaType[] | any> {
+  async buscar(): Promise<VagaType[] | null> {
     try {
       const vagas = await prismaDb.vaga.findMany({
         include: {
           ong: true,
         },
       });
-
-      return vagas;
+      console.log(vagas, "vagas")
+      return vagas as any
     } catch (error) {
       throw new Error("erro ao buscar vagas.");
     }

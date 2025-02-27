@@ -1,6 +1,6 @@
  enum Tipo{
-    VOLUNTARIO = "VOLUNTARIO",
-    ONG = "ONG"
+    VOLUNTARIO = 'VOLUNTARIO',
+    ONG = 'ONG'
 }
 
 export default Tipo

@@ -180,8 +180,8 @@ new RegistrarVagaController(app, registrarVaga, UserAuthentication(voluntarioRep
 
 // // buscar vagas
 
-// const listarVagas = new ListarVagas(vagaRepositorio)
-// new ListarVagasController(app, listarVagas,)
+const listarVagas = new ListarVagas(vagaRepositorio)
+new ListarVagasController(app, listarVagas,UserAuthentication(voluntarioRepositorio, ongRepositorio, provedorToken),UsuarioAutorizacao(["VOLUNTARIO","ONG"]))
 
 // //listar vaga por id
 
