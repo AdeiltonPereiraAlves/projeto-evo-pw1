@@ -3,18 +3,13 @@ import VagaType from "../../../@types/VagaType";
 import VagaRepositorioPort from "../../../core/useCase/vaga/VagaRepositorioPort";
 import prismaDb from "../../prismaDb/Prisma";
 export default class VagaRepositorio implements VagaRepositorioPort {
-  async excluir(id: string): Promise<any> {
+  async excluir(id: string, idOng: string): Promise<boolean> {
     try {
-      const vagaExistente = await this.buscarPorId(id);
-      if (!vagaExistente) {
-        throw new Error("ID nao existe");
-      }
-      const resultado = await prismaDb.vaga.delete({ where: { id } });
-
-      if (!resultado) {
-        throw new Error("Erro ao deletar vaga");
-      }
-      return resultado;
+    
+      const resultado = await prismaDb.vaga.deleteMany({ where: { id , ongId: idOng}, });
+      
+      
+      return resultado? true : false
     } catch (error) {
       throw new Error("Erro ao deletar vaga");
     }

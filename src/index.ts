@@ -190,8 +190,8 @@ new ListarVagasController(app, listarVagas,UserAuthentication(voluntarioReposito
 
 // //deletar vaga
 
-// const excluirVaga = new ExcluirVaga(vagaRepositorio)
-// new ExcluirVagaController(app, excluirVaga)
+const excluirVaga = new ExcluirVaga(vagaRepositorio, ongRepositorio)
+new ExcluirVagaController(app, excluirVaga, UserAuthentication(voluntarioRepositorio, ongRepositorio, provedorToken))
 
 // //atualizar vaga 
 // const editarVaga = new EditarVaga(vagaRepositorio)
