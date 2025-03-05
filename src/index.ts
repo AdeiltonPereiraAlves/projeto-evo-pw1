@@ -180,27 +180,27 @@ new RegistrarVagaController(app, registrarVaga, UserAuthentication(voluntarioRep
 
 // // buscar vagas
 
-// const listarVagas = new ListarVagas(vagaRepositorio)
-// new ListarVagasController(app, listarVagas,)
+const listarVagas = new ListarVagas(vagaRepositorio)
+new ListarVagasController(app, listarVagas,)
 
 // //listar vaga por id
 
-// const buscarVagaPorId = new BuscarVagaPorId(vagaRepositorio)
-// new BuscarVagaPorIdController(app, buscarVagaPorId, UserAuthentication(usuarioAutenticaoDb,provedorToken), UsuarioAutorizacao(["ONG","VOLUNTARIO"]))
+const buscarVagaPorId = new BuscarVagaPorId(vagaRepositorio)
+new BuscarVagaPorIdController(app, buscarVagaPorId, UserAuthentication(voluntarioRepositorio, ongRepositorio,provedorToken), UsuarioAutorizacao(["ONG","VOLUNTARIO"]))
 
 // //deletar vaga
 
-// const excluirVaga = new ExcluirVaga(vagaRepositorio)
-// new ExcluirVagaController(app, excluirVaga)
+const excluirVaga = new ExcluirVaga(vagaRepositorio)
+new ExcluirVagaController(app, excluirVaga)
 
 // //atualizar vaga 
-// const editarVaga = new EditarVaga(vagaRepositorio)
-// new EditarVagaController(app, editarVaga, UserAuthentication(usuarioAutenticaoDb,provedorToken), UsuarioAutorizacao(["ONG"]), middlewareValidador)
+const editarVaga = new EditarVaga(vagaRepositorio)
+new EditarVagaController(app, editarVaga, UserAuthentication(voluntarioRepositorio, ongRepositorio,provedorToken), UsuarioAutorizacao(["ONG"]), middlewareValidador)
 
 // // filtrar vaga 
 
-// const filtrarVaga = new filtrarVagas(vagaRepositorio)
-// new FiltrarVagaController(app, filtrarVaga)
+const filtrarVaga = new filtrarVagas(vagaRepositorio)
+new FiltrarVagaController(app, filtrarVaga)
 
 
 
