@@ -1,4 +1,4 @@
-import ExcluirVaga from "../../core/useCase/vaga/ExcluirVaga";
+import ExcluirVaga, { deletarVagaDto } from "../../core/useCase/vaga/ExcluirVaga";
 import { Express, Request, Response } from "express";
 export default class ExcluirVagaController{
     constructor(
@@ -8,9 +8,18 @@ export default class ExcluirVagaController{
     ){
         const excluir = async (req:Request, res:Response) => {
             try {
+                const ong = req.usuario
+                const ongId = ong.id!
                 const {id} = req.params
+                
+               const parametrosID: deletarVagaDto  = {
+                id: id,
+                idOng: ongId
+               }
 
-                const resultado =await this.casoDeUso.executar(id)
+                const resultado =await this.casoDeUso.executar(parametrosID)
+
+                console.log(resultado, "resultado")
                 res.status(200).json(resultado)
 
             } catch (error) {

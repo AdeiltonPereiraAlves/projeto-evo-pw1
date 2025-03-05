@@ -13,8 +13,9 @@ export default interface Vagatype {
   tipoTrabalho: TipoTrabalho;
   latitude: number;
   longitude: number;
-  ongId: string,
+  ongId: string ,
   createdAt?: Date; // Mantido opcional, pois o banco pode preencher automaticamente
   updatedAt?: Date;
+  [key: string]: any;
   
 }

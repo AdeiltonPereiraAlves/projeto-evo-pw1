@@ -181,7 +181,7 @@ new RegistrarVagaController(app, registrarVaga, UserAuthentication(voluntarioRep
 // // buscar vagas
 
 const listarVagas = new ListarVagas(vagaRepositorio)
-new ListarVagasController(app, listarVagas,)
+new ListarVagasController(app, listarVagas,UserAuthentication(voluntarioRepositorio, ongRepositorio, provedorToken),UsuarioAutorizacao(["VOLUNTARIO","ONG"]))
 
 // //listar vaga por id
 
@@ -190,8 +190,8 @@ new BuscarVagaPorIdController(app, buscarVagaPorId, UserAuthentication(voluntari
 
 // //deletar vaga
 
-const excluirVaga = new ExcluirVaga(vagaRepositorio)
-new ExcluirVagaController(app, excluirVaga)
+const excluirVaga = new ExcluirVaga(vagaRepositorio, ongRepositorio)
+new ExcluirVagaController(app, excluirVaga, UserAuthentication(voluntarioRepositorio, ongRepositorio, provedorToken))
 
 // //atualizar vaga 
 const editarVaga = new EditarVaga(vagaRepositorio)

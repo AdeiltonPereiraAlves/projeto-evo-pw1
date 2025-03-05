@@ -14,4 +14,5 @@ export default interface OngType {
     missao :string
     areaAtuacao: AreaAtuacao[]
     endereco: string
+   
 }

@@ -5,7 +5,7 @@ import Id from "../../shared/Id";
 
 export default class RegistrarVaga implements CasoDeUso<Vagatype, any>{
     constructor(private vagaRepositorio: VagaRepositorioPort){}
-    async executar(dto: Vagatype): Promise<any> {
+    async executar(dto: Vagatype) {
         try {
             const vaga ={
                 id: Id.gerarId(),
