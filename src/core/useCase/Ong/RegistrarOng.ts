@@ -1,7 +1,7 @@
 import CasoDeUso from "../../../@types/CasoDeUso";
 import OngType from "../../../@types/OngType";
 import Erros from "../../constants/Erros";
-import Ong from "../../model/ong/Ong";
+// import Ong from "../../model/ong/Ong";
 import SenhaCriptografada from "../../portas/SenhaCriptografada";
 import Id from "../../shared/Id";
 import OngRepositorioPort from "./OngRepositorioPort";

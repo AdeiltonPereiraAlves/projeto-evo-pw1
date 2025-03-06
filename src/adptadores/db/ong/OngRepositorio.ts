@@ -76,8 +76,8 @@ export class OngRepositorio implements OngRepositorioPort {
     });
     return ongRegistrada
     } catch (error) {
-      // console.error("Erro ao cadastrar  ong:", error);
-      // return { error: "Erro ao registrar ong" }
+      console.error("Erro ao cadastrar  ong:", error);
+     
       throw new Error("Erro ao registrar ong")
     }
     

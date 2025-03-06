@@ -78,6 +78,8 @@ import AvaliacaoController from "./controllers/avaliacao/AvaliacaoController";
 import ListarInscricoesVoluntarioControllers from "./controllers/voluntario/ListarInscricoesVoluntarioController";
 import ListarInscricoesVoluntario from "./core/useCase/Voluntario/ListarInscricoesVoluntario";
 import { validarRegistroVoluntario } from "./adptadores/middleware/validarRegistroVoluntario";
+import validarRegistroOngs from "./adptadores/middleware/validarRegistroOng"
+
 
 const app = express();
 const port = process.env.PORT
@@ -143,7 +145,7 @@ new ListarInscricoesVoluntarioControllers(app, listarInscricoes, UserAuthenticat
 //registrar
 const registrarOng = new RegistrarOng(ongRepositorio,senhaCrypto )
 
-new RegistrarOngController(app, registrarOng )
+new RegistrarOngController(app, registrarOng,validarRegistroOngs(), middlewareValidador)
 //login
 const login = new LonginUsuario(voluntarioRepositorio,ongRepositorio,provedorToken  ,senhaCrypto )
 new LoginUsuarioController(app, login, )
@@ -205,6 +207,10 @@ new FiltrarVagaController(app, filtrarVaga)
 
 
 
+
+function validarRegistroOng(): any {
+    throw new Error("Function not implemented.");
+}
 // //--------------------------------------------------INSCRICAO E AVALIACAO-----------------------------------------------------------------------------------------
 // // Inscricao
 // const inscricaoRepositorio = new InscricaoRepositorio();

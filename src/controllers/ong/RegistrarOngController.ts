@@ -44,6 +44,6 @@ export default class RegistrarOngController{
             res.status(400).send(error.message)
          }
       }
-      this.servidor.post("/ong/registrar",registraOng)
+      this.servidor.post("/ong/registrar",...middleware, registraOng)
     }
 }
