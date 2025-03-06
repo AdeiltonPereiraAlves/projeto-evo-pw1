@@ -77,6 +77,7 @@ import InscricaoController from "./controllers/inscricao/InscricaoController";
 import AvaliacaoController from "./controllers/avaliacao/AvaliacaoController";
 import ListarInscricoesVoluntarioControllers from "./controllers/voluntario/ListarInscricoesVoluntarioController";
 import ListarInscricoesVoluntario from "./core/useCase/Voluntario/ListarInscricoesVoluntario";
+import { validarRegistroVoluntario } from "./adptadores/middleware/validarRegistroVoluntario";
 
 const app = express();
 const port = process.env.PORT
@@ -105,7 +106,7 @@ const ongRepositorio = new OngRepositorio()
 const loginVoluntario = new LonginUsuario(voluntarioRepositorio,ongRepositorio, provedorToken  ,senhaCrypto)
 
 const middlewareImagem = imagemUpload.single("imagem")
-new RegistrarVoluntarioController(app,registrarVoluntario,middlewareValidador,middlewareImagem )
+new RegistrarVoluntarioController(app,registrarVoluntario,validarRegistroVoluntario(), middlewareValidador,middlewareImagem )
 new LoginUsuarioController(app,loginVoluntario)
 
 const usuarioAutenticaoDb = new UsuarioAutenticao() // altentica o usuario dinamicamente retornando dados para o payload de uma ong ou voluntario
