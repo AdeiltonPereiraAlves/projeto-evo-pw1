@@ -16,10 +16,7 @@ export default class EditarOngController {
                     res.status(400).json({ error: "ID é obrigatório" });
                     return
                 }
-                let imagemUp = ""
-                if (req.file) {
-                    imagemUp = req.file.filename
-                }
+              
                 console.log(req.body, "req body")
                 const { nome, email, missao, descricao, visao, areaAtuacao, endereco } = req.body
                 const ongEditavel: editarOngDto = {

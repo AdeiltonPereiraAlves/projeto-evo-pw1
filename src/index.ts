@@ -79,6 +79,7 @@ import ListarInscricoesVoluntarioControllers from "./controllers/voluntario/List
 import ListarInscricoesVoluntario from "./core/useCase/Voluntario/ListarInscricoesVoluntario";
 import { validarRegistroVoluntario } from "./adptadores/middleware/validarRegistroVoluntario";
 import validarRegistroOngs from "./adptadores/middleware/validarRegistroOng"
+import validarEditarOng from "./adptadores/middleware/validaraEditarOng";
 
 
 const app = express();
@@ -168,7 +169,7 @@ new BuscarOngController(app, buscarOngs,UserAuthentication(voluntarioRepositorio
 //editar ong
 
 const editar = new EditarOng(ongRepositorio)
-new EditarOngController(app,editar, UserAuthentication(voluntarioRepositorio, ongRepositorio, provedorToken),middlewareImagem)
+new EditarOngController(app,editar,validarEditarOng(),middlewareValidador, UserAuthentication(voluntarioRepositorio, ongRepositorio, provedorToken),)
 
 
 

@@ -17,7 +17,7 @@ export default class InscricaoController {
     // Registrar Inscrição
     const registrar = async (req: Request, res: Response) => {
       try {
-        const inscricao: InscricaoType = {
+        const inscricao:any = {
           voluntarioId: req.body.voluntarioId,
           vagaId: req.body.vagaId,
           status: req.body.status,

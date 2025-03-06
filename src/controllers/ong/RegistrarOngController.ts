@@ -10,12 +10,7 @@ export default class RegistrarOngController{
       ...middleware: any[]
     ){
       const registraOng = async(req:Request, res:Response) => {
-    //     cnpj:string
-    // descricao: string
-    // visao: string
-    // missao :string
-    // areaAtuacao: AreaAtuacao[]
-    // endereco: string
+ 
          try {
           
             const {nome,email, tipo, senha, cnpj, descricao, visao, missao,areaAtuacao,endereco } = req.body
