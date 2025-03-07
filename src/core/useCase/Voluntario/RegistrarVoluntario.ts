@@ -8,38 +8,36 @@ import Id from "../../shared/Id";
 import SenhaCriptografada from "../../portas/SenhaCriptografada";
 import VoluntarioType from "../../../@types/VoluntarioType";
 import UsuarioRepo from "../../portas/usuario/UsuarioRepo";
+import Voluntario from "../../model/voluntario/Voluntario";
 
+export default class RegistrarVoluntario
+  implements CasoDeUso<VoluntarioType, Voluntario>
+{
+  constructor(
+    private voluntarioRepositorio: voluntarioRepositorio,
+    private senhaCrypto: SenhaCriptografada
+  ) {}
+  async executar(dto: VoluntarioType) {
+   
+    const senhaHash = this.senhaCrypto.criptarSenha(dto.senha!);
 
-export default class RegistrarVoluntario implements CasoDeUso<VoluntarioType,VoluntarioType>{
-
-    constructor(private voluntarioRepositorio: voluntarioRepositorio, private senhaCrypto: SenhaCriptografada){
-
-    }
-    async executar(dto: VoluntarioType){
-        console.log(dto.imagem,"imagem no usecase")
-        const senhaHash = this.senhaCrypto.criptarSenha(dto.senha!)
-               
-
-            const voluntario = {
-                id:Id.gerarId(),
-                nome: dto.nome,
-                email: dto.email,
-                tipo:dto.tipo,
-                contato:dto.contato,
-                cpf:dto.cpf,
-                habilidades: dto.habilidades,
-                interesses: dto.interesses,
-                disponibilidade: dto.disponibilidade,
-                senha:senhaHash,
-                imagem: dto.imagem
-    
-            }
-            console.log(voluntario, "voluntario")
-            const newVoluntario = await this.voluntarioRepositorio.registrar(voluntario)
-            return newVoluntario
-      
-          
-    }
-
-
+    const voluntario: Voluntario = new Voluntario(
+        Id.gerarId(),
+        dto.nome,
+        dto.email,
+        dto.imagem,
+        dto.tipo,
+        dto.contato,
+        dto.cpf,
+        dto.habilidades,
+        dto.interesses,
+        dto.disponibilidade,
+        senhaHash,
+    );
+    console.log(voluntario, "voluntario");
+    const newVoluntario = await this.voluntarioRepositorio.registrar(
+      voluntario
+    );
+    return newVoluntario;
+  }
 }

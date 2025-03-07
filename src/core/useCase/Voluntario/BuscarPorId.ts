@@ -1,8 +1,8 @@
 import CasoDeUso from "../../../@types/CasoDeUso";
-import VoluntarioType from "../../model/voluntario/VoluntarioType";
+import VoluntarioType from "../../model/voluntario/Voluntario";
 import voluntarioRepositorio from "./VoluntarioRepositorioPort";
 
-export default class BuscarPorId implements CasoDeUso<string,VoluntarioType>{
+export default class BuscarPorId implements CasoDeUso<string,any>{
     constructor(private voluntarioRepositorio: voluntarioRepositorio){}
     async executar(id: string){
         try {
