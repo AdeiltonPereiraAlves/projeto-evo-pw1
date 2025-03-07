@@ -35,13 +35,13 @@ export default class EditarVoluntario implements CasoDeUso<editarVoluntarioDto, 
 
 
     id = voluntarioExistente.id!
-    const dados = {
+    const dados: editarVoluntarioDto = {
       id,
       nome: dto.nome ?? voluntarioExistente.nome, // Mantém o valor atual se não for fornecido
       email: dto.email ?? voluntarioExistente.email,
       contato: dto.contato ?? voluntarioExistente.contato,
       imagem: dto.imagem ?? voluntarioExistente.imagem,
-
+      
       habilidades: dto.habilidades ?? voluntarioExistente.habilidades,
       interesses: dto.interesses ?? voluntarioExistente.interesses,
       disponibilidade: dto.disponibilidade ?? voluntarioExistente.disponibilidade,

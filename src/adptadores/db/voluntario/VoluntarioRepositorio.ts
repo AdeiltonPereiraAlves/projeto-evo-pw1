@@ -4,6 +4,7 @@ import VoluntarioType from "../../../@types/VoluntarioType";
 
 import { Inscricao } from "@prisma/client";
 import Voluntario from "../../../core/model/voluntario/Voluntario";
+import { editarVoluntarioDto } from "../../../core/useCase/Voluntario/EditarVoluntario";
 
 export default class VoluntarioRepositorio
   implements VoluntarioRepositorioPort
@@ -14,10 +15,10 @@ export default class VoluntarioRepositorio
     });
     return voluntario;
   }
-  async buscarTodos() {
+  async buscarTodos():Promise<VoluntarioType[]> {
     try {
       const voluntarios = await prismaDb.voluntario.findMany();
-      return voluntarios;
+      return voluntarios as any;
     } catch (error) {
       throw new Error("Erro no buscar voluntarios");
     }
@@ -51,29 +52,21 @@ export default class VoluntarioRepositorio
 
   // buscar por email
 
-  async buscarPorEmail(email: string): Promise<any> {
+  async buscarPorEmail(email: string): Promise<Voluntario| null> {
     console.log(email, "email");
     const voluntario = await prismaDb.voluntario.findUnique({
       where: { email },
     });
-
+    if (!voluntario) {
+      return null;
+    }
     console.log(voluntario, "voluntario");
-    return voluntario;
+    return voluntario as any;
   }
 
   //excluir voluntario
   async excluir(id: string): Promise<boolean> {
     try {
-      // let usuarioId = ""
-      // let idV =""
-
-      //   usuarioId = resposta.voluntario.usuarioId;
-      //   idV = resposta.voluntario.id
-
-      //   console.log(idV, "idv")
-      //   const imagePath = path.resolve(`public/images/voluntarios/${resposta.imagem}`);
-      //   await fs.unlink(imagePath).catch(() => console.log('Imagem já foi excluída.'));
-      //   console.log('ID do usuário:', usuarioId);
 
       await prismaDb.voluntario.delete({
         where: { id },
@@ -86,7 +79,7 @@ export default class VoluntarioRepositorio
     }
   }
 
-  async atualizar(voluntario: VoluntarioType): Promise<VoluntarioType | any> {
+  async atualizar(voluntario:editarVoluntarioDto): Promise<Voluntario | any> {
     try {
       const voluntarioAtualizado = await prismaDb.voluntario.update({
         where: { id: voluntario.id },

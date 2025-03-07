@@ -34,9 +34,9 @@ export default class LonginUsuario implements CasoDeUso<Dto, Object> {
 
     // Compara a senha fornecida com a armazenada
     const senhaCrypto = usuarioExistente.senha;
-    console.log(dto.senha, senhaCrypto);
+    console.log(dto.senha, senhaCrypto,"senhas ");
 
-    const mesmaSenha = await this.bcrypt.compararSenha(dto.senha, senhaCrypto);
+    const mesmaSenha = await this.bcrypt.compararSenha(dto.senha, senhaCrypto!);
     console.log(mesmaSenha, "Senhas no caso de uso");
 
     if (!mesmaSenha) {
