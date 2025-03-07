@@ -77,9 +77,10 @@ import InscricaoController from "./controllers/inscricao/InscricaoController";
 import AvaliacaoController from "./controllers/avaliacao/AvaliacaoController";
 import ListarInscricoesVoluntarioControllers from "./controllers/voluntario/ListarInscricoesVoluntarioController";
 import ListarInscricoesVoluntario from "./core/useCase/Voluntario/ListarInscricoesVoluntario";
-import { validarRegistroVoluntario } from "./adptadores/middleware/validarRegistroVoluntario";
-import validarRegistroOngs from "./adptadores/middleware/validarRegistroOng"
-import validarEditarOng from "./adptadores/middleware/validaraEditarOng";
+import { validarRegistroVoluntario } from "./adptadores/middleware/validarCampos/validarRegistroVoluntario";
+import validarRegistroOngs from "./adptadores/middleware/validarCampos/validarRegistroOng"
+import validarEditarOng from "./adptadores/middleware/validarCampos/validaraEditarOng";
+import { validarEditarVoluntario } from "./adptadores/middleware/validarCampos/validarEditarVoluntario";
 
 
 const app = express();
@@ -133,6 +134,7 @@ new ExcluirVoluntarioController(app, excluirVoluntario,middlewareValidador, User
 // //editar voluntario
 
 const editarVoluntario = new EditarVoluntario(voluntarioRepositorio)
+//validarEditarVoluntario(), 
 new EditarVoluntarioController(app,editarVoluntario, middlewareValidador,UserAuthentication(voluntarioRepositorio, ongRepositorio, provedorToken),middlewareImagem, UsuarioAutorizacao(["VOLUNTARIO"]))
 
 //listar inscricoes

@@ -1,6 +1,5 @@
 import path from "path";
 import OngType from "../../../@types/OngType";
-import Ong from "../../../core/model/ong/Ong";
 import prismaDb from "../../prismaDb/Prisma";
 import  UsuarioRepositorio  from "../usuario/UsuarioRepositorio";
 import fs from 'fs/promises';
@@ -113,5 +112,40 @@ export class OngRepositorio implements OngRepositorioPort {
     return ong
   }
  
+ async aprovarVoluntario(aprovacao:any){
+   try {
+
+     console.log(aprovacao, "aprovacao")
+     const res = await prismaDb.inscricao.updateMany({
+       where: {vagaId: aprovacao.vagaId},
+
+       data: {
+          status: aprovacao.aprovado.aprovado
+       }
+     })
+     console.log(res, "res")
+     return res
+   } catch (error){
+     console.log(error,"erro")
+     throw new Error("Erro ao aprovar ")
+   }
+ }
+
+ async listarVagaDeUmaOng(ong:any){ // talves nao precise desse metodo
+   console.log(ong, "ong")
+     try {
+       const vagasDeUmaOng = await prismaDb.vaga.findUnique(
+         {
+           where: {
+             id: ong.vagaId,
+             ongId: ong.id
+           }
+         }
+       )
+       return vagasDeUmaOng
+     } catch (error) {
+       throw new Error("Erro ao retonar vagas ")
+     }
+ }
  
 }
