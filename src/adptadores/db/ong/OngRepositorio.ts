@@ -89,7 +89,14 @@ export class OngRepositorio implements OngRepositorioPort {
             
             vagas: {
               include: {
-                inscricoes: true
+                inscricoes: {
+                   
+                   select:{
+                    ativo:true,
+                    status:true,
+                    voluntario:true
+                   }
+                }
               },
             },
           },
@@ -120,7 +127,7 @@ export class OngRepositorio implements OngRepositorioPort {
        where: {vagaId: aprovacao.vagaId},
 
        data: {
-          status: aprovacao.aprovado.aprovado
+          status: aprovacao.status
        }
      })
      console.log(res, "res")
@@ -139,7 +146,8 @@ export class OngRepositorio implements OngRepositorioPort {
            where: {
              id: ong.vagaId,
              ongId: ong.id
-           }
+           },
+           
          }
        )
        return vagasDeUmaOng

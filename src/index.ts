@@ -81,6 +81,10 @@ import { validarRegistroVoluntario } from "./adptadores/middleware/validarCampos
 import validarRegistroOngs from "./adptadores/middleware/validarCampos/validarRegistroOng"
 import validarEditarOng from "./adptadores/middleware/validarCampos/validaraEditarOng";
 import { validarEditarVoluntario } from "./adptadores/middleware/validarCampos/validarEditarVoluntario";
+import ListarVagasOng from "./core/useCase/Ong/ListarVagasOng";
+import ListarVagasOngController from "./controllers/ong/ListarVagasOngController";
+import AprovarVoluntario from "./core/useCase/Ong/AprovarVoluntario";
+import AprovarVoluntarioController from "./controllers/ong/AprovarVoluntarioController";
 
 
 const app = express();
@@ -194,6 +198,13 @@ new ListarVagasController(app, listarVagas,UserAuthentication(voluntarioReposito
 const buscarVagaPorId = new BuscarVagaPorId(vagaRepositorio)
 new BuscarVagaPorIdController(app, buscarVagaPorId, UserAuthentication(voluntarioRepositorio, ongRepositorio,provedorToken), UsuarioAutorizacao(["ONG","VOLUNTARIO"]))
 
+// listar vagas de uma ong
+const listarVagaDeUmaOng = new ListarVagasOng(ongRepositorio)
+new ListarVagasOngController(app, listarVagaDeUmaOng, UserAuthentication(voluntarioRepositorio,ongRepositorio,provedorToken), UsuarioAutorizacao(["ONG","VOLUNTARIO"]))
+
+//aprovar voluntario 
+const aprovarVoluntario = new AprovarVoluntario(ongRepositorio)
+new AprovarVoluntarioController(app,aprovarVoluntario , UserAuthentication(voluntarioRepositorio, ongRepositorio,provedorToken))
 // //deletar vaga
 
 const excluirVaga = new ExcluirVaga(vagaRepositorio, ongRepositorio)
@@ -211,9 +222,7 @@ new FiltrarVagaController(app, filtrarVaga)
 
 
 
-function validarRegistroOng(): any {
-    throw new Error("Function not implemented.");
-}
+
 //--------------------------------------------------INSCRICAO E AVALIACAO-----------------------------------------------------------------------------------------
 // Inscricao
 const inscricaoRepositorio = new InscricaoRepositorio();

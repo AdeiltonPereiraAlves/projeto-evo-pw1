@@ -1,9 +1,11 @@
+import { StatusInscricao } from "@prisma/client";
 import CasoDeUso from "../../../@types/CasoDeUso";
+import Status from "../../../@types/Status";
 import VagaRepositorioPort from "../vaga/VagaRepositorioPort";
 import OngRepositorioPort from "./OngRepositorioPort";
 export type aprovarDto = {
     
-    aprovado: string
+    status: StatusInscricao
     ongId: string,
     vagaId?: string
 }
@@ -17,6 +19,7 @@ export default class AprovarVoluntario implements CasoDeUso<aprovarDto,any>{
                 throw new Error("Vaga na existe")
             }
             dto.vagaId = vagaExistente.id
+            dto.status =  StatusInscricao.aprovado
             const aprovado = await this.ongRepositorio.aprovarVoluntario(dto)
             console.log(aprovado, "aprovado")
             return aprovado
