@@ -236,7 +236,7 @@ const inscricaoRepositorio = new InscricaoRepositorio();
 const registrarInscricao = new RegistrarInscricao(inscricaoRepositorio, vagaRepositorio, voluntarioRepositorio);
 const buscarInscricaoPorId = new BuscarInscricaoPorId(inscricaoRepositorio);
 const atualizarInscricao = new AtualizarInscricao(inscricaoRepositorio);
-const excluirInscricao = new ExcluirInscricao(inscricaoRepositorio);
+const excluirInscricao = new ExcluirInscricao(inscricaoRepositorio,voluntarioRepositorio);
 
 new InscricaoController(
   app,

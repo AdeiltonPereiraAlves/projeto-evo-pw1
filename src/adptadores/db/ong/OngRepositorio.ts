@@ -76,6 +76,7 @@ export class OngRepositorio implements OngRepositorioPort {
             include: {
               inscricoes: {
                 select: {
+                  id:true,
                   ativo: true,
                   status: true,
                   voluntario: true,

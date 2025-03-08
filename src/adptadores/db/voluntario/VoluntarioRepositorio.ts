@@ -109,7 +109,11 @@ export default class VoluntarioRepositorio
           id,
         },
         include: {
-          inscricoes: true,
+          inscricoes:{
+            include:{
+              vaga:true
+            }
+          }
         },
       });
 

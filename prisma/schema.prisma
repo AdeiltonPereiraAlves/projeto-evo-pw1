@@ -77,6 +77,8 @@ model Voluntario {
   disponibilidade Disponibilidade[]
   inscricoes Inscricao[]
   avaliacoes Avaliacao[]
+  latitude Float?
+  longitude Float?
  
 }
 
@@ -115,8 +117,8 @@ model Vaga{
   tipoTrabalho TipoTrabalho
   latitude Float
   longitude Float
-  ong Ong @relation(fields:[ongId], references: [id])
-  inscricoes Inscricao[]
+  ong Ong @relation(fields:[ongId], references: [id], onDelete: Cascade)
+  inscricoes Inscricao[] 
   createdAt  DateTime @default(now()) // Criado automaticamente na inserção
   updatedAt  DateTime @updatedAt      // Atualizado automaticamente na modificação
 }
@@ -132,8 +134,8 @@ model Inscricao{
   data  DateTime @default(now())
   status StatusInscricao
   ativo  Boolean  @default(false)
-  voluntario Voluntario @relation(fields:[voluntarioId], references: [id])
-  vaga Vaga @relation(fields:[vagaId], references: [id])
+  voluntario Voluntario @relation(fields:[voluntarioId], references: [id], onDelete: Cascade)
+  vaga Vaga @relation(fields:[vagaId], references: [id], onDelete: Cascade)
   createdAt  DateTime @default(now()) // Criado automaticamente na inserção
   updatedAt  DateTime @updatedAt      // Atualizado automaticamente na modificação
 }
@@ -147,8 +149,8 @@ model Avaliacao{
   tipo TipoUsuario
   comentario String
   nota Int
-  voluntario Voluntario @relation(fields:[voluntarioId], references: [id])
-  ong Ong @relation(fields:[ongId], references: [id])
+  voluntario Voluntario @relation(fields:[voluntarioId], references: [id],onDelete: Cascade)
+  ong Ong @relation(fields:[ongId], references: [id], onDelete: Cascade)
   createdAt  DateTime @default(now()) // Criado automaticamente na inserção
   updatedAt  DateTime @updatedAt      // Atualizado automaticamente na modificação
 }

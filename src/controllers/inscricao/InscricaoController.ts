@@ -85,7 +85,14 @@ export default class InscricaoController {
     const excluir = async (req: Request, res: Response) => {
       try {
         const { id } = req.params;
-        const resultado = await this.excluirInscricao.executar(id);
+        const voluntario = req.usuario
+        const voluntarioId = voluntario.id
+        const excluirInscricaoDto = {
+          id,
+          voluntarioId,
+
+        }
+        const resultado = await this.excluirInscricao.executar(excluirInscricaoDto);
         res.status(200).json(resultado);
       } catch (error: any) {
         res.status(400).send(error.message);
@@ -93,7 +100,7 @@ export default class InscricaoController {
     };
 
     // Rotas
-    this.servidor.patch("/inscricao/:id", ...middleware, registrar);
+    this.servidor.post("/inscricao/:id", ...middleware, registrar);
     this.servidor.get("/inscricao/:id", ...middleware, buscarPorId);
     this.servidor.put("/inscricao/:id", ...middleware, atualizar);
     this.servidor.delete("/inscricao/:id", ...middleware, excluir);

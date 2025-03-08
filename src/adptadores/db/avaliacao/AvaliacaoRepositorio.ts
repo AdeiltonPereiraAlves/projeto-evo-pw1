@@ -1,8 +1,9 @@
 import { PrismaClient } from "@prisma/client";
 import AvaliacaoType from "../../../@types/AvaliacaoType";
 import prismaDb from "../../prismaDb/Prisma";
+import AvaliacaoRepositorioPort from "../../../core/useCase/Avaliacao/AvaliacaoRepositorioPort";
 
-export default class AvaliacaoRepositorio {
+export default class AvaliacaoRepositorio implements AvaliacaoRepositorioPort {
   private prisma: PrismaClient;
 
   constructor() {
