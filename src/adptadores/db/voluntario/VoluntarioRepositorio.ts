@@ -52,7 +52,7 @@ export default class VoluntarioRepositorio
 
   // buscar por email
 
-  async buscarPorEmail(email: string): Promise<Voluntario| null> {
+  async buscarPorEmail(email: string): Promise<VoluntarioType| null> {
     console.log(email, "email");
     const voluntario = await prismaDb.voluntario.findUnique({
       where: { email },

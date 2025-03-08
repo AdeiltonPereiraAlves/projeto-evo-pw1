@@ -8,8 +8,8 @@ export default class BuscarVagaPorId implements CasoDeUso<string,any>{
            const vagaExistente = await this.vagaRepositorio.buscarPorId(id)
            return vagaExistente
         } catch (error) {
-            
-            throw new Error("Method not implemented.");
+            console.log(error, "error")
+            throw new Error("Erro ao busca vaga por id");
         }
     }
 

@@ -214,23 +214,23 @@ new FiltrarVagaController(app, filtrarVaga)
 function validarRegistroOng(): any {
     throw new Error("Function not implemented.");
 }
-// //--------------------------------------------------INSCRICAO E AVALIACAO-----------------------------------------------------------------------------------------
-// // Inscricao
-// const inscricaoRepositorio = new InscricaoRepositorio();
-// const registrarInscricao = new RegistrarInscricao(inscricaoRepositorio);
-// const buscarInscricaoPorId = new BuscarInscricaoPorId(inscricaoRepositorio);
-// const atualizarInscricao = new AtualizarInscricao(inscricaoRepositorio);
-// const excluirInscricao = new ExcluirInscricao(inscricaoRepositorio);
+//--------------------------------------------------INSCRICAO E AVALIACAO-----------------------------------------------------------------------------------------
+// Inscricao
+const inscricaoRepositorio = new InscricaoRepositorio();
+const registrarInscricao = new RegistrarInscricao(inscricaoRepositorio, vagaRepositorio, voluntarioRepositorio);
+const buscarInscricaoPorId = new BuscarInscricaoPorId(inscricaoRepositorio);
+const atualizarInscricao = new AtualizarInscricao(inscricaoRepositorio);
+const excluirInscricao = new ExcluirInscricao(inscricaoRepositorio);
 
-// new InscricaoController(
-//   app,
-//   registrarInscricao,
-//   buscarInscricaoPorId,
-//   atualizarInscricao,
-//   excluirInscricao,
-//   UserAuthentication(usuarioAutenticaoDb, provedorToken),
-//   UsuarioAutorizacao(["VOLUNTARIO", "ONG"])
-// );
+new InscricaoController(
+  app,
+  registrarInscricao,
+  buscarInscricaoPorId,
+  atualizarInscricao,
+  excluirInscricao,
+  UserAuthentication(voluntarioRepositorio, ongRepositorio, provedorToken),
+  UsuarioAutorizacao(["VOLUNTARIO", "ONG"])
+);
 
 // // Avaliacao
 // const avaliacaoRepositorio = new AvaliacaoRepositorio();

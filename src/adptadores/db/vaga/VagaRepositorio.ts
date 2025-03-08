@@ -48,6 +48,7 @@ export default class VagaRepositorio implements VagaRepositorioPort {
       const existeVaga = await prismaDb.vaga.findUnique({ where: { id } });
       return existeVaga;
     } catch (error) {
+      console.log(error,"error no banco")
       throw new Error("erro ao buscar vaga por id.");
     }
   }

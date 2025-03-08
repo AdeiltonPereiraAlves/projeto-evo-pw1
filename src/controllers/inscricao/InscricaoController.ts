@@ -3,7 +3,7 @@ import RegistrarInscricao from "../../core/useCase/Inscricao/RegistrarInscricao"
 import BuscarInscricaoPorId from "../../core/useCase/Inscricao/BuscarInscricaoPorId";
 import AtualizarInscricao from "../../core/useCase/Inscricao/AtualizarInscricao";
 import ExcluirInscricao from "../../core/useCase/Inscricao/ExcluirInscricao";
-import InscricaoType from "../../@types/InscricaoType";
+import InscricaoType, { StatusInscricao } from "../../@types/InscricaoType";
 
 export default class InscricaoController {
   constructor(
@@ -17,10 +17,22 @@ export default class InscricaoController {
     // Registrar Inscrição
     const registrar = async (req: Request, res: Response) => {
       try {
-        const inscricao:any = {
-          voluntarioId: req.body.voluntarioId,
-          vagaId: req.body.vagaId,
-          status: req.body.status,
+        const { id } = req.params;
+        const voluntario = req.usuario;
+        const voluntarioId = voluntario.id;
+        const { ativo } = req.body;
+
+        console.log(id, "id da vaga");
+        if (!ativo) {
+          res.status(400).json({ message: "Status é obrigatório" });
+          return;
+        }
+
+        const inscricao: InscricaoType = {
+          voluntarioId,
+          vagaId: id,
+          status: StatusInscricao.pendente,
+          ativo,
         };
         const novaInscricao = await this.registrarInscricao.executar(inscricao);
         res.status(201).json(novaInscricao);
@@ -40,31 +52,34 @@ export default class InscricaoController {
       }
     };
 
-    
- // Atualizar Inscrição
- const atualizar = async (req: Request, res: Response) => {
-  try {
-    const { id } = req.params;
-    const { voluntarioId, vagaId, status } = req.body;
+    // Atualizar Inscrição
+    const atualizar = async (req: Request, res: Response) => {
+      try {
+        const { id } = req.params;
+        const voluntario = req.usuario;
+        const voluntarioId = voluntario.id;
+        const { ativo } = req.body;
 
-    if (!status) {
-     res.status(400).json({ message: "Status é obrigatório" });
-     return;
-    }
+        console.log(id, "id da vaga");
+        if (!ativo) {
+          res.status(400).json({ message: "Status é obrigatório" });
+          return;
+        }
 
-    const inscricao: InscricaoType = {
-      id,
-      voluntarioId,
-      vagaId,
-      status,
+        const inscricao: InscricaoType = {
+          voluntarioId,
+          vagaId: id,
+          status: StatusInscricao.pendente,
+          ativo,
+        };
+        const inscricaoAtualizada = await this.atualizarInscricao.executar(
+          inscricao
+        );
+        res.status(200).json(inscricaoAtualizada);
+      } catch (error: any) {
+        res.status(400).send(error.message);
+      }
     };
-    const inscricaoAtualizada = await this.atualizarInscricao.executar(inscricao);
-    res.status(200).json(inscricaoAtualizada);
-  } catch (error: any) {
-    res.status(400).send(error.message);
-  }
-};
-
 
     // Excluir Inscrição
     const excluir = async (req: Request, res: Response) => {
@@ -78,7 +93,7 @@ export default class InscricaoController {
     };
 
     // Rotas
-    this.servidor.post("/inscricao/registrar", ...middleware, registrar);
+    this.servidor.patch("/inscricao/:id", ...middleware, registrar);
     this.servidor.get("/inscricao/:id", ...middleware, buscarPorId);
     this.servidor.put("/inscricao/:id", ...middleware, atualizar);
     this.servidor.delete("/inscricao/:id", ...middleware, excluir);

@@ -131,6 +131,7 @@ model Inscricao{
   vagaId String
   data  DateTime @default(now())
   status StatusInscricao
+  ativo  Boolean  @default(false)
   voluntario Voluntario @relation(fields:[voluntarioId], references: [id])
   vaga Vaga @relation(fields:[vagaId], references: [id])
   createdAt  DateTime @default(now()) // Criado automaticamente na inserção

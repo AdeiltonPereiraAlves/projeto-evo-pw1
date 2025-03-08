@@ -13,7 +13,12 @@ export default class InscricaoRepositorio {
     try {
       const novaInscricao = await this.prisma.inscricao.create({
         data: {
-         ...inscricao
+          id: inscricao.id,
+          voluntarioId: inscricao.voluntarioId,
+          vagaId: inscricao.vagaId,
+          status: inscricao.status,
+          ativo: inscricao.ativo,
+
         },
       });
       return novaInscricao;
