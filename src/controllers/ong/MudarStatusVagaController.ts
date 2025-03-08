@@ -2,25 +2,27 @@ import { StatusInscricao } from "../../@types/InscricaoType";
 import AprovarVoluntario, { aprovarDto } from "../../core/useCase/Ong/AprovarVoluntario";
 import BuscarOngs from "../../core/useCase/Ong/BuscarOngs";
 import { Express, Request, Response } from "express";
-export default class AprovarVoluntarioController{
+import MudarStatusVaga from "../../core/useCase/Ong/MudarStatusVaga";
+import Status from "../../@types/Status";
+export default class MudarStatusVagaController{
     constructor(
         private servidor: Express,
-        private casoDeUso: AprovarVoluntario,
+        private casoDeUso: MudarStatusVaga,
         ...middleware:any []
     ){
         const aprovar = async(req:Request, res: Response) =>{
             try {
                 const ong = req.usuario
                 const ongId = ong?.id!
-                const {id} = req.params
+                const {id} = req.params //id da vaga
                 const aprovar:any = {
                     
-                    status: StatusInscricao,
+                    status: Status,
                     ongId,
                     vagaId: id
                     
                 }
-                console.log(aprovar, "Aprovar")
+              
                 const resultado = await this.casoDeUso.executar(aprovar)
                 console.log(resultado, "resultado")
                 res.status(200).json(resultado)
@@ -29,6 +31,6 @@ export default class AprovarVoluntarioController{
             }
         }
 
-        this.servidor.patch("/aprovar/:id", ...middleware, aprovar)
+        this.servidor.patch("/status/:id", ...middleware, aprovar)
     }
 }  

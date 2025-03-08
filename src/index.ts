@@ -85,6 +85,8 @@ import ListarVagasOng from "./core/useCase/Ong/ListarVagasOng";
 import ListarVagasOngController from "./controllers/ong/ListarVagasOngController";
 import AprovarVoluntario from "./core/useCase/Ong/AprovarVoluntario";
 import AprovarVoluntarioController from "./controllers/ong/AprovarVoluntarioController";
+import MudarStatusVaga from "./core/useCase/Ong/MudarStatusVaga";
+import MudarStatusVagaController from "./controllers/ong/MudarStatusVagaController";
 
 
 const app = express();
@@ -205,6 +207,11 @@ new ListarVagasOngController(app, listarVagaDeUmaOng, UserAuthentication(volunta
 //aprovar voluntario 
 const aprovarVoluntario = new AprovarVoluntario(ongRepositorio)
 new AprovarVoluntarioController(app,aprovarVoluntario , UserAuthentication(voluntarioRepositorio, ongRepositorio,provedorToken))
+
+// mudar status da vaga
+const mudarStatus = new MudarStatusVaga(ongRepositorio)
+new MudarStatusVagaController(app, mudarStatus, UserAuthentication(voluntarioRepositorio, ongRepositorio,provedorToken))
+
 // //deletar vaga
 
 const excluirVaga = new ExcluirVaga(vagaRepositorio, ongRepositorio)
