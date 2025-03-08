@@ -123,7 +123,7 @@ export class OngRepositorio implements OngRepositorioPort {
   // alterar quantidade de vaga
   async alterQuantidadeVaga(alterarVaga: any) {
     try {
-       await prismaDb.vaga.update({
+       await prismaDb.vaga.updateMany({
         where: { id: alterarVaga.vagaId },
         data: {
           quantidade: {

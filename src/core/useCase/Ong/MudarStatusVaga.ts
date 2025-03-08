@@ -21,7 +21,7 @@ export default class MudarStatusVaga implements CasoDeUso<mudarStatusVagaDto,any
             }
             dto.vagaId = vagaExistente.id
             dto.status =  Status.ENCERRADO
-            const aprovado = await this.ongRepositorio.aprovarVoluntario(dto)
+            const aprovado = await this.ongRepositorio.mudarStatusDaVaga(dto)
             console.log(aprovado, "aprovado")
             return aprovado
         } catch (error) {
