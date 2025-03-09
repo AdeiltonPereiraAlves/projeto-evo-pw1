@@ -5,7 +5,7 @@ import InscricaoRepositorioPort from "../Inscricao/InscricaoRepositorio";
 import BuscarPorId from "./BuscarPorId";
 import AvaliacaoRepositorioPort from "../Avaliacao/AvaliacaoRepositorioPort";
 
-export default class ListarAvaliacoesVoluntario implements CasoDeUso<string, any> {
+export default class ListarAvaliacoesRecebidas implements CasoDeUso<string, any> {
     constructor(private avaliacaoRepositorio: AvaliacaoRepositorioPort){}
      async executar(id:string){
           
@@ -17,7 +17,7 @@ export default class ListarAvaliacoesVoluntario implements CasoDeUso<string, any
         // if(!voluntario){
         //     throw new Error("voluntario nao existe")
         // }
-        const avaliacoesAtuais =  await this.avaliacaoRepositorio.avaliacoesFeitasVoluntario(id)
+        const avaliacoesAtuais =  await this.avaliacaoRepositorio.avaliacoesRecebidasVoluntario(id)
         
         console.log(avaliacoesAtuais, "insc a")
         return avaliacoesAtuais;

@@ -17,7 +17,9 @@ export default class AvaliacaoRepositorio implements AvaliacaoRepositorioPort {
         data: {
           voluntarioId: avaliacao.voluntarioId,
           ongId: avaliacao.ongId,
+          avaliadoId: avaliacao.avaliadoId,
           tipo: avaliacao.tipo,
+          frequecia:avaliacao.frequencia,
           comentario: avaliacao.comentario,
           nota: avaliacao.nota,
         },
@@ -63,6 +65,32 @@ export default class AvaliacaoRepositorio implements AvaliacaoRepositorioPort {
       return true;
     } catch (error) {
       throw new Error("Erro ao excluir avaliação");
+    }
+  }
+
+  async avaliacoesFeitasVoluntario(id:string) {
+    try {
+      const listaAvaliaco = await this.prisma.avaliacao.findMany({ where: {voluntarioId:id },
+        include:{
+          ong:true
+        }
+       });
+      return listaAvaliaco ;
+    } catch (error) {
+      throw new Error("Erro ao listar avaliação");
+    }
+  }
+  async avaliacoesRecebidasVoluntario(id:string) {
+    try {
+      const avaliacoesRecebidas = await this.prisma.avaliacao.findMany({
+         where:{
+          avaliadoId: id,
+          tipo: 'ONG', // Só traz avaliações feitas por ONGs
+         }
+       });
+      return  avaliacoesRecebidas;
+    } catch (error) {
+      throw new Error("Erro ao lista avaliação");
     }
   }
   

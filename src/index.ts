@@ -90,7 +90,11 @@ import MudarStatusVagaController from "./controllers/ong/MudarStatusVagaControll
 import RegistrarAvaliacaoVoluntario from "./core/useCase/Avaliacao/RegistrarAvaliacaoVoluntario";
 import RegistrarAvalicaoVoluntarioController from "./controllers/avaliacao/RegistrarAvalicaoVoluntarioController";
 import ListarAvaliacoesVoluntario from "./core/useCase/Voluntario/ListarAvaliacoesVoluntario";
-import ListarAvaliacoesVoluntarioController from "./controllers/voluntario/ListarAvalicaoVoluntarioController";
+import ListarAvaliacoesVoluntarioController from "./controllers/voluntario/ListarAvalicaoFeitasVoluntarioController";
+import RegistrarAvaliacaoOng from "./core/useCase/Avaliacao/RegistrarAvaliacaoOng";
+import RegistrarAvaliacaoOngController from "./controllers/avaliacao/RegistrarAvaliacaoOngController";
+import ListarAvaliacoesRecebidas from "./core/useCase/Voluntario/ListarAvaliacoesRecebidas";
+import ListarAvaliacoesRecebidasController from "./controllers/voluntario/ListarAvaliacoesRecebidasController";
 
 
 const app = express();
@@ -263,10 +267,15 @@ const excluirAvaliacao = new ExcluirAvaliacao(avaliacaoRepositorio);
 const registrarAvalicaoVoluntario = new RegistrarAvaliacaoVoluntario(avaliacaoRepositorio)
 new RegistrarAvalicaoVoluntarioController(app, registrarAvalicaoVoluntario,UserAuthentication(voluntarioRepositorio, ongRepositorio, provedorToken))
 
-const listarAvalicaoVoluntario = new ListarAvaliacoesVoluntario(voluntarioRepositorio)
+const registrarAvaliacaoOng = new RegistrarAvaliacaoOng(avaliacaoRepositorio)
+new RegistrarAvaliacaoOngController(app, registrarAvaliacaoOng,UserAuthentication(voluntarioRepositorio, ongRepositorio, provedorToken), UsuarioAutorizacao(["ONG"]) )
+
+const listarAvalicaoVoluntario = new ListarAvaliacoesVoluntario(avaliacaoRepositorio)
 new ListarAvaliacoesVoluntarioController(app, listarAvalicaoVoluntario,UserAuthentication(voluntarioRepositorio, ongRepositorio, provedorToken), UsuarioAutorizacao(["VOLUNTARIO"]) )
 
-UsuarioAutorizacao(["VOLUNTARIO", "ONG"])
+const listarAvaliacoesRecebidasVoluntario = new ListarAvaliacoesRecebidas(avaliacaoRepositorio)
+new ListarAvaliacoesRecebidasController(app, listarAvaliacoesRecebidasVoluntario,UserAuthentication(voluntarioRepositorio, ongRepositorio, provedorToken), UsuarioAutorizacao(["VOLUNTARIO"]) )
+
 new AvaliacaoController(
   app,
   registrarAvaliacao,
