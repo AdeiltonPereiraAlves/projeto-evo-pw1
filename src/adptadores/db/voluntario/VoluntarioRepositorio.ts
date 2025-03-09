@@ -122,4 +122,22 @@ export default class VoluntarioRepositorio
       throw new Error("Erro ao listar inscricoes");
     }
   }
+
+  async listarAvaliacoesVoluntario(id:string){
+    try {
+      const inscricoes = await prismaDb.voluntario.findFirst({
+        where: {
+          id,
+        },
+        include: {
+         avaliacoes:true
+          
+        },
+      });
+
+      return inscricoes;
+    } catch (error) {
+      throw new Error("Erro ao listar avaliacoes");
+    }
+  }
 }

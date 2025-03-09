@@ -1,5 +1,5 @@
 import { Express, Request, Response } from "express";
-import RegistrarAvaliacao from "../../core/useCase/Avaliacao/RegistrarAvaliacao";
+import RegistrarAvaliacao from "../../core/useCase/Avaliacao/RegistrarAvaliacaoVoluntario";
 import BuscarAvaliacaoPorId from "../../core/useCase/Avaliacao/BuscarAvaliacaoPorId";
 import AtualizarAvaliacao from "../../core/useCase/Avaliacao/AtualizarAvaliacao";
 import ExcluirAvaliacao from "../../core/useCase/Avaliacao/ExcluirAvaliacao";
@@ -17,14 +17,17 @@ export default class AvaliacaoController {
     // Registrar Avaliação
     const registrar = async (req: Request, res: Response) => {
       try {
-        const avaliacao: AvaliacaoType = {
-          voluntarioId: req.body.voluntarioId,
-          ongId: req.body.ongId,
-          frequencia: req.body.frequencia,
-          tipo: req.body.tipo,
-          comentario: req.body.comentario,
-          nota: req.body.nota,
-        };
+        const usuario = req.usuario
+        if(usuario.tipo ==="VOLUNTARIO"){
+
+          const avaliacao: AvaliacaoType = {
+            voluntarioId: usuario.id,
+            ongId: req.params.id,
+            tipo: req.body.tipo,
+            comentario: req.body.comentario,
+            nota: req.body.nota,
+          };
+        }
         const novaAvaliacao = await this.registrarAvaliacao.executar(avaliacao);
         res.status(201).json(novaAvaliacao);
       } catch (error: any) {

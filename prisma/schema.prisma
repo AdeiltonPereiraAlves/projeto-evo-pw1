@@ -144,6 +144,7 @@ model Avaliacao{
   id String @id @default(uuid())
   voluntarioId String
   ongId String
+  avaliadoId  String
   data DateTime @default(now())
   frequecia String?
   tipo TipoUsuario

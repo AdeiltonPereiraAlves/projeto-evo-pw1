@@ -12,11 +12,11 @@ export default class AvaliacaoRepositorio implements AvaliacaoRepositorioPort {
 
   async registrar(avaliacao: AvaliacaoType): Promise<any> {
     try {
+      console.log(avaliacao,"avaliacao")
       const novaAvaliacao = await this.prisma.avaliacao.create({
         data: {
           voluntarioId: avaliacao.voluntarioId,
           ongId: avaliacao.ongId,
-          frequecia: avaliacao.frequencia,
           tipo: avaliacao.tipo,
           comentario: avaliacao.comentario,
           nota: avaliacao.nota,
@@ -24,10 +24,11 @@ export default class AvaliacaoRepositorio implements AvaliacaoRepositorioPort {
       });
       return novaAvaliacao;
     } catch (error) {
+      console.log(error, "erro db")
       throw new Error("Erro ao registrar avaliação");
     }
   }
-
+  
   async buscarPorId(id: string): Promise<any> {
     try {
       const avaliacao = await this.prisma.avaliacao.findUnique({
@@ -64,4 +65,5 @@ export default class AvaliacaoRepositorio implements AvaliacaoRepositorioPort {
       throw new Error("Erro ao excluir avaliação");
     }
   }
+  
 }

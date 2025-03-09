@@ -1,4 +1,4 @@
-import { Inscricao } from "@prisma/client";
+import { Avaliacao, Inscricao } from "@prisma/client";
 import VoluntarioType from "../../../@types/VoluntarioType";
 import Voluntario from "../../model/voluntario/Voluntario";
 import { editarVoluntarioDto } from "./EditarVoluntario";
@@ -13,5 +13,6 @@ export default interface VoluntarioRepositorioPort{
     buscarPorEmail(email:string):Promise<VoluntarioType| null>
     buscarTodos():Promise<VoluntarioType[]>
     listarInscricoesVoluntario(id:string):Promise<Partial<Inscricao>| null>
+    listarAvaliacoesVoluntario(id:string):Promise<Partial<Avaliacao>| null>
 
 }

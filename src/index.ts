@@ -67,7 +67,7 @@ import AtualizarInscricao from "./core/useCase/Inscricao/AtualizarInscricao";
 import ExcluirInscricao from "./core/useCase/Inscricao/ExcluirInscricao";
 
 // Casos de Uso para Avaliacao
-import RegistrarAvaliacao from "./core/useCase/Avaliacao/RegistrarAvaliacao";
+import RegistrarAvaliacao from "./core/useCase/Avaliacao/RegistrarAvaliacaoVoluntario";
 import BuscarAvaliacaoPorId from "./core/useCase/Avaliacao/BuscarAvaliacaoPorId";
 import AtualizarAvaliacao from "./core/useCase/Avaliacao/AtualizarAvaliacao";
 import ExcluirAvaliacao from "./core/useCase/Avaliacao/ExcluirAvaliacao";
@@ -87,6 +87,10 @@ import AprovarVoluntario from "./core/useCase/Ong/AprovarVoluntario";
 import AprovarVoluntarioController from "./controllers/ong/AprovarVoluntarioController";
 import MudarStatusVaga from "./core/useCase/Ong/MudarStatusVaga";
 import MudarStatusVagaController from "./controllers/ong/MudarStatusVagaController";
+import RegistrarAvaliacaoVoluntario from "./core/useCase/Avaliacao/RegistrarAvaliacaoVoluntario";
+import RegistrarAvalicaoVoluntarioController from "./controllers/avaliacao/RegistrarAvalicaoVoluntarioController";
+import ListarAvaliacoesVoluntario from "./core/useCase/Voluntario/ListarAvaliacoesVoluntario";
+import ListarAvaliacoesVoluntarioController from "./controllers/voluntario/ListarAvalicaoVoluntarioController";
 
 
 const app = express();
@@ -248,19 +252,27 @@ new InscricaoController(
   UsuarioAutorizacao(["VOLUNTARIO", "ONG"])
 );
 
-// // Avaliacao
-// const avaliacaoRepositorio = new AvaliacaoRepositorio();
-// const registrarAvaliacao = new RegistrarAvaliacao(avaliacaoRepositorio);
-// const buscarAvaliacaoPorId = new BuscarAvaliacaoPorId(avaliacaoRepositorio);
-// const atualizarAvaliacao = new AtualizarAvaliacao(avaliacaoRepositorio);
-// const excluirAvaliacao = new ExcluirAvaliacao(avaliacaoRepositorio);
+// Avaliacao
+const avaliacaoRepositorio = new AvaliacaoRepositorio();
+const registrarAvaliacao = new RegistrarAvaliacao(avaliacaoRepositorio);
+const buscarAvaliacaoPorId = new BuscarAvaliacaoPorId(avaliacaoRepositorio);
+const atualizarAvaliacao = new AtualizarAvaliacao(avaliacaoRepositorio);
+const excluirAvaliacao = new ExcluirAvaliacao(avaliacaoRepositorio);
 
-// new AvaliacaoController(
-//   app,
-//   registrarAvaliacao,
-//   buscarAvaliacaoPorId,
-//   atualizarAvaliacao,
-//   excluirAvaliacao,
-//   UserAuthentication(usuarioAutenticaoDb, provedorToken),
-//   UsuarioAutorizacao(["VOLUNTARIO", "ONG"])
-// );
+//
+const registrarAvalicaoVoluntario = new RegistrarAvaliacaoVoluntario(avaliacaoRepositorio)
+new RegistrarAvalicaoVoluntarioController(app, registrarAvalicaoVoluntario,UserAuthentication(voluntarioRepositorio, ongRepositorio, provedorToken))
+
+const listarAvalicaoVoluntario = new ListarAvaliacoesVoluntario(voluntarioRepositorio)
+new ListarAvaliacoesVoluntarioController(app, listarAvalicaoVoluntario,UserAuthentication(voluntarioRepositorio, ongRepositorio, provedorToken), UsuarioAutorizacao(["VOLUNTARIO"]) )
+
+UsuarioAutorizacao(["VOLUNTARIO", "ONG"])
+new AvaliacaoController(
+  app,
+  registrarAvaliacao,
+  buscarAvaliacaoPorId,
+  atualizarAvaliacao,
+  excluirAvaliacao,
+  UserAuthentication(voluntarioRepositorio, ongRepositorio, provedorToken),
+  UsuarioAutorizacao(["VOLUNTARIO", "ONG"])
+);
