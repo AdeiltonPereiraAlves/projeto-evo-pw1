@@ -6,7 +6,7 @@ import Validador from "../../utils/Validador";
 
 export default class Vaga {
   private id: string;
-   private titulo: string;
+  private titulo: string;
   private descricao: string;
   private requisitos: string[];
   private quantidade:number;
@@ -60,9 +60,18 @@ export default class Vaga {
     this.longitude = longitude;
     this.ongId = ongId;
   }
-
+  
   getId(){
     return this.id
+  }
+  getTitulo(){
+    return this.titulo
+  }
+  getQuantidade(){
+    return this.quantidade
+  }
+  getOngId(){
+    return this.ongId
   }
   // get e set descricao
   setDescricao(descricao: string) {

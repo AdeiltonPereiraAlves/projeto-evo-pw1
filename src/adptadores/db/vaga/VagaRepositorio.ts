@@ -1,5 +1,7 @@
+import VagaSaidaType from "../../../@types/VagaSaidaType";
 import vagasSaidaArray from "../../../@types/vagasSaidaArray";
 import VagaType from "../../../@types/VagaType";
+import Vaga from "../../../core/model/vaga/Vaga";
 import VagaRepositorioPort from "../../../core/useCase/vaga/VagaRepositorioPort";
 import prismaDb from "../../prismaDb/Prisma";
 export default class VagaRepositorio implements VagaRepositorioPort {
@@ -14,12 +16,23 @@ export default class VagaRepositorio implements VagaRepositorioPort {
       throw new Error("Erro ao deletar vaga");
     }
   }
-  async registrar(vaga: VagaType) {
+  async registrar(vaga: Vaga):Promise<VagaSaidaType> {
     try {
       console.log(vaga, "vaga repo");
       const vagaRegistrada = await prismaDb.vaga.create({
         data: {
-        ...vaga
+          id: vaga.getId(),
+          titulo: vaga.getTitulo(),
+          descricao: vaga.getDescricao(),
+          requisitos:vaga.getRequisitos(),
+          quantidade: vaga.getQuantidade(),
+          status: vaga.getStatus(),
+          duracao: vaga.getDuracao(),
+          localizacao: vaga.getLocalizacao(),
+          tipoTrabalho: vaga.getTipoTrabalho(),
+          latitude: vaga.getLatitude(),
+          longitude: vaga.getLongitude(),
+          ongId: vaga.getOngId()
         },
       });
 
@@ -30,7 +43,7 @@ export default class VagaRepositorio implements VagaRepositorioPort {
       throw new Error("erro no banco.");
     }
   }
-  async buscar(): Promise<VagaType[] | null> {
+  async buscar(): Promise<VagaSaidaType[] | null> {
     try {
       const vagas = await prismaDb.vaga.findMany({
         include: {
@@ -38,12 +51,12 @@ export default class VagaRepositorio implements VagaRepositorioPort {
         },
       });
       console.log(vagas, "vagas")
-      return vagas as any
+      return vagas 
     } catch (error) {
       throw new Error("erro ao buscar vagas.");
     }
   }
-  async buscarPorId(id: string) {
+  async buscarPorId(id: string):Promise<VagaSaidaType| null> {
     try {
       const existeVaga = await prismaDb.vaga.findUnique({ where: { id } });
       return existeVaga;
@@ -52,7 +65,7 @@ export default class VagaRepositorio implements VagaRepositorioPort {
       throw new Error("erro ao buscar vaga por id.");
     }
   }
-  async editar(vaga: VagaType) {
+  async editar(vaga: VagaType):Promise<VagaSaidaType> {
     try {
       const vagaAtualizada = await prismaDb.vaga.update({
         where: {

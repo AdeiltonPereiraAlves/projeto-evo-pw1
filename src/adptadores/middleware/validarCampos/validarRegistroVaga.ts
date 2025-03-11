@@ -1,6 +1,6 @@
 import { body } from "express-validator";
 
-export const validarCadastroVaga = () => {
+export const validarRegistroVaga = () => {
   return [
     body("titulo")
       .isString().withMessage("O título é obrigatório e deve ser uma string.")

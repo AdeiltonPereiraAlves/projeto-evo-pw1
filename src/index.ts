@@ -100,6 +100,8 @@ import ListarAvaliacoesRecebidasOngController from "./controllers/ong/ListarAval
 import ListarAvaliacoesFeitasOng from "./core/useCase/Ong/ListarAvaliacoesFeitasOng";
 import ListarAvaliacoesOngController from "./controllers/ong/ListarAvalicaoFeitasOngController";
 import ListarAvaliacoesFeitasOngController from "./controllers/ong/ListarAvalicaoFeitasOngController";
+import { validarRegistroVaga } from "./adptadores/middleware/validarCampos/validarRegistroVaga";
+import { validarRegistroAvaliacao } from "./adptadores/middleware/validarCampos/validarRegistroAvaliacao";
 
 
 const app = express();
@@ -201,7 +203,7 @@ new EditarOngController(app,editar,validarEditarOng(),middlewareValidador, UserA
 const vagaRepositorio = new VagaRepositorio()
 const registrarVaga = new RegistrarVaga(vagaRepositorio)
 
-new RegistrarVagaController(app, registrarVaga, UserAuthentication(voluntarioRepositorio, ongRepositorio, provedorToken),UsuarioAutorizacao(["ONG"]) )
+new RegistrarVagaController(app, registrarVaga, validarRegistroVaga(), middlewareValidador, UserAuthentication(voluntarioRepositorio, ongRepositorio, provedorToken),UsuarioAutorizacao(["ONG"]) )
 
 // // buscar vagas
 
@@ -270,9 +272,9 @@ const avaliacaoRepositorio = new AvaliacaoRepositorio();
 // const atualizarAvaliacao = new AtualizarAvaliacao(avaliacaoRepositorio);
 // const excluirAvaliacao = new ExcluirAvaliacao(avaliacaoRepositorio);
 
-//
+//----------------------avalicao voluntario------------------------------
 const registrarAvalicaoVoluntario = new RegistrarAvaliacaoVoluntario(avaliacaoRepositorio)
-new RegistrarAvalicaoVoluntarioController(app, registrarAvalicaoVoluntario,UserAuthentication(voluntarioRepositorio, ongRepositorio, provedorToken))
+new RegistrarAvalicaoVoluntarioController(app, registrarAvalicaoVoluntario,validarRegistroAvaliacao(), middlewareValidador,UserAuthentication(voluntarioRepositorio, ongRepositorio, provedorToken))
 
 const registrarAvaliacaoOng = new RegistrarAvaliacaoOng(avaliacaoRepositorio)
 new RegistrarAvaliacaoOngController(app, registrarAvaliacaoOng,UserAuthentication(voluntarioRepositorio, ongRepositorio, provedorToken), UsuarioAutorizacao(["ONG"]) )

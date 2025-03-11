@@ -16,10 +16,10 @@ export default class ExcluirVaga implements CasoDeUso<deletarVagaDto, any> {
         try {
             
 
-            const listaDeVagas = await this.ongRepositorio.buscarVagasDeOng(dto.idOng)
+            const listaDeVagas: any = await this.ongRepositorio.buscarVagasDeOng(dto.idOng)
             
             console.log(listaDeVagas, "lista de vagas")
-            const vagaEstaListada = listaDeVagas.vagas.some((vaga:any) => vaga.id === dto.id)
+            const vagaEstaListada = listaDeVagas!.vagas.some((vaga:any) => vaga.id === dto.id)
            console.log(vagaEstaListada, "vagalistada")
             if(vagaEstaListada ===  false) throw new Error("Id da vaga nao existe na ong correspondente")
       
