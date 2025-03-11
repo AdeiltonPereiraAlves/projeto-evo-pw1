@@ -2,6 +2,8 @@ import { PrismaClient } from "@prisma/client";
 import AvaliacaoType from "../../../@types/AvaliacaoType";
 import prismaDb from "../../prismaDb/Prisma";
 import AvaliacaoRepositorioPort from "../../../core/useCase/Avaliacao/AvaliacaoRepositorioPort";
+import Tipo from "../../../@types/Tipo";
+import { atualizaAvaliacaoDto } from "../../../core/useCase/Avaliacao/AtualizarAvaliacao";
 
 export default class AvaliacaoRepositorio implements AvaliacaoRepositorioPort {
   private prisma: PrismaClient;
@@ -19,7 +21,6 @@ export default class AvaliacaoRepositorio implements AvaliacaoRepositorioPort {
           ongId: avaliacao.ongId,
           avaliadoId: avaliacao.avaliadoId,
           tipo: avaliacao.tipo,
-          frequecia:avaliacao.frequencia,
           comentario: avaliacao.comentario,
           nota: avaliacao.nota,
         },
@@ -43,12 +44,11 @@ export default class AvaliacaoRepositorio implements AvaliacaoRepositorioPort {
     }
   }
 
-  async atualizar(avaliacao: AvaliacaoType): Promise<any> {
+  async atualizar(avaliacao: atualizaAvaliacaoDto): Promise<any> {
     try {
       const avaliacaoAtualizada = await this.prisma.avaliacao.update({
-        where: { id: avaliacao.id },
+        where: { id: avaliacao.avaliacaoId },
         data: {
-          frequecia: avaliacao.frequencia,
           comentario: avaliacao.comentario,
           nota: avaliacao.nota,
         },
@@ -68,9 +68,9 @@ export default class AvaliacaoRepositorio implements AvaliacaoRepositorioPort {
     }
   }
 
-  async avaliacoesFeitasVoluntario(id:string) {
+  async avaliacoesFeitasVoluntario(id:string, tipo:Tipo) {
     try {
-      const listaAvaliaco = await this.prisma.avaliacao.findMany({ where: {voluntarioId:id },
+      const listaAvaliaco = await this.prisma.avaliacao.findMany({ where: {voluntarioId:id ,tipo},
         include:{
           ong:true
         }
@@ -80,12 +80,24 @@ export default class AvaliacaoRepositorio implements AvaliacaoRepositorioPort {
       throw new Error("Erro ao listar avaliação");
     }
   }
-  async avaliacoesRecebidasVoluntario(id:string) {
+  async avaliacoesFeitasOng(id:string, tipo:Tipo) {
+    try {
+      const listaAvaliaco = await this.prisma.avaliacao.findMany({ where: {ongId:id ,tipo},
+        include:{
+          voluntario:true
+        }
+       });
+      return listaAvaliaco ;
+    } catch (error) {
+      throw new Error("Erro ao listar avaliação");
+    }
+  }
+  async avaliacoesRecebidasVoluntario(id:string, tipo:Tipo) {
     try {
       const avaliacoesRecebidas = await this.prisma.avaliacao.findMany({
          where:{
           avaliadoId: id,
-          tipo: 'ONG', // Só traz avaliações feitas por ONGs
+          tipo, // Só traz avaliações feitas por ONGs
          }
        });
       return  avaliacoesRecebidas;

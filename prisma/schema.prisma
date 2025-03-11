@@ -145,8 +145,6 @@ model Avaliacao{
   voluntarioId String
   ongId String
   avaliadoId  String?
-  data DateTime @default(now())
-  frequecia String?
   tipo TipoUsuario
   comentario String
   nota Int

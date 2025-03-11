@@ -1,9 +1,10 @@
 import CasoDeUso from "../../../@types/CasoDeUso";
 import InscricaoType from "../../../@types/InscricaoType";
 import InscricaoRepositorio from "../../../adptadores/db/inscricao/InscricaoRepositorio";
+import InscricaoRepositorioPort from "./InscricaoRepositorio";
 
 export default class AtualizarInscricao implements CasoDeUso<InscricaoType, any> {
-  constructor(private inscricaoRepositorio: InscricaoRepositorio) {}
+  constructor(private inscricaoRepositorio: InscricaoRepositorioPort) {}
 
   async executar(dto: InscricaoType): Promise<any> {
     if (!dto.id || !dto.status) {

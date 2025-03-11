@@ -4,21 +4,22 @@ import ListarInscricoesVoluntario from "../../core/useCase/Voluntario/ListarInsc
 import ListarAvaliacoesVoluntario, { avaliacaoDto } from "../../core/useCase/Voluntario/ListarAvaliacoesVoluntario";
 import ListarAvaliacoesRecebidas from "../../core/useCase/Voluntario/ListarAvaliacoesRecebidas";
 import Tipo from "../../@types/Tipo";
-export default class ListarAvaliacoesRecebidasController {
+import ListarAvaliacoesRecebidasOng from "../../core/useCase/Ong/ListarAvaliacoesRecebidasOng";
+export default class ListarAvaliacoesRecebidasOngController {
   constructor(
     private servidor: Express,
-    private casoDeUso: ListarAvaliacoesRecebidas,
+    private casoDeUso: ListarAvaliacoesRecebidasOng,
     ...middleware: any[]
   ) {
     const buscar = async (req: Request, res: Response) => {
       try {
-        const voluntario = req.usuario; // pegando o payload depois do login com as informaões
-        console.log(voluntario, "voluntario da req");
+        const ong = req.usuario; // pegando o payload depois do login com as informaões
+        console.log(ong, "ong da req");
 
-        const id = voluntario?.id;
+        const id = ong?.id;
         const avaliadoDto: avaliacaoDto = {
           id,
-          tipo:Tipo.ONG,
+          tipo:Tipo.VOLUNTARIO,
         };
 
         console.log(id, "id");
@@ -31,6 +32,6 @@ export default class ListarAvaliacoesRecebidasController {
       }
     };
 
-    this.servidor.get("/listar/avaliacoes/recebidas", ...middleware, buscar);
+    this.servidor.get("/avaliacoes/recebidas", ...middleware, buscar);
   }
 }

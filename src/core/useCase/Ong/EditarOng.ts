@@ -8,7 +8,6 @@ import OngRepositorioPort from "./OngRepositorioPort";
 export type editarOngDto = {
     id?: string,
     nome: string,
-    email: string,
     descricao: string
     missao: string
     visao: string
@@ -31,10 +30,6 @@ export default class EditarOng implements CasoDeUso<editarOngDto, any> {
         const ongEditar = {
             id: ong.id!,
             nome: dto.nome ?? ong.nome, // Mantém o valor atual se não for fornecido
-            email: dto.email ?? ong.email,
-
-
-
             descricao: dto.descricao ?? ong.descricao,
             missao: dto.missao ?? ong.missao,
             visao: dto.visao ?? ong.visao,
@@ -43,6 +38,7 @@ export default class EditarOng implements CasoDeUso<editarOngDto, any> {
 
         }
         const resposta = await this.ong.atualizar(ongEditar)
+        
         return resposta
     }
 }

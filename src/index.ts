@@ -21,7 +21,6 @@ import ExcluirVoluntarioController from "./controllers/voluntario/ExcluirVolunta
 import EditarVoluntario from "./core/useCase/Voluntario/EditarVoluntario";
 import EditarVoluntarioController from "./controllers/voluntario/EditarVoluntarioController";
 import UsuarioAutorizacao from "./adptadores/middleware/UsuarioAutorizacao"
-import UsuarioRepositorio from "./adptadores/db/usuario/UsuarioRepositorio";
 
 
 //
@@ -35,8 +34,7 @@ import BuscarOngs from "./core/useCase/Ong/BuscarOngs";
 import BuscarOngController from "./controllers/ong/BuscarOngs";
 import LonginUsuario from "./core/useCase/auth/LonginUsuario";
 import LoginUsuarioController from "./controllers/usuario/LoginUsuarioController";
-import BuscarUsuario from "./adptadores/db/usuario/UsuarioAutenticao";
-import UsuarioAutenticao from "./adptadores/db/usuario/UsuarioAutenticao";
+
 
 import EditarOng from "./core/useCase/Ong/EditarOng";
 import EditarOngController from "./controllers/ong/EditarOngController";
@@ -74,7 +72,6 @@ import ExcluirAvaliacao from "./core/useCase/Avaliacao/ExcluirAvaliacao";
 
 // Controladores
 import InscricaoController from "./controllers/inscricao/InscricaoController";
-import AvaliacaoController from "./controllers/avaliacao/AvaliacaoController";
 import ListarInscricoesVoluntarioControllers from "./controllers/voluntario/ListarInscricoesVoluntarioController";
 import ListarInscricoesVoluntario from "./core/useCase/Voluntario/ListarInscricoesVoluntario";
 import { validarRegistroVoluntario } from "./adptadores/middleware/validarCampos/validarRegistroVoluntario";
@@ -95,6 +92,14 @@ import RegistrarAvaliacaoOng from "./core/useCase/Avaliacao/RegistrarAvaliacaoOn
 import RegistrarAvaliacaoOngController from "./controllers/avaliacao/RegistrarAvaliacaoOngController";
 import ListarAvaliacoesRecebidas from "./core/useCase/Voluntario/ListarAvaliacoesRecebidas";
 import ListarAvaliacoesRecebidasController from "./controllers/voluntario/ListarAvaliacoesRecebidasController";
+import ExcluirAvaliacaoVoluntario from "./core/useCase/Avaliacao/ExcluirAvaliacaoVoluntario";
+import ExcluirAvaliacaoVoluntarioController from "./controllers/avaliacao/ExcluirAvaliacaoVoluntarioController";
+import AtualizaarAvalicaoVoluntarioController from "./controllers/avaliacao/AtualizarAvaliacaoVoluntarioController";
+import ListarAvaliacoesRecebidasOng from "./core/useCase/Ong/ListarAvaliacoesRecebidasOng";
+import ListarAvaliacoesRecebidasOngController from "./controllers/ong/ListarAvaliacoesRecebidasOngController";
+import ListarAvaliacoesFeitasOng from "./core/useCase/Ong/ListarAvaliacoesFeitasOng";
+import ListarAvaliacoesOngController from "./controllers/ong/ListarAvalicaoFeitasOngController";
+import ListarAvaliacoesFeitasOngController from "./controllers/ong/ListarAvalicaoFeitasOngController";
 
 
 const app = express();
@@ -127,7 +132,7 @@ const middlewareImagem = imagemUpload.single("imagem")
 new RegistrarVoluntarioController(app,registrarVoluntario,validarRegistroVoluntario(), middlewareValidador,middlewareImagem )
 new LoginUsuarioController(app,loginVoluntario)
 
-const usuarioAutenticaoDb = new UsuarioAutenticao() // altentica o usuario dinamicamente retornando dados para o payload de uma ong ou voluntario
+
 const buscarVoluntarios = new BuscarVoluntarios(voluntarioRepositorio)
 new buscarVoluntariosControllers(app,buscarVoluntarios,UserAuthentication(voluntarioRepositorio, ongRepositorio, provedorToken),UsuarioAutorizacao(["VOLUNTARIO","ONG"]) )
 // UsuarioAutorizacao(["VOLUNTARIO"]) 
@@ -258,10 +263,12 @@ new InscricaoController(
 
 // Avaliacao
 const avaliacaoRepositorio = new AvaliacaoRepositorio();
-const registrarAvaliacao = new RegistrarAvaliacao(avaliacaoRepositorio);
-const buscarAvaliacaoPorId = new BuscarAvaliacaoPorId(avaliacaoRepositorio);
-const atualizarAvaliacao = new AtualizarAvaliacao(avaliacaoRepositorio);
-const excluirAvaliacao = new ExcluirAvaliacao(avaliacaoRepositorio);
+
+
+// const registrarAvaliacao = new RegistrarAvaliacao(avaliacaoRepositorio);
+// const buscarAvaliacaoPorId = new BuscarAvaliacaoPorId(avaliacaoRepositorio);
+// const atualizarAvaliacao = new AtualizarAvaliacao(avaliacaoRepositorio);
+// const excluirAvaliacao = new ExcluirAvaliacao(avaliacaoRepositorio);
 
 //
 const registrarAvalicaoVoluntario = new RegistrarAvaliacaoVoluntario(avaliacaoRepositorio)
@@ -276,12 +283,34 @@ new ListarAvaliacoesVoluntarioController(app, listarAvalicaoVoluntario,UserAuthe
 const listarAvaliacoesRecebidasVoluntario = new ListarAvaliacoesRecebidas(avaliacaoRepositorio)
 new ListarAvaliacoesRecebidasController(app, listarAvaliacoesRecebidasVoluntario,UserAuthentication(voluntarioRepositorio, ongRepositorio, provedorToken), UsuarioAutorizacao(["VOLUNTARIO"]) )
 
-new AvaliacaoController(
-  app,
-  registrarAvaliacao,
-  buscarAvaliacaoPorId,
-  atualizarAvaliacao,
-  excluirAvaliacao,
-  UserAuthentication(voluntarioRepositorio, ongRepositorio, provedorToken),
-  UsuarioAutorizacao(["VOLUNTARIO", "ONG"])
-);
+// atualizar avalicao de um voluntario
+const atualizaAvalicaoVoluntario = new AtualizarAvaliacao(avaliacaoRepositorio)
+new AtualizaarAvalicaoVoluntarioController(app, atualizaAvalicaoVoluntario,UserAuthentication(voluntarioRepositorio, ongRepositorio, provedorToken), UsuarioAutorizacao(["VOLUNTARIO","ONG"] ))
+
+
+// excluir avaliacao de um voluntario
+
+const excluirAvaliacaoVoluntario = new ExcluirAvaliacaoVoluntario(avaliacaoRepositorio)
+new ExcluirAvaliacaoVoluntarioController(app, excluirAvaliacaoVoluntario,UserAuthentication(voluntarioRepositorio, ongRepositorio, provedorToken), UsuarioAutorizacao(["VOLUNTARIO"] ))
+
+
+
+//----------------------------------------------------------------------Avaliacoes ong---------------------------------------------------------------------
+
+const listarAvalicaoOng = new ListarAvaliacoesRecebidasOng(avaliacaoRepositorio)
+new ListarAvaliacoesRecebidasOngController(app, listarAvalicaoOng,UserAuthentication(voluntarioRepositorio, ongRepositorio, provedorToken), UsuarioAutorizacao(["ONG"] ) )
+
+const listarAvalicoesFeitasOng = new ListarAvaliacoesFeitasOng(avaliacaoRepositorio)
+new ListarAvaliacoesFeitasOngController(app, listarAvalicoesFeitasOng,UserAuthentication(voluntarioRepositorio, ongRepositorio, provedorToken), UsuarioAutorizacao(["ONG"] )  )
+
+// atualizar 
+
+// new AvaliacaoController(
+//   app,
+//   registrarAvaliacao,
+//   buscarAvaliacaoPorId,
+//   atualizarAvaliacao,
+//   // excluirAvaliacao,
+//   UserAuthentication(voluntarioRepositorio, ongRepositorio, provedorToken),
+//   UsuarioAutorizacao(["VOLUNTARIO", "ONG"])
+// );

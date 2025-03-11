@@ -5,36 +5,34 @@ import { RegistrarOng } from "../../core/useCase/Ong/RegistrarOng";
 import OngType from "../../@types/OngType";
 import AvaliacaoType from "../../@types/AvaliacaoType";
 import RegistrarAvaliacaoVoluntario from "../../core/useCase/Avaliacao/RegistrarAvaliacaoVoluntario";
-import RegistrarAvaliacaoOng from "../../core/useCase/Avaliacao/RegistrarAvaliacaoOng";
-export default class RegistrarAvalicaoOngController{
+import ExcluirAvaliacaoVoluntario, { excluirAvaliacaoDto } from "../../core/useCase/Avaliacao/ExcluirAvaliacaoVoluntario";
+export default class ExcluirAvaliacaoVoluntarioController{
     constructor(
       private servidor: Express,
-      private casoDeUso: RegistrarAvaliacaoOng,
+      private casoDeUso: ExcluirAvaliacaoVoluntario,
       ...middleware: any[]
     ){
       const registraOng = async(req:Request, res:Response) => {
-    try {
-         const ong = req.usuario
-        
- 
-           const avaliacao: AvaliacaoType = {
-             voluntarioId: req.params.id,
-             ongId: ong.id,
-             avaliadoId: req.params.id,
-             tipo: ong.tipo,
-             comentario: req.body.comentario,
-             nota: req.body.nota,
-           };
 
-           console.log(avaliacao,"avalia")
+    try {
+        console.log("chegou no controler")
+         const voluntario= req.usuario
+        const voluntarioId = voluntario.id
+
+        const {id} = req.params
+         const excluir: excluirAvaliacaoDto= {
+             avaliacaoId:id,
+             voluntarioId
+         }
          
-         const novaAvaliacao = await this.casoDeUso.executar(avaliacao);
+         
+         const novaAvaliacao = await this.casoDeUso.executar(excluir);
          res.status(201).json(novaAvaliacao);
        } catch (error: any) {
          res.status(400).send(error.message);
        }
         
       }
-      this.servidor.post("/avaliar/voluntario/:id",...middleware, registraOng)
+      this.servidor.delete("/excluir/avaliacao/:id",...middleware, registraOng)
     }
 }

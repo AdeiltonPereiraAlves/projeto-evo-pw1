@@ -6,25 +6,32 @@ import Validador from "../../utils/Validador";
 
 export default class Vaga {
   private id: string;
+   private titulo: string;
   private descricao: string;
   private requisitos: string[];
+  private quantidade:number;
   private status: Status;
   private duracao: string;
   private localizacao: string;
   private tipoTrabalho: TipoTrabalho;
   private latitude: number;
   private longitude: number;
+  private ongId: string;
 
   constructor(
     id: string,
+    titulo:string,
+
     descricao: string,
     requisitos: string[],
+    quantidade:number,
     status: Status,
     duracao: string,
     localizacao: string,
     tipoTrabalho: TipoTrabalho,
     latitude: number,
-    longitude: number
+    longitude: number,
+    ongId:string
   ) {
     const erros = Validador.combinar(
         Validador.naoVazia(descricao, Erros.DESCRICAO_INVALIDA),
@@ -41,14 +48,17 @@ export default class Vaga {
       throw new Error(erros.join(", "));
     }
     this.id = id;
+    this.titulo = titulo;
     this.descricao = descricao;
     this.requisitos = requisitos;
+    this.quantidade =quantidade;
     this.status = status;
     this.duracao = duracao;
     this.localizacao = localizacao;
     this.tipoTrabalho = tipoTrabalho;
     this.latitude = latitude;
     this.longitude = longitude;
+    this.ongId = ongId;
   }
 
   getId(){

@@ -1,17 +1,9 @@
 import CasoDeUso from "../../../@types/CasoDeUso";
-import UsuarioRepo from "../../portas/usuario/UsuarioRepo";
-import VoluntarioRepositorio from "./VoluntarioRepositorioPort"
-import InscricaoRepositorioPort from "../Inscricao/InscricaoRepositorio";
-import BuscarPorId from "./BuscarPorId";
+
+
 import AvaliacaoRepositorioPort from "../Avaliacao/AvaliacaoRepositorioPort";
-import Tipo from "../../../@types/Tipo";
-
-
-export type avaliacaoDto = {
-    id:string,
-    tipo: Tipo
-}
-export default class ListarAvaliacoesVoluntario implements CasoDeUso<avaliacaoDto, any> {
+import { avaliacaoDto } from "../Voluntario/ListarAvaliacoesVoluntario";
+export default class ListarAvaliacoesRecebidasOng implements CasoDeUso<avaliacaoDto, any> {
     constructor(private avaliacaoRepositorio: AvaliacaoRepositorioPort){}
      async executar(dto:avaliacaoDto){
           
@@ -23,7 +15,7 @@ export default class ListarAvaliacoesVoluntario implements CasoDeUso<avaliacaoDt
         // if(!voluntario){
         //     throw new Error("voluntario nao existe")
         // }
-        const avaliacoesAtuais =  await this.avaliacaoRepositorio.avaliacoesFeitasVoluntario(dto.id, dto.tipo)
+        const avaliacoesAtuais =  await this.avaliacaoRepositorio.avaliacoesRecebidasVoluntario(dto.id, dto.tipo)
         
         console.log(avaliacoesAtuais, "insc a")
         return avaliacoesAtuais;

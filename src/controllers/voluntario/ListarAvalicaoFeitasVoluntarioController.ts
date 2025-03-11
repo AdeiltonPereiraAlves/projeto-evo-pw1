@@ -1,7 +1,7 @@
 import buscarVoluntarios from "../../core/useCase/Voluntario/BuscarVoluntarios";
 import { Express, Request, Response } from "express";
 import ListarInscricoesVoluntario from "../../core/useCase/Voluntario/ListarInscricoesVoluntario";
-import ListarAvaliacoesVoluntario from "../../core/useCase/Voluntario/ListarAvaliacoesVoluntario";
+import ListarAvaliacoesVoluntario, { avaliacaoDto } from "../../core/useCase/Voluntario/ListarAvaliacoesVoluntario";
 export default class ListarAvaliacoesVoluntarioController{
     constructor(
         private servidor:Express,
@@ -19,7 +19,11 @@ export default class ListarAvaliacoesVoluntarioController{
                 const id = voluntario?.id
                 
                 console.log(id, "id")
-                const result = await this.casoDeUso.executar(id!)
+                const avaliadoDto:avaliacaoDto = {
+                    id,
+                    tipo: voluntario.tipo
+                }
+                const result = await this.casoDeUso.executar(avaliadoDto!)
                 console.log(result, "res")
                 
                 res.status(200).json(result)
@@ -28,6 +32,6 @@ export default class ListarAvaliacoesVoluntarioController{
             }
       }
 
-      this.servidor.get("/listar/avaliacoes",...middleware,buscar)
+      this.servidor.get("/avalicoes/feitas",...middleware,buscar)
     }
 }

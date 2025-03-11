@@ -4,6 +4,8 @@ import Status from "../../../@types/Status";
 import VagaRepositorioPort from "../vaga/VagaRepositorioPort";
 import OngRepositorioPort from "./OngRepositorioPort";
 import Vagatype from "../../../@types/VagaType";
+import vagasSaidaArray from "../../../@types/vagasSaidaArray";
+import VagaSaidaType from "../../../@types/VagaSaidaType";
 export type aprovarDto = {
     
     status: StatusInscricao
@@ -15,7 +17,7 @@ export default class AprovarVoluntario implements CasoDeUso<aprovarDto,any>{
     constructor(private ongRepositorio: OngRepositorioPort){}
     async executar(dto: aprovarDto): Promise<any> {
         try {
-            const vagaExistente:Vagatype = await this.ongRepositorio.listarVagaDeUmaOng({ongId:dto.ongId, vagaId:dto.vagaId})
+            const vagaExistente:VagaSaidaType | null = await this.ongRepositorio.listarVagaDeUmaOng({ongId:dto.ongId, vagaId:dto.vagaId})
             console.log(vagaExistente, "vagaex")
             if(!vagaExistente){
                 throw new Error("Vaga na existe")

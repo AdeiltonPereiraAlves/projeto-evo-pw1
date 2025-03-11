@@ -18,24 +18,23 @@ export default class EditarOngController {
                 }
               
                 console.log(req.body, "req body")
-                const { nome, email, missao, descricao, visao, areaAtuacao, endereco } = req.body
+                const { nome, missao, descricao, visao, areaAtuacao, endereco } = req.body
                 const ongEditavel: editarOngDto = {
                     id,
                     nome,
-                    email,
                     descricao,
                     missao,
                     visao,
                     areaAtuacao,
                     endereco
                 }
-                console.log(ongEditavel, "volunter editar")
-                const voluntarioEditado = await this.casoDeUso.executar(ongEditavel)
+                const ongEditado = await this.casoDeUso.executar(ongEditavel)
+                console.log(ongEditado, "ong editar")
 
 
-                voluntarioEditado.senha = undefined // deixa a senha undefined
+              // deixa a senha undefined
          
-                res.status(200).json(voluntarioEditado)
+                res.status(200).json(ongEditado)
             } catch (error: any) {
                 res.status(400).send(error.message)
             }

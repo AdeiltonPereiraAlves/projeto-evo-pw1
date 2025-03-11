@@ -1,7 +1,8 @@
 import VagaType from "../../../@types/VagaType"
+import Vaga from "../../model/vaga/Vaga"
 
 export default interface VagaRepositorioPort {
-    registrar(vaga:VagaType): any
+    registrar(vaga:Vaga): any
     buscar():Promise<VagaType[]|null>
     excluir(id:string, idOng:string):Promise<boolean>
     buscarPorId(id:string):any

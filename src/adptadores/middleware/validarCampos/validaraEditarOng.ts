@@ -6,10 +6,7 @@ import { body } from "express-validator";
         .isString().withMessage("O nome é obrigatório e deve ser uma string.")
         .notEmpty().withMessage("O nome não pode ser vazio.")
         .isLength({ min: 10, max: 100 }).withMessage("O nome deve ter entre 10 e 100 caracteres."),
-  
-      body("email")
-        .isEmail().withMessage("O e-mail deve ser válido."),
-
+ 
       body("descricao")
         .isString().withMessage("A descrição é obrigatória e deve ser uma string.")
         .notEmpty().withMessage("A descrição não pode ser vazia.")

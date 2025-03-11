@@ -125,7 +125,7 @@ export default class VoluntarioRepositorio
 
   async listarAvaliacoesVoluntario(id:string){
     try {
-      const inscricoes = await prismaDb.voluntario.findFirst({
+      const avaliacao = await prismaDb.voluntario.findFirst({
         where: {
           id,
         },
@@ -135,7 +135,7 @@ export default class VoluntarioRepositorio
         },
       });
 
-      return inscricoes;
+      return avaliacao;
     } catch (error) {
       throw new Error("Erro ao listar avaliacoes");
     }

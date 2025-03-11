@@ -20,6 +20,7 @@ export default class RegistrarAvalicaoVoluntarioController{
              voluntarioId: voluntario.id,
              ongId: req.params.id,
              tipo: voluntario.tipo,
+             avaliadoId: req.params.id,
              comentario: req.body.comentario,
              nota: req.body.nota,
            };
