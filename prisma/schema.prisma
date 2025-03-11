@@ -13,18 +13,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Usuario {
-  id         String      @id @default(uuid())
-  nome       String
-  email      String      
-  senha      String?
-  imagem     String
-  tipo       TipoUsuario
-  voluntario Voluntario?
-  ong        Ong?
-   createdAt  DateTime @default(now()) // Criado automaticamente na inserção
-  updatedAt  DateTime @updatedAt      // Atualizado automaticamente na modificação
-}
 
 enum TipoUsuario {
   VOLUNTARIO
@@ -33,6 +21,13 @@ enum TipoUsuario {
 enum Status{
   ENCERRADO
   ABERTO
+}
+
+enum Disponibilidade {
+  manha
+  tarde
+  noite
+  integral
 }
 
 enum AreaAtuacao {
@@ -70,23 +65,32 @@ enum AreaAtuacao {
 
 model Voluntario {
   id              String            @id @default(uuid())
-  usuarioId       String            @unique
-  usuario         Usuario           @relation(fields: [usuarioId], references: [id])
+  nome       String
+  email      String  @unique
+  senha      String?
+  imagem     String
+  tipo       TipoUsuario
+  contato String
+  cpf String  @unique
   interesses      String[]
   habilidades     String[]
-  disponibilidade String
+  disponibilidade Disponibilidade[]
   inscricoes Inscricao[]
   avaliacoes Avaliacao[]
+  latitude Float?
+  longitude Float?
  
 }
 
 model Ong {
   id          String   @id @default(uuid())
-  usuarioId   String   @unique
-  usuario     Usuario  @relation(fields: [usuarioId], references: [id])
+  nome       String
+  email      String  @unique
+  senha      String?
+  tipo       TipoUsuario
   cnpj        String   @unique
   descricao   String
-  misao       String
+  missao       String
   visao       String
   areaAtuacao AreaAtuacao[]
   endereco    String
@@ -103,28 +107,35 @@ enum TipoTrabalho {
 model Vaga{
   id String @id @default(uuid())
   ongId String
+  titulo String
   descricao String
   requisitos String[]
+  quantidade Int
   status Status
   duracao String
   localizacao String
   tipoTrabalho TipoTrabalho
   latitude Float
   longitude Float
-  ong Ong @relation(fields:[ongId], references: [id])
-  inscricoes Inscricao[]
+  ong Ong @relation(fields:[ongId], references: [id], onDelete: Cascade)
+  inscricoes Inscricao[] 
   createdAt  DateTime @default(now()) // Criado automaticamente na inserção
   updatedAt  DateTime @updatedAt      // Atualizado automaticamente na modificação
 }
-
+enum StatusInscricao{
+  pendente
+  aprovado
+  rejeitado
+}
 model Inscricao{
   id String @id @default(uuid())
   voluntarioId String
   vagaId String
   data  DateTime @default(now())
-  status Status
-  voluntario Voluntario @relation(fields:[voluntarioId], references: [id])
-  vaga Vaga @relation(fields:[vagaId], references: [id])
+  status StatusInscricao
+  ativo  Boolean  @default(false)
+  voluntario Voluntario @relation(fields:[voluntarioId], references: [id], onDelete: Cascade)
+  vaga Vaga @relation(fields:[vagaId], references: [id], onDelete: Cascade)
   createdAt  DateTime @default(now()) // Criado automaticamente na inserção
   updatedAt  DateTime @updatedAt      // Atualizado automaticamente na modificação
 }
@@ -133,13 +144,12 @@ model Avaliacao{
   id String @id @default(uuid())
   voluntarioId String
   ongId String
-  data DateTime @default(now())
-  frequecia String?
+  avaliadoId  String?
   tipo TipoUsuario
   comentario String
   nota Int
-  voluntario Voluntario @relation(fields:[voluntarioId], references: [id])
-  ong Ong @relation(fields:[ongId], references: [id])
+  voluntario Voluntario @relation(fields:[voluntarioId], references: [id],onDelete: Cascade)
+  ong Ong @relation(fields:[ongId], references: [id], onDelete: Cascade)
   createdAt  DateTime @default(now()) // Criado automaticamente na inserção
   updatedAt  DateTime @updatedAt      // Atualizado automaticamente na modificação
 }

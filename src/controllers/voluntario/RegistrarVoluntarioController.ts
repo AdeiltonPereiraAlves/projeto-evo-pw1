@@ -1,4 +1,3 @@
-import ValidateReq from "../../adptadores/middleware/handleValidation";
 import RegistrarVoluntario from "../../core/useCase/Voluntario/RegistrarVoluntario";
 import { Express } from "express";
 
@@ -19,13 +18,15 @@ export default class RegistrarVoluntarioController{
             }else{
                 imagemUp = "public/images/profile.png"
             }
-            const {nome, email, tipo, habilidades, interesses,disponibilidade,senha} = req.body 
+            const {nome, email, tipo,contato, cpf, habilidades, interesses,disponibilidade,senha} = req.body 
            
             try {
                 await this.casoDeUso.executar({
                     nome,
                     email,
                     tipo,
+                    contato,
+                    cpf,
                     habilidades,
                     interesses,
                     disponibilidade,

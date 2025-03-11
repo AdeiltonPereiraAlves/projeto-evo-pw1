@@ -1,12 +1,16 @@
 import CasoDeUso from "../../../@types/CasoDeUso";
-import VoluntarioDb from "../../portas/VoluntarioDb";
+import BuscarPorId from "./BuscarPorId";
+import voluntarioRepositorio from "./VoluntarioRepositorioPort";
 
-export default class ExcluirVoluntario implements CasoDeUso<string, void>{
+export default class ExcluirVoluntario implements CasoDeUso<string, boolean>{
     constructor(
-        private voluntarioDb: VoluntarioDb
+        private voluntarioRepositorio: voluntarioRepositorio
     ){}
-    async executar(id:string): Promise<void> {
-        const resposta = await this.voluntarioDb.excluirVoluntario(id)
+    async executar(id:string) {
+        const buscarPorId = new BuscarPorId(this.voluntarioRepositorio)
+        if(!buscarPorId) throw new Error("Voluntario não existe")
+
+        const resposta = await this.voluntarioRepositorio.excluir(id)
         return resposta;
         
     }

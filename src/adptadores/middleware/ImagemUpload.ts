@@ -3,12 +3,14 @@ import path from 'path'
 import fs from "fs";
 import { Request } from "express";
 import UsuarioType from "../../@types/UsuarioType";
+import VoluntarioType from "../../@types/VoluntarioType";
+import OngType from "../../@types/OngType";
 
 declare global {
     namespace Express {
       interface Request {
         file?: Multer.File;
-        usuario?: UsuarioType
+        usuario?:any
       }
     }
   }

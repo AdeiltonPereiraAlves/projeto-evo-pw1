@@ -1,7 +1,7 @@
 enum TipoTrabalho {
-    PRESENCIAL = 'Presencial',
-    REMOTO = 'Remoto',
-    HIBRIDO = 'Hibrido'
+    PRESENCIAL="PRESENCIAL" ,
+    REMOTO="REMOTO",
+    HIBRIDO ="HIBRIDO"
   }
 
   export default TipoTrabalho

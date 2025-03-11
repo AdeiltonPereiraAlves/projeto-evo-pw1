@@ -1,55 +1,45 @@
-import { log } from "console";
-import Usuario from "../../../core/model/usuario/Usuario";
-import Voluntario from "../../../core/model/voluntario/Voluntario";
-import VoluntarioDb from "../../../core/portas/VoluntarioDb";
+import VoluntarioRepositorioPort from "../../../core/useCase/Voluntario/VoluntarioRepositorioPort";
 import prismaDb from "../../prismaDb/Prisma";
-import UsuarioType from "../../../@types/UsuarioType";
 import VoluntarioType from "../../../@types/VoluntarioType";
-import imagemUpload from "../../middleware/ImagemUpload";
-import path from "path";
-import fs from 'fs/promises';
 
-export default class VoluntarioRepositorio implements VoluntarioDb {
-  constructor() {}
-  async buscarVoluntarios() {
+import { Inscricao } from "@prisma/client";
+import Voluntario from "../../../core/model/voluntario/Voluntario";
+import { editarVoluntarioDto } from "../../../core/useCase/Voluntario/EditarVoluntario";
+
+export default class VoluntarioRepositorio
+  implements VoluntarioRepositorioPort
+{
+  async buscarPorId(id: string): Promise<any> {
+    const voluntario = await prismaDb.voluntario.findUnique({
+      where: { id },
+    });
+    return voluntario;
+  }
+  async buscarTodos():Promise<VoluntarioType[]> {
     try {
-      const voluntarios = await prismaDb.voluntario.findMany({
-        include: {
-          usuario: {
-            select: {
-              nome: true,
-              email: true,
-              tipo: true,
-              imagem: true,
-            },
-          },
-        },
-      });
-      return voluntarios;
+      const voluntarios = await prismaDb.voluntario.findMany();
+      return voluntarios as any;
     } catch (error) {
       throw new Error("Erro no buscar voluntarios");
     }
   }
-  async inserirUsuario(voluntario: Voluntario): Promise<any> {
+  async registrar(voluntario: Voluntario): Promise<any> {
     console.log("chegou no banco");
 
-    console.log(voluntario.getImagem(), "Imagem no banco");
     try {
       const voluntarioRegistrado = await prismaDb.voluntario.create({
         data: {
+          id: voluntario.getId(),
+          nome: voluntario.getNome(),
+          email: voluntario.getEmail(),
+          tipo: voluntario.getTipo(),
+          contato: voluntario.getContato(),
+          cpf: voluntario.getCpf(),
           habilidades: voluntario.getHabilidades(),
           interesses: voluntario.getInteresses(),
           disponibilidade: voluntario.getDisponibilidade(),
-          usuario: {
-            create: {
-              id: voluntario.getId(),
-              nome: voluntario.getNome(),
-              email: voluntario.getEmail(),
-              senha: voluntario.getSenha(),
-              imagem: voluntario.getImagem(),
-              tipo: voluntario.getTipo(),
-            },
-          },
+          senha: voluntario.getSenha(),
+          imagem: voluntario.getImagem(),
         },
       });
       console.log(voluntarioRegistrado);
@@ -61,102 +51,93 @@ export default class VoluntarioRepositorio implements VoluntarioDb {
   }
 
   // buscar por email
-  async buscarPorEmail(email: string) {
-    try {
-      const usuario = await prismaDb.usuario.findFirst({
-        where: { email },
-        include: {
-          voluntario: true,
-        },
-      });
-      if (!usuario) {
-        return { error: "Usuário não encontrado" };
-      }
 
-      return usuario;
-    } catch (error) {
-      console.error("Erro ao buscar usuário pelo email:", error);
-      return { error: "Erro ao buscar usuário" };
+  async buscarPorEmail(email: string): Promise<VoluntarioType| null> {
+    console.log(email, "email");
+    const voluntario = await prismaDb.voluntario.findUnique({
+      where: { email },
+    });
+    if (!voluntario) {
+      return null;
     }
+    console.log(voluntario, "voluntario");
+    return voluntario as any;
   }
-  async buscarPorId(id: string) {
-    try {
-      const voluntario = await prismaDb.usuario.findUnique({
-        where: { id },
-        include: { voluntario: true },
-      });
 
-      if (!voluntario) {
-        return { error: "Id nao encontrado" };
-      }
-      return voluntario;
-    } catch (error) {
-      console.error("Erro ao buscar voluntario pelo id:", error);
-      return { error: "Erro ao buscar voluntario" };
-    }
-  }
-  async editarFoto(novaImagem: string, id: string) {
-    try {
-      const voluntario = await this.buscarPorId(id);
-      if ("error" in voluntario) {
-        throw new Error(voluntario.error);
-      }
-
-      const voluntarioFotoAtualizada = await prismaDb.usuario.update({
-        where: {
-          id: voluntario.id,
-        },
-        select: {
-          id: true,
-          nome: true,
-          email: true,
-          imagem: true,
-          tipo: true,
-        },
-        data: { imagem: novaImagem },
-      });
-
-      return voluntarioFotoAtualizada;
-    } catch (error) {
-      console.error("Erro ao editar foto do voluntario:", error);
-      return { error: "Erro ao editar voluntario" };
-    }
-  }
   //excluir voluntario
-  async excluirVoluntario(id: string) {
+  async excluir(id: string): Promise<boolean> {
     try {
-      const  resposta = await this.buscarPorId(id);
-      let usuarioId = ""
-      let idV =""
-      if (!resposta) {
-       throw new Error("Voluntario Nao encontrado")
-      }
-      console.log(resposta, "resposta")
-      if ('voluntario' in resposta && resposta.voluntario !== null) {
-        usuarioId = resposta.voluntario.usuarioId;
-        idV = resposta.voluntario.id
 
-        console.log(idV, "idv")
-        const imagePath = path.resolve(`public/images/voluntarios/${resposta.imagem}`);
-        await fs.unlink(imagePath).catch(() => console.log('Imagem já foi excluída.'));
-        console.log('ID do usuário:', usuarioId);
-    } else {
-        console.log('Erro: não há dados do voluntário ou a resposta é de erro');
-    }
-   
       await prismaDb.voluntario.delete({
-        where: { id: idV},
+        where: { id },
       });
 
-      // Excluir o usuário
-      await prismaDb.usuario.delete({
-        where: { id: usuarioId },
-      });
-
-      return true
+      return true;
     } catch (error) {
       console.error("Erro aodeletar  voluntario:", error);
-      return { error: "Erro ao deletar voluntario" };
+      throw new Error("Erro ao excluir Voluntario");
+    }
+  }
+
+  async atualizar(voluntario:editarVoluntarioDto): Promise<Voluntario | any> {
+    try {
+      const voluntarioAtualizado = await prismaDb.voluntario.update({
+        where: { id: voluntario.id },
+
+        data: { ...voluntario },
+      });
+      return voluntarioAtualizado;
+    } catch (error) {
+      console.error("Erro ao alterar  voluntario:", error);
+      throw new Error("erro ao atualizar voluntario");
+    }
+  }
+  async editarFoto(id: string, novaImagem: string): Promise<boolean> {
+    const voluntario = await prismaDb.voluntario.update({
+      where: { id },
+      data: { imagem: novaImagem },
+    });
+
+    return voluntario ? true : false;
+  }
+  async listarInscricoesVoluntario(
+    id: string
+  ): Promise<Partial<Inscricao> | null> {
+    try {
+      const inscricoes = await prismaDb.voluntario.findFirst({
+        where: {
+          id,
+        },
+        include: {
+          inscricoes:{
+            include:{
+              vaga:true
+            }
+          }
+        },
+      });
+
+      return inscricoes;
+    } catch (error) {
+      throw new Error("Erro ao listar inscricoes");
+    }
+  }
+
+  async listarAvaliacoesVoluntario(id:string){
+    try {
+      const avaliacao = await prismaDb.voluntario.findFirst({
+        where: {
+          id,
+        },
+        include: {
+         avaliacoes:true
+          
+        },
+      });
+
+      return avaliacao;
+    } catch (error) {
+      throw new Error("Erro ao listar avaliacoes");
     }
   }
 }

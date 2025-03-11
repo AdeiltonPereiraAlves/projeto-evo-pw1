@@ -1,43 +1,98 @@
+// import Disponibilidade from "../../../@types/Disponibilidade";
+// import Tipo from "../../../@types/Tipo";
+
+// export default interface VoluntarioType{
+//     id?: string;
+//     nome: string;
+//     email: string;
+//     tipo: Tipo;
+//     contato: string;
+//     cpf:string;
+//     senha?: string;
+//     imagem: string;
+//     habilidades: string[]
+//     interesses:string []
+//     disponibilidade:Disponibilidade[]
+// }
+
 import Disponibilidade from "../../../@types/Disponibilidade";
 import Tipo from "../../../@types/Tipo";
 import Erros from "../../constants/Erros";
 import Validador from "../../utils/Validador";
 
-import Usuario from "../usuario/Usuario";
-
-export default class Voluntario extends Usuario {
-  private _habilidades: string[]
-  private _interesses: string[]
-  private _disponibilidade: Disponibilidade
+export default class Voluntario {
+  id: string;
+  private nome: string;
+  private email: string;
+  private senha?: string;
+  private imagem: string;
+  private tipo: Tipo;
+  private contato: string;
+  private cpf: string;
+  private _interesses: string[];
+  private _habilidades: string[];
+  private _disponibilidade: Disponibilidade[];
   constructor(
     id: string,
     nome: string,
     email: string,
+    imagem: string,
     tipo: Tipo,
+    contato: string,
+    cpf:string,
     habilidades: string[],
     interesses: string[],
-    disponibilidade: Disponibilidade,
-    senha: string ,
-    imagem: string 
+    disponibilidade: Disponibilidade[],
+    senha?: string,
   ) {
-    super(id, nome, email, tipo, senha, imagem);
     const erros = Validador.combinar(
+      Validador.naoVazia(nome, Erros.NOME_VAZIO),
+      Validador.naoVazia(email, Erros.EMAIL_INVALIDO),
+      Validador.naoVazia(senha, Erros.SENHA_INVALIDA),
+      Validador.naoVazia(imagem, Erros.IMAGEM_INVALIDA),
       Validador.arrayInvalido(habilidades, Erros.HABILIDADES_INVALIDAS),
-      Validador.arrayInvalido(interesses, Erros.INTERESSES_INVALIDOS),
-      
-      
+      Validador.arrayInvalido(interesses, Erros.INTERESSES_INVALIDOS)
     );
 
     if (erros) {
       throw new Error(erros.join(", "));
     }
-    
-    this._habilidades = habilidades ;
+    this.id = id;
+    this.nome = nome;
+    this.email = email;
+    this.tipo = tipo;
+    this.contato = contato;
+    this.cpf = cpf;
+    this._habilidades = habilidades;
     this._interesses = interesses;
     this._disponibilidade = disponibilidade;
-   
+    this.senha = senha;
+    this.imagem = imagem;
   }
-
+  getId(){
+    return this.id;
+  }
+  getNome(): string {
+    return this.nome;
+  }
+  getSenha(): string | undefined  {
+    return this.senha;
+  }
+  getEmail(): string {
+    return this.email;
+  }
+  getImagem(): string  {
+    return this.imagem;
+  }
+  getTipo(): Tipo {
+    return this.tipo;
+  }
+  getContato(){
+    return this.contato
+  }
+  getCpf(){
+    return this.cpf
+  }
   //get e set habilidades
   setHabilidades(habilidades: string[]) {
     const res = Validador.arrayInvalido(
@@ -68,7 +123,7 @@ export default class Voluntario extends Usuario {
   }
 
   //get e set disponibilidade
-  setDisponibilidade(disponibilidades: Disponibilidade) {
+  setDisponibilidade(disponibilidades: Disponibilidade[]) {
     this._disponibilidade = disponibilidades;
   }
   getDisponibilidade() {

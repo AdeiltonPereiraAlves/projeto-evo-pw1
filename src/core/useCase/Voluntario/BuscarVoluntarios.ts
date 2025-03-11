@@ -1,10 +1,12 @@
 import CasoDeUso from "../../../@types/CasoDeUso";
-import VoluntarioDb from "../../portas/VoluntarioDb";
+import VoluntarioType from "../../../@types/VoluntarioType";
+import UsuarioRepo from "../../portas/usuario/UsuarioRepo";
+import VoluntarioDb from "./VoluntarioRepositorioPort";
 
-export default class buscarVoluntarios implements CasoDeUso<void, any> {
-    constructor(private voluntarioDb: VoluntarioDb){}
+export default class buscarVoluntarios implements CasoDeUso<void,VoluntarioType[]> {
+    constructor(private voluntarioRepositorio: VoluntarioDb){}
      async executar(){
-        const voluntarios = await this.voluntarioDb.buscarVoluntarios()
+        const voluntarios = await this.voluntarioRepositorio.buscarTodos()
         return voluntarios
     }
 }

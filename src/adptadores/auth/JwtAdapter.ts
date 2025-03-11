@@ -11,9 +11,13 @@ export default class JwtAdapter{
 
     }
     gerar(payload:string| object):string {
-      return jwt.sign(payload, this.jwtsecret, {expiresIn:'1d'})
+      console.log(payload, "payload")
+      return jwt.sign(payload, this.jwtsecret, {expiresIn:'6d'})
     }
-    validar(token:string):TokenPayload{
-        return jwt.verify(token, this.jwtsecret) as TokenPayload
+    validar(token: string): TokenPayload {
+      console.log(token, "token no pay");
+      const payload = jwt.verify(token, this.jwtsecret) as TokenPayload;
+      console.log(payload, "token payload");
+      return payload;
     }
 }

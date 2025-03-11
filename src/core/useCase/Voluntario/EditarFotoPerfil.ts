@@ -1,16 +1,18 @@
 import CasoDeUso from "../../../@types/CasoDeUso";
-import VoluntarioDb from "../../portas/VoluntarioDb";
+import VoluntarioType from "../../../@types/VoluntarioType";
+import UsuarioRepo from "../../portas/usuario/UsuarioRepo";
+import voluntatioRepositorio from "./VoluntarioRepositorioPort";
 export type fotoDto = {
     imagem: string,
     id?:string
 }
-export default class EditarFotoPerfil implements CasoDeUso<fotoDto,void>{ 
+export default class EditarFotoPerfil implements CasoDeUso<fotoDto,boolean>{ 
     constructor(
-        private VoluntarioDb: VoluntarioDb,
+        private voluntarioRepositorio: voluntatioRepositorio,
        
     ){}
     async executar(dto: fotoDto){
-        const voluntarioAtual = await this.VoluntarioDb.editarFoto(dto.imagem,dto.id)
-        return voluntarioAtual
+        const fotoAtualizada = await this.voluntarioRepositorio.editarFoto(dto.id!,dto.imagem,)
+        return fotoAtualizada
     }
 }
