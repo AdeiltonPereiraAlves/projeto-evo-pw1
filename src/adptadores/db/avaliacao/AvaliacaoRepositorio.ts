@@ -95,7 +95,7 @@ export default class AvaliacaoRepositorio implements AvaliacaoRepositorioPort {
     try {
       const avaliacoesRecebidas = await this.prisma.avaliacao.findMany({
          where:{
-          avaliadoId: id,
+          voluntarioId: id,
           tipo, // Só traz avaliações feitas por ONGs
          }
        });
