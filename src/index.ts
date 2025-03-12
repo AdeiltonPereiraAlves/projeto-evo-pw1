@@ -24,7 +24,6 @@ import UsuarioAutorizacao from "./adptadores/middleware/UsuarioAutorizacao"
 
 
 //
-import UsuarioRepo from "./core/portas/usuario/UsuarioRepo";
 import { RegistrarOng } from "./core/useCase/Ong/RegistrarOng";
 import { OngRepositorio } from "./adptadores/db/ong/OngRepositorio";
 import RegistrarOngController from "./controllers/ong/RegistrarOngController";
