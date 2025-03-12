@@ -39,20 +39,20 @@ export default class InscricaoRepositorio {
     }
   }
 
-  async atualizar(inscricao: InscricaoType): Promise<any> {
+  async atualizar(inscricao: any): Promise<any> {
     try {
       const inscricaoExistente = await this.prisma.inscricao.findUnique({
-        where: { id: inscricao.id },
+        where: { id: inscricao.inscricaoId },
       });
-  
+       console.log(inscricaoExistente,"inscricao existente")
       if (!inscricaoExistente) {
         throw new Error("Inscrição não encontrada");
       }
   
       const inscricaoAtualizada = await this.prisma.inscricao.update({
-        where: { id: inscricao.id },
+        where: { id: inscricao.inscricaoId },
         data: {
-          status: inscricao.status,
+          ativo: inscricao.ativo
         },
       });
       return inscricaoAtualizada;

@@ -20,7 +20,6 @@ export default class RegistrarAvalicaoOngController{
            const avaliacao: AvaliacaoType = {
              voluntarioId: req.params.id,
              ongId: ong.id,
-             avaliadoId: req.params.id,
              tipo: ong.tipo,
              comentario: req.body.comentario,
              nota: req.body.nota,

@@ -144,7 +144,6 @@ model Avaliacao{
   id String @id @default(uuid())
   voluntarioId String
   ongId String
-  avaliadoId  String?
   tipo TipoUsuario
   comentario String
   nota Int

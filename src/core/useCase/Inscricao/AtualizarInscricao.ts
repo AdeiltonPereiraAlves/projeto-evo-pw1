@@ -7,9 +7,8 @@ export default class AtualizarInscricao implements CasoDeUso<InscricaoType, any>
   constructor(private inscricaoRepositorio: InscricaoRepositorioPort) {}
 
   async executar(dto: InscricaoType): Promise<any> {
-    if (!dto.id || !dto.status) {
-      throw new Error("ID e status são obrigatórios para atualizar a inscrição");
-    }
+   
+    console.log(dto, "dto")
   
     try {
       const inscricaoAtualizada = await this.inscricaoRepositorio.atualizar(dto);

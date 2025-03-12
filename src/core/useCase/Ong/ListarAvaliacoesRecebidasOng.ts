@@ -15,7 +15,7 @@ export default class ListarAvaliacoesRecebidasOng implements CasoDeUso<avaliacao
         // if(!voluntario){
         //     throw new Error("voluntario nao existe")
         // }
-        const avaliacoesAtuais =  await this.avaliacaoRepositorio.avaliacoesRecebidasVoluntario(dto.id, dto.tipo)
+        const avaliacoesAtuais =  await this.avaliacaoRepositorio.avaliacoesRecebidasOng(dto.id, dto.tipo)
         
         console.log(avaliacoesAtuais, "insc a")
         return avaliacoesAtuais;

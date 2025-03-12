@@ -23,10 +23,7 @@ export default class InscricaoController {
         const { ativo } = req.body;
 
         console.log(id, "id da vaga");
-        if (!ativo) {
-          res.status(400).json({ message: "Status é obrigatório" });
-          return;
-        }
+      
 
         const inscricao: InscricaoType = {
           voluntarioId,
@@ -61,15 +58,11 @@ export default class InscricaoController {
         const { ativo } = req.body;
 
         console.log(id, "id da vaga");
-        if (!ativo) {
-          res.status(400).json({ message: "Status é obrigatório" });
-          return;
-        }
-
-        const inscricao: InscricaoType = {
+      
+         
+        const inscricao:any = {
           voluntarioId,
-          vagaId: id,
-          status: StatusInscricao.pendente,
+          inscricaoId: id,
           ativo,
         };
         const inscricaoAtualizada = await this.atualizarInscricao.executar(
@@ -102,7 +95,7 @@ export default class InscricaoController {
     // Rotas
     this.servidor.post("/inscricao/:id", ...middleware, registrar);
     this.servidor.get("/inscricao/:id", ...middleware, buscarPorId);
-    this.servidor.put("/inscricao/:id", ...middleware, atualizar);
+    this.servidor.put("/atualizar/inscricao/:id", ...middleware, atualizar);
     this.servidor.delete("/inscricao/:id", ...middleware, excluir);
   }
 }

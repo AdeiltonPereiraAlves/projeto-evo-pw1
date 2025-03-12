@@ -19,7 +19,6 @@ export default class AvaliacaoRepositorio implements AvaliacaoRepositorioPort {
         data: {
           voluntarioId: avaliacao.voluntarioId,
           ongId: avaliacao.ongId,
-          avaliadoId: avaliacao.avaliadoId,
           tipo: avaliacao.tipo,
           comentario: avaliacao.comentario,
           nota: avaliacao.nota,
@@ -105,5 +104,19 @@ export default class AvaliacaoRepositorio implements AvaliacaoRepositorioPort {
       throw new Error("Erro ao lista avaliação");
     }
   }
+  async avaliacoesRecebidasOng(id:string, tipo:Tipo) {
+    try {
+      const avaliacoesRecebidas = await this.prisma.avaliacao.findMany({
+         where:{
+          ongId: id,
+          tipo, // Só traz avaliações feitas por ONGs
+         }
+       });
+      return  avaliacoesRecebidas;
+    } catch (error) {
+      throw new Error("Erro ao lista avaliação");
+    }
+  }
+
   
 }
