@@ -103,6 +103,7 @@ import ListarAvaliacoesFeitasOngController from "./controllers/ong/ListarAvalica
 import { validarRegistroVaga } from "./adptadores/middleware/validarCampos/validarRegistroVaga";
 import { validarRegistroAvaliacao } from "./adptadores/middleware/validarCampos/validarRegistroAvaliacao";
 import AtualizaarAvalicaoController from "./controllers/avaliacao/AtualizarAvaliacaoController";
+import BuscarPorId from "./core/useCase/Voluntario/BuscarPorId";
 
 
 const app = express();
@@ -149,7 +150,8 @@ new EditarFotoController(app,editarFoto,UserAuthentication(voluntarioRepositorio
 // //excluir voluntario
 
 const excluirVoluntario = new ExcluirVoluntario(voluntarioRepositorio)
-new ExcluirVoluntarioController(app, excluirVoluntario,middlewareValidador, UserAuthentication(voluntarioRepositorio, ongRepositorio, provedorToken),middlewareImagem, UsuarioAutorizacao(["VOLUNTARIO"]))
+const buscarPorId =  new BuscarPorId(voluntarioRepositorio)
+new ExcluirVoluntarioController(app, excluirVoluntario,buscarPorId,middlewareValidador, UserAuthentication(voluntarioRepositorio, ongRepositorio, provedorToken),middlewareImagem, UsuarioAutorizacao(["VOLUNTARIO"]))
 //UserAuthentication(voluntarioRepositorio, provedorToken),
 
 
