@@ -32,6 +32,6 @@ export default class ListarAvaliacoesVoluntarioController{
             }
       }
 
-      this.servidor.get("/avalicoes/feitas",...middleware,buscar)
+      this.servidor.get("/avaliacoes/feitas",...middleware,buscar)
     }
 }

@@ -7,7 +7,7 @@ import AvaliacaoType from "../../@types/AvaliacaoType";
 import RegistrarAvaliacaoVoluntario from "../../core/useCase/Avaliacao/RegistrarAvaliacaoVoluntario";
 import RegistrarAvaliacaoOng from "../../core/useCase/Avaliacao/RegistrarAvaliacaoOng";
 import AtualizarAvaliacao, { atualizaAvaliacaoDto } from "../../core/useCase/Avaliacao/AtualizarAvaliacao";
-export default class AtualizaarAvalicaoVoluntarioController {
+export default class AtualizaarAvalicaoController {
   constructor(
     private servidor: Express,
     private casoDeUso: AtualizarAvaliacao,

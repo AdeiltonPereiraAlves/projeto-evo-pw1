@@ -6,7 +6,6 @@ export default interface AvaliacaoType {
   id?: string;
   voluntarioId: string;
   ongId: string;
-  avaliadoId:string;
   tipo: Tipo;
   comentario: string;
   nota: number;

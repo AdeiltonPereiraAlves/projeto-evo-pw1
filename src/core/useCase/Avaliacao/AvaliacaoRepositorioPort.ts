@@ -8,6 +8,7 @@ export default interface AvaliacaoRepositorioPort{
     atualizar(avaliacao: atualizaAvaliacaoDto): Promise<any>
     excluir(id: string): Promise<boolean>
     avaliacoesRecebidasVoluntario(id:string, tipo:Tipo):any
+    avaliacoesRecebidasOng(id:string, tipo:Tipo):any
     avaliacoesFeitasVoluntario(id:string, tipo:Tipo):any
     avaliacoesFeitasOng(id:string, tipo:Tipo):any
 }

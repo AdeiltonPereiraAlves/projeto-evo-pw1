@@ -94,7 +94,7 @@ import ListarAvaliacoesRecebidas from "./core/useCase/Voluntario/ListarAvaliacoe
 import ListarAvaliacoesRecebidasController from "./controllers/voluntario/ListarAvaliacoesRecebidasController";
 import ExcluirAvaliacaoVoluntario from "./core/useCase/Avaliacao/ExcluirAvaliacaoVoluntario";
 import ExcluirAvaliacaoVoluntarioController from "./controllers/avaliacao/ExcluirAvaliacaoVoluntarioController";
-import AtualizaarAvalicaoVoluntarioController from "./controllers/avaliacao/AtualizarAvaliacaoVoluntarioController";
+import AtualizaarAvalicaoVoluntarioController from "./controllers/avaliacao/AtualizarAvaliacaoController";
 import ListarAvaliacoesRecebidasOng from "./core/useCase/Ong/ListarAvaliacoesRecebidasOng";
 import ListarAvaliacoesRecebidasOngController from "./controllers/ong/ListarAvaliacoesRecebidasOngController";
 import ListarAvaliacoesFeitasOng from "./core/useCase/Ong/ListarAvaliacoesFeitasOng";
@@ -102,6 +102,7 @@ import ListarAvaliacoesOngController from "./controllers/ong/ListarAvalicaoFeita
 import ListarAvaliacoesFeitasOngController from "./controllers/ong/ListarAvalicaoFeitasOngController";
 import { validarRegistroVaga } from "./adptadores/middleware/validarCampos/validarRegistroVaga";
 import { validarRegistroAvaliacao } from "./adptadores/middleware/validarCampos/validarRegistroAvaliacao";
+import AtualizaarAvalicaoController from "./controllers/avaliacao/AtualizarAvaliacaoController";
 
 
 const app = express();
@@ -287,7 +288,7 @@ new ListarAvaliacoesRecebidasController(app, listarAvaliacoesRecebidasVoluntario
 
 // atualizar avalicao de um voluntario
 const atualizaAvalicaoVoluntario = new AtualizarAvaliacao(avaliacaoRepositorio)
-new AtualizaarAvalicaoVoluntarioController(app, atualizaAvalicaoVoluntario,UserAuthentication(voluntarioRepositorio, ongRepositorio, provedorToken), UsuarioAutorizacao(["VOLUNTARIO","ONG"] ))
+new AtualizaarAvalicaoController(app, atualizaAvalicaoVoluntario,UserAuthentication(voluntarioRepositorio, ongRepositorio, provedorToken), UsuarioAutorizacao(["VOLUNTARIO","ONG"] ))
 
 
 // excluir avaliacao de um voluntario
