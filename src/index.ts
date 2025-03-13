@@ -296,7 +296,7 @@ new AtualizaarAvalicaoController(app, atualizaAvalicaoVoluntario,UserAuthenticat
 // excluir avaliacao de um voluntario
 
 const excluirAvaliacaoVoluntario = new ExcluirAvaliacaoVoluntario(avaliacaoRepositorio)
-new ExcluirAvaliacaoVoluntarioController(app, excluirAvaliacaoVoluntario,UserAuthentication(voluntarioRepositorio, ongRepositorio, provedorToken), UsuarioAutorizacao(["VOLUNTARIO"] ))
+new ExcluirAvaliacaoVoluntarioController(app, excluirAvaliacaoVoluntario,UserAuthentication(voluntarioRepositorio, ongRepositorio, provedorToken), UsuarioAutorizacao(["VOLUNTARIO","ONG"] ))
 
 
 
