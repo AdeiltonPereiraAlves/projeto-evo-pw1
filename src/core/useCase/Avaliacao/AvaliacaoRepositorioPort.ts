@@ -11,4 +11,5 @@ export default interface AvaliacaoRepositorioPort{
     avaliacoesRecebidasOng(id:string, tipo:Tipo):any
     avaliacoesFeitasVoluntario(id:string, tipo:Tipo):any
     avaliacoesFeitasOng(id:string, tipo:Tipo):any
+    atualizarsAvalicaoOng(avaliacao:atualizaAvaliacaoDto):any
 }
