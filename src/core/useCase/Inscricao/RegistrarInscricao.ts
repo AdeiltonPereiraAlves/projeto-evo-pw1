@@ -7,6 +7,7 @@ import VagaRepositorioPort from "../vaga/VagaRepositorioPort";
 import VoluntarioDb from "../Voluntario/VoluntarioRepositorioPort";
 import BuscarVoluntarioPorId from "../Voluntario/BuscarPorId";
 import { StatusInscricao } from "@prisma/client";
+import Inscricao from "../../model/inscricao/Inscricao";
 
 export type inscricaoDto = {
   id?: string;
@@ -45,13 +46,22 @@ export default class RegistrarInscricao
       if (voluntario.id !== dto.voluntarioId) {
         throw new Error("error id de voluntario não encontrado");
       }
-      const inscricao = {
-        id: Id.gerarId(),
-        status:'pendente',
-        ativo: dto.ativo,
-        vagaId: vaga.id,
-        voluntarioId: voluntario.id,
-      };
+      // const inscricao = {
+      //   id: Id.gerarId(),
+      //   status:'pendente',
+      //   ativo: dto.ativo,
+      //   vagaId: vaga.id,
+      //   voluntarioId: voluntario.id,
+      // };
+      const inscricao = new Inscricao(
+         Id.gerarId(),
+         StatusInscricao.pendente,
+         dto.ativo,
+         vaga.id,
+         voluntario.id!
+
+
+      )
       const novaInscricao = await this.inscricaoRepositorio.registrar(
         inscricao
       );
@@ -60,7 +70,7 @@ export default class RegistrarInscricao
       return novaInscricao;
     } catch (error) {
       console.log(error, "erro no c");
-      throw new Error("Method not implemented c.");
+      throw new Error("Erro ao registrar inscricao");
     }
   }
 }

@@ -1,6 +1,8 @@
 import { PrismaClient } from "@prisma/client";
 import InscricaoType from "../../../@types/InscricaoType";
 import prismaDb from "../../prismaDb/Prisma";
+import Inscricao from "../../../core/model/inscricao/Inscricao";
+import InscricaoTypeSaida from "../../../@types/InscricaoTypeSaida";
 
 export default class InscricaoRepositorio {
   private prisma: PrismaClient;
@@ -9,15 +11,15 @@ export default class InscricaoRepositorio {
     this.prisma = prismaDb;
   }
 
-  async registrar(inscricao: InscricaoType): Promise<any> {
+  async registrar(inscricao: Inscricao): Promise<InscricaoTypeSaida> {
     try {
       const novaInscricao = await this.prisma.inscricao.create({
         data: {
-          id: inscricao.id,
-          voluntarioId: inscricao.voluntarioId,
-          vagaId: inscricao.vagaId,
-          status: inscricao.status,
-          ativo: inscricao.ativo,
+          id: inscricao.getId(),
+          voluntarioId: inscricao.getVoluntarioId(),
+          vagaId: inscricao.getVagaId(),
+          status: inscricao.getStatus(),
+          ativo: inscricao.getAtivo(),
 
         },
       });
@@ -39,7 +41,7 @@ export default class InscricaoRepositorio {
     }
   }
 
-  async atualizar(inscricao: any): Promise<any> {
+  async atualizar(inscricao: any): Promise<InscricaoTypeSaida> {
     try {
       const inscricaoExistente = await this.prisma.inscricao.findUnique({
         where: { id: inscricao.inscricaoId },
