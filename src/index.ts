@@ -105,6 +105,8 @@ import AtualizaarAvalicaoController from "./controllers/avaliacao/AtualizarAvali
 import BuscarPorId from "./core/useCase/Voluntario/BuscarPorId";
 import ExcluirAvaliacaoOng from "./core/useCase/Ong/ExcluirAvaliacaoOng";
 import ExcluirAvaliacaoOngController from "./controllers/avaliacao/ExcluirAvaliacaoOngController";
+import AtualizarAvaliacaoOng from "./core/useCase/Avaliacao/AtualizarAvaliacaoOng";
+import AtualizaarAvalicaoOngController from "./controllers/avaliacao/AtualizarAvaliacaoOngController";
 
 
 const app = express();
@@ -293,15 +295,14 @@ new ListarAvaliacoesRecebidasController(app, listarAvaliacoesRecebidasVoluntario
 const atualizaAvalicaoVoluntario = new AtualizarAvaliacao(avaliacaoRepositorio)
 new AtualizaarAvalicaoController(app, atualizaAvalicaoVoluntario,UserAuthentication(voluntarioRepositorio, ongRepositorio, provedorToken), UsuarioAutorizacao(["VOLUNTARIO","ONG"] ))
 
+// const atualizaAvalicaoVoluntario = new AtualizarAvaliacao(avaliacaoRepositorio)
+// new AtualizaarAvalicaoController(app, atualizaAvalicaoVoluntario,UserAuthentication(voluntarioRepositorio, ongRepositorio, provedorToken), UsuarioAutorizacao(["VOLUNTARIO","ONG"] ))
+
 
 // excluir avaliacao de um voluntario
 
 const excluirAvaliacaoVoluntario = new ExcluirAvaliacaoVoluntario(avaliacaoRepositorio)
 new ExcluirAvaliacaoVoluntarioController(app, excluirAvaliacaoVoluntario,UserAuthentication(voluntarioRepositorio, ongRepositorio, provedorToken), UsuarioAutorizacao(["VOLUNTARIO","ONG"] ))
-
-//excluir avalicao de uma ong
-const excluirAvaliacaoOng = new ExcluirAvaliacaoOng(ongRepositorio, avaliacaoRepositorio)
-new ExcluirAvaliacaoOngController(app, excluirAvaliacaoOng,UserAuthentication(voluntarioRepositorio, ongRepositorio, provedorToken), UsuarioAutorizacao(["VOLUNTARIO","ONG"] ))
 
 
 
@@ -313,7 +314,14 @@ new ListarAvaliacoesRecebidasOngController(app, listarAvalicaoOng,UserAuthentica
 const listarAvalicoesFeitasOng = new ListarAvaliacoesFeitasOng(avaliacaoRepositorio)
 new ListarAvaliacoesFeitasOngController(app, listarAvalicoesFeitasOng,UserAuthentication(voluntarioRepositorio, ongRepositorio, provedorToken), UsuarioAutorizacao(["ONG"] )  )
 
+//excluir avalicao de uma ong
+const excluirAvaliacaoOng = new ExcluirAvaliacaoOng(ongRepositorio, avaliacaoRepositorio)
+new ExcluirAvaliacaoOngController(app, excluirAvaliacaoOng,UserAuthentication(voluntarioRepositorio, ongRepositorio, provedorToken), UsuarioAutorizacao(["VOLUNTARIO","ONG"] ))
+
+
 // atualizar 
+const atualizarAvalicaoOng = new AtualizarAvaliacaoOng(avaliacaoRepositorio)
+new AtualizaarAvalicaoOngController(app, atualizarAvalicaoOng,UserAuthentication(voluntarioRepositorio, ongRepositorio, provedorToken), UsuarioAutorizacao(["VOLUNTARIO","ONG"] ) )
 
 // new AvaliacaoController(
 //   app,

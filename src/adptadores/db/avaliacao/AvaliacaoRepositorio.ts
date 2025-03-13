@@ -42,11 +42,24 @@ export default class AvaliacaoRepositorio implements AvaliacaoRepositorioPort {
       throw new Error("Erro ao buscar avaliação por ID");
     }
   }
-
+  async atualizarsAvalicaoOng(avaliacao:atualizaAvaliacaoDto){
+    try {
+      const avaliacaoAtualizada = await this.prisma.avaliacao.update({
+        where: { id: avaliacao.avaliacaoId, ongId:avaliacao.avaliadorId  },
+        data: {
+          comentario: avaliacao.comentario,
+          nota: avaliacao.nota,
+        },
+      });
+      return avaliacaoAtualizada;
+    } catch (error) {
+      throw new Error("Erro ao atualizar avaliação");
+    }
+  }
   async atualizar(avaliacao: atualizaAvaliacaoDto): Promise<any> {
     try {
       const avaliacaoAtualizada = await this.prisma.avaliacao.update({
-        where: { id: avaliacao.avaliacaoId },
+        where: { id: avaliacao.avaliacaoId, voluntarioId: avaliacao.avaliadorId },
         data: {
           comentario: avaliacao.comentario,
           nota: avaliacao.nota,
