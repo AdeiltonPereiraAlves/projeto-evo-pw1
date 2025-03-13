@@ -1,8 +1,10 @@
 import InscricaoType from "../../../@types/InscricaoType";
+import InscricaoTypeSaida from "../../../@types/InscricaoTypeSaida";
+import Inscricao from "../../model/inscricao/Inscricao";
 
 export default interface InscricaoRepositorioPort{
-    registrar(inscricacao:any):Promise<InscricaoType>
-    buscarPorId(id:string): any
+    registrar(inscricacao:Inscricao):Promise<InscricaoTypeSaida>
+    buscarPorId(id:string):Promise<any>
     atualizar(inscricacao: InscricaoType):any
-    excluir(id:string):any
+    excluir(id:string):Promise<boolean>
 }

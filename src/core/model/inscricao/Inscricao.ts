@@ -1,26 +1,29 @@
+import { StatusInscricao } from "@prisma/client";
 import Status from "../../../@types/Status";
 
 export default class Inscricao {
   private id: string;
-  private voluntarioId: string;
+  private status: StatusInscricao;//alterar para StatusInscricao depois
+  private  ativo: boolean;
   private vagaId: string;
-  private data: Date;
-  private status: Status;//alterar para StatusInscricao depois
-  private createdAt: Date;
-  private updatedAt: Date;
+  private voluntarioId: string;
 
-  constructor(id: string, voluntarioId: string, vagaId: string, status: Status) {
+  constructor(id: string,  status: StatusInscricao, ativo:boolean, vagaId: string,voluntarioId: string) {
     this.id = id;
     this.voluntarioId = voluntarioId;
     this.vagaId = vagaId;
     this.status = status;
-    this.data = new Date();
-    this.createdAt = new Date();
-    this.updatedAt = new Date();
+    this.ativo = ativo;
+   
+    
   }
 
   getId() {
     return this.id;
+  }
+
+  getAtivo(){
+    return this.ativo
   }
 
   getVoluntarioId() {
@@ -35,8 +38,8 @@ export default class Inscricao {
     return this.status;
   }
 
-  setStatus(status: Status) {
+  setStatus(status: StatusInscricao) {
     this.status = status;
-    this.updatedAt = new Date();
+   
   }
 }
