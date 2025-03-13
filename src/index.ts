@@ -23,7 +23,6 @@ import EditarVoluntarioController from "./controllers/voluntario/EditarVoluntari
 import UsuarioAutorizacao from "./adptadores/middleware/UsuarioAutorizacao"
 
 
-//
 import { RegistrarOng } from "./core/useCase/Ong/RegistrarOng";
 import { OngRepositorio } from "./adptadores/db/ong/OngRepositorio";
 import RegistrarOngController from "./controllers/ong/RegistrarOngController";
@@ -142,8 +141,7 @@ new LoginUsuarioController(app,loginVoluntario)
 
 const buscarVoluntarios = new BuscarVoluntarios(voluntarioRepositorio)
 new buscarVoluntariosControllers(app,buscarVoluntarios,UserAuthentication(voluntarioRepositorio, ongRepositorio, provedorToken),UsuarioAutorizacao(["VOLUNTARIO","ONG"]) )
-// UsuarioAutorizacao(["VOLUNTARIO"]) 
-//UserAuthentication(voluntarioRepositorio, provedorToken)
+
 
 // atualiza foto perfil voluntario
 
@@ -273,10 +271,6 @@ new InscricaoController(
 const avaliacaoRepositorio = new AvaliacaoRepositorio();
 
 
-// const registrarAvaliacao = new RegistrarAvaliacao(avaliacaoRepositorio);
-// const buscarAvaliacaoPorId = new BuscarAvaliacaoPorId(avaliacaoRepositorio);
-// const atualizarAvaliacao = new AtualizarAvaliacao(avaliacaoRepositorio);
-// const excluirAvaliacao = new ExcluirAvaliacao(avaliacaoRepositorio);
 
 //----------------------avalicao voluntario------------------------------
 const registrarAvalicaoVoluntario = new RegistrarAvaliacaoVoluntario(avaliacaoRepositorio)
@@ -322,13 +316,3 @@ new ExcluirAvaliacaoOngController(app, excluirAvaliacaoOng,UserAuthentication(vo
 // atualizar 
 const atualizarAvalicaoOng = new AtualizarAvaliacaoOng(avaliacaoRepositorio)
 new AtualizaarAvalicaoOngController(app, atualizarAvalicaoOng,UserAuthentication(voluntarioRepositorio, ongRepositorio, provedorToken), UsuarioAutorizacao(["VOLUNTARIO","ONG"] ) )
-
-// new AvaliacaoController(
-//   app,
-//   registrarAvaliacao,
-//   buscarAvaliacaoPorId,
-//   atualizarAvaliacao,
-//   // excluirAvaliacao,
-//   UserAuthentication(voluntarioRepositorio, ongRepositorio, provedorToken),
-//   UsuarioAutorizacao(["VOLUNTARIO", "ONG"])
-// );

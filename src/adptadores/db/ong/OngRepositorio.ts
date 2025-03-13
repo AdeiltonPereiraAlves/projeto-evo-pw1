@@ -8,7 +8,7 @@ import OngSaidaType from "../../../@types/OngSaidaType";
 import { Vaga } from "@prisma/client";
 import VagaSaidaType from "../../../@types/VagaSaidaType";
 import { aprovarDto } from "../../../core/useCase/Ong/AprovarVoluntario";
-// OngRepositorio.ts
+
 export class OngRepositorio implements OngRepositorioPort {
   async buscarTodos():Promise<OngSaidaType[]> {
     try {
@@ -49,7 +49,7 @@ export class OngRepositorio implements OngRepositorioPort {
 
       return true;
     } catch (error) {
-      console.error("Erro aodeletar  ong:", error);
+      console.error("Erro ao deletar  ong:", error);
       return false;
     }
   }
@@ -100,7 +100,7 @@ export class OngRepositorio implements OngRepositorioPort {
       });
       return ongComVagas as any ;
     } catch (error) {
-      throw new Error("Erro ao ong com vagas");
+      throw new Error("Erro ao buscar ong com vagas");
     }
   }
 
@@ -150,11 +150,10 @@ export class OngRepositorio implements OngRepositorioPort {
      
     } catch (error) {
       console.log(error, "erro");
-      throw new Error("Erro ao aprovar ");
+      throw new Error("Erro ao alterar quantidade de vagas ");
     }
   }
   async listarVagaDeUmaOng(ong: mudarStatusVagaDto):Promise<VagaSaidaType | null> {
-    // talves nao precise desse metodo
     console.log(ong, "ong");
     try {
       const vagasDeUmaOng = await prismaDb.vaga.findUnique({
