@@ -187,4 +187,18 @@ export class OngRepositorio implements OngRepositorioPort {
       throw new Error("Erro ao aprovar ");
     }
   }
+  async listarAvalicaoesDeUmaOng(ong:any){
+   
+    try {
+      const avaliacoesDeUmaOng = await prismaDb.avaliacao.findMany({
+        where: {
+          id: ong.avaliacaoId,
+          ongId: ong.ongId,
+        },
+      });
+      return avaliacoesDeUmaOng;
+    } catch (error) {
+      throw new Error("Erro ao retonar avaliacoes ");
+    }
+  }
 }

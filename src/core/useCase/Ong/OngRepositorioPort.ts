@@ -20,6 +20,7 @@ export default interface OngRepositorioPort {
     listarVagaDeUmaOng(ong:any): Promise<VagaSaidaType| null>
     mudarStatusDaVaga(statusVaga: mudarStatusVagaDto):Promise<boolean>
     alterQuantidadeVaga(alterarVaga:mudarStatusVagaDto ):any
+    listarAvalicaoesDeUmaOng(ong:any):any
     
 
 

@@ -103,6 +103,8 @@ import { validarRegistroVaga } from "./adptadores/middleware/validarCampos/valid
 import { validarRegistroAvaliacao } from "./adptadores/middleware/validarCampos/validarRegistroAvaliacao";
 import AtualizaarAvalicaoController from "./controllers/avaliacao/AtualizarAvaliacaoController";
 import BuscarPorId from "./core/useCase/Voluntario/BuscarPorId";
+import ExcluirAvaliacaoOng from "./core/useCase/Ong/ExcluirAvaliacaoOng";
+import ExcluirAvaliacaoOngController from "./controllers/avaliacao/ExcluirAvaliacaoOngController";
 
 
 const app = express();
@@ -295,7 +297,11 @@ new AtualizaarAvalicaoController(app, atualizaAvalicaoVoluntario,UserAuthenticat
 // excluir avaliacao de um voluntario
 
 const excluirAvaliacaoVoluntario = new ExcluirAvaliacaoVoluntario(avaliacaoRepositorio)
-new ExcluirAvaliacaoVoluntarioController(app, excluirAvaliacaoVoluntario,UserAuthentication(voluntarioRepositorio, ongRepositorio, provedorToken), UsuarioAutorizacao(["VOLUNTARIO"] ))
+new ExcluirAvaliacaoVoluntarioController(app, excluirAvaliacaoVoluntario,UserAuthentication(voluntarioRepositorio, ongRepositorio, provedorToken), UsuarioAutorizacao(["VOLUNTARIO","ONG"] ))
+
+//excluir avalicao de uma ong
+const excluirAvaliacaoOng = new ExcluirAvaliacaoOng(ongRepositorio, avaliacaoRepositorio)
+new ExcluirAvaliacaoOngController(app, excluirAvaliacaoOng,UserAuthentication(voluntarioRepositorio, ongRepositorio, provedorToken), UsuarioAutorizacao(["VOLUNTARIO","ONG"] ))
 
 
 
