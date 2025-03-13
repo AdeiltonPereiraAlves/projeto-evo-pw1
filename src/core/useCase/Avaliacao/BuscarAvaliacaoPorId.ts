@@ -1,8 +1,9 @@
 import CasoDeUso from "../../../@types/CasoDeUso";
 import AvaliacaoRepositorio from "../../../adptadores/db/avaliacao/AvaliacaoRepositorio";
+import AvaliacaoRepositorioPort from "./AvaliacaoRepositorioPort";
 
 export default class BuscarAvaliacaoPorId implements CasoDeUso<string, any> {
-  constructor(private avaliacaoRepositorio: AvaliacaoRepositorio) {}
+  constructor(private avaliacaoRepositorio: AvaliacaoRepositorioPort) {}
 
   async executar(id: string): Promise<any> {
     try {

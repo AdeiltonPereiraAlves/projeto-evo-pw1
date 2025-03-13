@@ -66,7 +66,7 @@ export default class AvaliacaoRepositorio implements AvaliacaoRepositorioPort {
       throw new Error("Erro ao excluir avaliação");
     }
   }
-
+  
   async avaliacoesFeitasVoluntario(id:string, tipo:Tipo) {
     try {
       const listaAvaliaco = await this.prisma.avaliacao.findMany({ where: {voluntarioId:id ,tipo},
