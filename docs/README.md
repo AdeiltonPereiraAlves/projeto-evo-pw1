@@ -62,6 +62,10 @@ O EVO é desenvolvido seguindo a **Arquitetura Hexagonal (Ports and Adapters)**,
 - 📧 Email: adeutoo@gmail.com
 
 <img src="https://avatars.githubusercontent.com/u/124940122?v=4" width="150" style="border-radius:50%;" alt="Minha Foto">
+### Filipe de Oliveira Lira
+## Desenvolvedor FullStack
+- 💻 Estudante de Análise e Desenvolvimento de Sistemas
+- 🚀 Focado em **Node.js**, **React**, **Next.js**, **TypeScript** , **Prisma**, **Express**
 
 ## 🌐 Instalação e Configuração
 
