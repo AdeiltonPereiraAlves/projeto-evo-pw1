@@ -61,6 +61,7 @@ O EVO é desenvolvido seguindo a **Arquitetura Hexagonal (Ports and Adapters)**,
 - 🌐 [Perfil no GitHub](https://github.com/AdeiltonPereiraAlves)
 - 📧 Email: adeutoo@gmail.com
 
+<img src="https://avatars.githubusercontent.com/u/124940122?v=4" width="150" style="border-radius:50%;" alt="Minha Foto">
 
 ## 🌐 Instalação e Configuração
 
