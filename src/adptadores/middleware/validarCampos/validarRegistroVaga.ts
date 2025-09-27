@@ -14,7 +14,7 @@ export const validarRegistroVaga = () => {
       .isArray({ min: 1 }).withMessage("Os requisitos são obrigatórios e devem ser uma lista."),
 
     body("quantidade")
-      .isInt({ min: 1 , max:10}).withMessage("A quantidade deve ser um número inteiro positivo."),
+      .isInt({ min: 1 , max:30}).withMessage("A quantidade deve ser um número inteiro positivo."),
 
    
     body("duracao")

@@ -1,5 +1,4 @@
 import CasoDeUso from "../../../@types/CasoDeUso";
-import UsuarioRepo from "../../portas/usuario/UsuarioRepo";
 import VoluntarioRepositorio from "./VoluntarioRepositorioPort"
 import InscricaoRepositorioPort from "../Inscricao/InscricaoRepositorio";
 import BuscarPorId from "./BuscarPorId";
