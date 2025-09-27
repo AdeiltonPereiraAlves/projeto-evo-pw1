@@ -1,7 +1,7 @@
 import CasoDeUso from "../../../@types/CasoDeUso";
 import jwtPort from "../../portas/JwtPort";
 import SenhaCriptografada from "../../portas/SenhaCriptografada";
-import UsuarioRepo from "../../portas/usuario/UsuarioRepo";
+
 import VoluntarioDb from "../Voluntario/VoluntarioRepositorioPort";
 import OngRepositorioPort from "../Ong/OngRepositorioPort";
 import BuscarPorEmail from "../Voluntario/BuscarPorEmail";

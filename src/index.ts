@@ -106,18 +106,20 @@ import ExcluirAvaliacaoOng from "./core/useCase/Ong/ExcluirAvaliacaoOng";
 import ExcluirAvaliacaoOngController from "./controllers/avaliacao/ExcluirAvaliacaoOngController";
 import AtualizarAvaliacaoOng from "./core/useCase/Avaliacao/AtualizarAvaliacaoOng";
 import AtualizaarAvalicaoOngController from "./controllers/avaliacao/AtualizarAvaliacaoOngController";
-
+import cors from "cors"
 
 const app = express();
 const port = process.env.PORT
 const secret = process.env.JWTSECRET
+app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 
 
-app.listen(port, () => {
-    console.log("servidor rodando"+port)
-} )
+// app.listen(port, () => {
+//     console.log("servidor rodando"+port)
+// } )
+app.listen(3000, '0.0.0.0', () => console.log("Servidor rodando"));
 
 
 const senhaCrypto = new Bcrypt()
