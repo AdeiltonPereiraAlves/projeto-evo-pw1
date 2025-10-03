@@ -2,11 +2,13 @@ import RegistrarVoluntario from "../../core/useCase/Voluntario/RegistrarVoluntar
 import { Express } from "express";
 
 import { Request, Response } from "express";
+import LonginUsuario from "../../core/useCase/auth/LonginUsuario";
 
 export default class RegistrarVoluntarioController{
     constructor(
         private servidor: Express, 
         private casoDeUso: RegistrarVoluntario,
+        private loginUsuario: LonginUsuario,
         ...middleware: any[]
     ){
         
@@ -21,7 +23,7 @@ export default class RegistrarVoluntarioController{
             const {nome, email, tipo,contato, cpf, habilidades, interesses,disponibilidade,senha} = req.body 
            
             try {
-                await this.casoDeUso.executar({
+               const voluntario =  await this.casoDeUso.executar({
                     nome,
                     email,
                     tipo,
@@ -33,8 +35,12 @@ export default class RegistrarVoluntarioController{
                     senha,
                     imagem: imagemUp!
                 })
-                
-                res.status(201).send()
+                if(!voluntario){
+                    res.status(400).json("Erro ao registrar voluntario")
+                    return
+                }
+                const voluntarioLogado = await this.loginUsuario.executar({email, senha})
+                res.status(201).json({ voluntarioLogado})
             } catch (error:any) {
                 res.status(400).send(error.message)
             }

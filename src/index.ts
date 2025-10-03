@@ -137,7 +137,7 @@ const ongRepositorio = new OngRepositorio()
 const loginVoluntario = new LonginUsuario(voluntarioRepositorio,ongRepositorio, provedorToken  ,senhaCrypto)
 
 const middlewareImagem = imagemUpload.single("imagem")
-new RegistrarVoluntarioController(app,registrarVoluntario,validarRegistroVoluntario(), middlewareValidador,middlewareImagem )
+new RegistrarVoluntarioController(app,registrarVoluntario,loginVoluntario,validarRegistroVoluntario(), middlewareValidador,middlewareImagem )
 new LoginUsuarioController(app,loginVoluntario)
 
 
@@ -174,10 +174,9 @@ new ListarInscricoesVoluntarioControllers(app, listarInscricoes, UserAuthenticat
 
 //registrar
 const registrarOng = new RegistrarOng(ongRepositorio,senhaCrypto )
-const usuario = new LonginUsuario(voluntarioRepositorio,ongRepositorio, provedorToken  ,senhaCrypto )
-new RegistrarOngController(app, registrarOng,usuario,validarRegistroOngs(), middlewareValidador)
-//login
 const login = new LonginUsuario(voluntarioRepositorio,ongRepositorio,provedorToken  ,senhaCrypto )
+new RegistrarOngController(app, registrarOng,login,validarRegistroOngs(), middlewareValidador)
+//login
 new LoginUsuarioController(app, login, )
 // // //excluir
 const excluirOng = new ExcluirOng(ongRepositorio)
