@@ -5,13 +5,13 @@ import LonginUsuario from "../../core/useCase/auth/LonginUsuario";
 import { Voluntario } from "@prisma/client";
 import OngRepositorioPort from "../../core/useCase/Ong/OngRepositorioPort";
 import VoluntarioDb from "../../core/useCase/Voluntario/VoluntarioRepositorioPort";
-export default class LoginUsuarioController{
+export default class LoginUsuarioController {
     constructor(
         private servidor: Express,
         private casoDeuso: LonginUsuario,
-       
-    ){
-        this.servidor.post('/login', async (req:Request, res:Response ) => {
+
+    ) {
+        this.servidor.post('/login', async (req: Request, res: Response) => {
             try {
                 const login = {
                     email: req.body.email,
@@ -19,11 +19,16 @@ export default class LoginUsuarioController{
                 }
                 console.log(login, "login")
                 const resposta = await this.casoDeuso.executar(login)
-               
-                    res.status(200).json(resposta)
 
-            } catch (error:any) {
-                res.status(403).send(error.message)
+                res.status(200).json(resposta)
+
+            } catch (error: any) {
+                console.log(res, error.message, "mensagem de erro")
+                res.status(403).json({
+                    success: false,
+                    message: error.message,
+                    error: error.message
+                })
             }
         })
     }

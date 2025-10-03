@@ -119,7 +119,7 @@ app.use(express.urlencoded({extended:true}))
 // app.listen(port, () => {
 //     console.log("servidor rodando"+port)
 // } )
-app.listen(3000, '0.0.0.0', () => console.log("Servidor rodando"));
+app.listen(3001, '0.0.0.0', () => console.log("Servidor rodando"));
 
 
 const senhaCrypto = new Bcrypt()
@@ -174,8 +174,8 @@ new ListarInscricoesVoluntarioControllers(app, listarInscricoes, UserAuthenticat
 
 //registrar
 const registrarOng = new RegistrarOng(ongRepositorio,senhaCrypto )
-
-new RegistrarOngController(app, registrarOng,validarRegistroOngs(), middlewareValidador)
+const usuario = new LonginUsuario(voluntarioRepositorio,ongRepositorio, provedorToken  ,senhaCrypto )
+new RegistrarOngController(app, registrarOng,usuario,validarRegistroOngs(), middlewareValidador)
 //login
 const login = new LonginUsuario(voluntarioRepositorio,ongRepositorio,provedorToken  ,senhaCrypto )
 new LoginUsuarioController(app, login, )
