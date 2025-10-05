@@ -1,6 +1,4 @@
 import CasoDeUso from "../../../@types/CasoDeUso";
-import VoluntarioType from "../../../@types/VoluntarioType";
-import UsuarioRepo from "../../portas/usuario/UsuarioRepo";
 import voluntatioRepositorio from "./VoluntarioRepositorioPort";
 export type fotoDto = {
     imagem: string,

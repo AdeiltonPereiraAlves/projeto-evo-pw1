@@ -22,7 +22,7 @@ export const validarRegistroVaga = () => {
 
     body("localizacao")
       .isString().withMessage("A localização é obrigatória e deve ser uma string.")
-      .isLength({min: 5, max: 40}),
+      .isLength({min: 5, max: 60}),
   
   ];
 };

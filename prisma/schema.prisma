@@ -87,6 +87,7 @@ model Ong {
   nome       String
   email      String  @unique
   senha      String?
+  imagem     String?
   tipo       TipoUsuario
   cnpj        String   @unique
   descricao   String

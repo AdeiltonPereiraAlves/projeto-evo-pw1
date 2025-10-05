@@ -20,6 +20,7 @@ export class RegistrarOng implements CasoDeUso<OngType, OngSaidaType>{
               Id.gerarId(),
               dto.nome,
               dto.email,
+              dto.imagem!,
               dto.tipo,
               dto.missao,
               dto.cnpj,

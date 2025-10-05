@@ -61,6 +61,7 @@ export class OngRepositorio implements OngRepositorioPort {
           id:ong.getId(),
           nome: ong.getNome(),
           email: ong.getEmail(),
+          imagem: ong.getImagem()!,
           tipo: ong.getTipo(),
           missao: ong.getMissao(),
           cnpj: ong.getCnpj(),
@@ -185,6 +186,14 @@ export class OngRepositorio implements OngRepositorioPort {
       console.log(error, "erro");
       throw new Error("Erro ao aprovar ");
     }
+  }
+   async editarFoto(id: string, novaImagem: string): Promise<boolean> {
+    const ong = await prismaDb.ong.update({
+      where: { id },
+      data: { imagem: novaImagem },
+    });
+
+    return ong ? true : false;
   }
   async listarAvalicaoesDeUmaOng(ong:any){
    

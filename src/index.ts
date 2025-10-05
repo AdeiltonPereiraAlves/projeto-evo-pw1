@@ -106,6 +106,9 @@ import ExcluirAvaliacaoOng from "./core/useCase/Ong/ExcluirAvaliacaoOng";
 import ExcluirAvaliacaoOngController from "./controllers/avaliacao/ExcluirAvaliacaoOngController";
 import AtualizarAvaliacaoOng from "./core/useCase/Avaliacao/AtualizarAvaliacaoOng";
 import AtualizaarAvalicaoOngController from "./controllers/avaliacao/AtualizarAvaliacaoOngController";
+import EditarFotoOngController from "./controllers/ong/EditarFotoOngController";
+import EditarFotoOng from "./core/useCase/Ong/EditarFotoOng";
+import path from "path";
 import cors from "cors"
 
 const app = express();
@@ -130,7 +133,9 @@ const provedorToken = new  JwtAdapter(secret!)
 
 console.log(provedorToken,"provedor token")
 // const usuarioDb = new UsuarioRepositorio() //usuariodb
-
+// backend/index.js
+app.use('/public', express.static('public'));
+app.use(express.static(path.join(__dirname, "../public")));
 
 //--------------------------------VOLUNTARIO------------------------------------------------------------------------------------------------------
 const ongRepositorio = new OngRepositorio()
@@ -188,10 +193,8 @@ const buscarOngs = new BuscarOngs(ongRepositorio)
 new BuscarOngController(app, buscarOngs,UserAuthentication(voluntarioRepositorio, ongRepositorio, provedorToken),UsuarioAutorizacao(["VOLUNTARIO","ONG"]))
 
 // // editar foto ong
-// const ongRepo = new UsuarioRepositorio("ONG","//")
-// const editarFotoOng = new EditarFotoPerfilOng(ongRepo)
-
-// new EditarFotoPerfilController(app, editarFotoOng, UserAuthentication(usuarioAutenticaoDb, provedorToken),  middlewareImagem,UsuarioAutorizacao(["ONG"]))
+const editarFotoOng = new EditarFotoOng(ongRepositorio)
+new EditarFotoOngController(app,editarFotoOng,UserAuthentication(voluntarioRepositorio, ongRepositorio, provedorToken), middlewareImagem, UsuarioAutorizacao(["ONG"]))
 
 
 //editar ong

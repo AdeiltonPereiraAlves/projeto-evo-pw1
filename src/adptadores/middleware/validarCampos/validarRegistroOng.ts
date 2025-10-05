@@ -23,7 +23,7 @@ import { body } from "express-validator";
       body("descricao")
         .isString().withMessage("A descrição é obrigatória e deve ser uma string.")
         .notEmpty().withMessage("A descrição não pode ser vazia.")
-        .isLength({ min: 10, max: 100 }).withMessage("A descrição deve ter entre 10 e 100 caracteres."),
+        .isLength({ min: 10, max: 200 }).withMessage("A descrição deve ter entre 10 e 100 caracteres."),
   
       body("visao")
         .isString().withMessage("A visão é obrigatória e deve ser uma string.")

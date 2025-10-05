@@ -6,6 +6,7 @@ export default interface OngType {
     id?: string;
     nome: string;
     email: string;
+    imagem:string| undefined
     tipo: Tipo;
     senha?: string;
     cnpj:string

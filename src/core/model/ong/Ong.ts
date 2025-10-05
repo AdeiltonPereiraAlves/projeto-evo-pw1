@@ -8,6 +8,7 @@ export default class Ong {
   private nome: string;
   private email: string;
   private tipo: Tipo;
+  private imagem: string | undefined;
   private missao: string;
   private cnpj: string;
   private descricao: string;
@@ -19,6 +20,7 @@ export default class Ong {
     id: string,
     nome: string,
     email: string,
+    imagem: string,
     tipo: Tipo,
     missao: string,
     cnpj: string,
@@ -45,6 +47,7 @@ export default class Ong {
     this.nome = nome;
     this.email = email;
     this.tipo = tipo;
+    this.imagem = imagem;
     this.missao = missao;
     this.cnpj = cnpj;
     this.missao = missao;
@@ -66,7 +69,12 @@ export default class Ong {
   getEmail(): string {
     return this.email;
   }
-
+  getImagem(): string | undefined {
+    return this.imagem;
+  }
+ setImagem(imagem: string) {
+    this.imagem = imagem;
+  }
   getTipo(): Tipo {
     return this.tipo;
   }

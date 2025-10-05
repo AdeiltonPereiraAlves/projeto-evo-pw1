@@ -21,6 +21,7 @@ export default interface OngRepositorioPort {
     mudarStatusDaVaga(statusVaga: mudarStatusVagaDto):Promise<boolean>
     alterQuantidadeVaga(alterarVaga:mudarStatusVagaDto ):any
     listarAvalicaoesDeUmaOng(ong:any):any
+    editarFoto(id:string, novaImagem:string):Promise<boolean>
     
 
 
