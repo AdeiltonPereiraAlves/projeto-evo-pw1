@@ -7,4 +7,5 @@ export default interface InscricaoRepositorioPort{
     buscarPorId(id:string):Promise<any>
     atualizar(inscricacao: InscricaoType):any
     excluir(id:string):Promise<boolean>
+    buscarStatus(vagaId:string, voluntarioId:string):Promise<any>
 }

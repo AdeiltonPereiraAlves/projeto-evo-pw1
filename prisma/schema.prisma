@@ -139,6 +139,7 @@ model Inscricao{
   vaga Vaga @relation(fields:[vagaId], references: [id], onDelete: Cascade)
   createdAt  DateTime @default(now()) // Criado automaticamente na inserção
   updatedAt  DateTime @updatedAt      // Atualizado automaticamente na modificação
+  @@unique([voluntarioId, vagaId], name: "user_vaga_unique")
 }
 
 model Avaliacao{

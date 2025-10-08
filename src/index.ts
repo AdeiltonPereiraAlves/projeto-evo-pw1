@@ -110,6 +110,8 @@ import EditarFotoOngController from "./controllers/ong/EditarFotoOngController";
 import EditarFotoOng from "./core/useCase/Ong/EditarFotoOng";
 import path from "path";
 import cors from "cors"
+import BuscarStatus from "./core/useCase/Inscricao/BuscarStatus";
+import buscarVoluntarioPorIdControllers from "./controllers/voluntario/BuscarVoluntarioPorIdController";
 
 const app = express();
 const port = process.env.PORT
@@ -145,6 +147,11 @@ const middlewareImagem = imagemUpload.single("imagem")
 new RegistrarVoluntarioController(app,registrarVoluntario,loginVoluntario,validarRegistroVoluntario(), middlewareValidador,middlewareImagem )
 new LoginUsuarioController(app,loginVoluntario)
 
+
+
+// buscar vonluntario por id (perfil)
+const buscarVoluntarioPorId =  new BuscarPorId(voluntarioRepositorio)
+new buscarVoluntarioPorIdControllers(app,buscarVoluntarioPorId,UserAuthentication(voluntarioRepositorio, ongRepositorio, provedorToken),UsuarioAutorizacao(["VOLUNTARIO","ONG"]) )
 
 const buscarVoluntarios = new BuscarVoluntarios(voluntarioRepositorio)
 new buscarVoluntariosControllers(app,buscarVoluntarios,UserAuthentication(voluntarioRepositorio, ongRepositorio, provedorToken),UsuarioAutorizacao(["VOLUNTARIO","ONG"]) )
@@ -260,6 +267,7 @@ const registrarInscricao = new RegistrarInscricao(inscricaoRepositorio, vagaRepo
 const buscarInscricaoPorId = new BuscarInscricaoPorId(inscricaoRepositorio);
 const atualizarInscricao = new AtualizarInscricao(inscricaoRepositorio);
 const excluirInscricao = new ExcluirInscricao(inscricaoRepositorio,voluntarioRepositorio);
+const buscarStatus = new BuscarStatus(inscricaoRepositorio);
 
 new InscricaoController(
   app,
@@ -267,6 +275,7 @@ new InscricaoController(
   buscarInscricaoPorId,
   atualizarInscricao,
   excluirInscricao,
+  buscarStatus,
   UserAuthentication(voluntarioRepositorio, ongRepositorio, provedorToken),
   UsuarioAutorizacao(["VOLUNTARIO", "ONG"])
 );

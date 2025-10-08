@@ -28,12 +28,12 @@ import { body } from "express-validator";
       body("visao")
         .isString().withMessage("A visão é obrigatória e deve ser uma string.")
         .notEmpty().withMessage("A visão não pode ser vazia.")
-        .isLength({ min: 10, max: 100 }).withMessage("A visão deve ter entre 10 e 100 caracteres."),
+        .isLength({ min: 10, max: 200 }).withMessage("A visão deve ter entre 10 e 100 caracteres."),
   
       body("missao")
         .isString().withMessage("A missão é obrigatória e deve ser uma string.")
         .notEmpty().withMessage("A missão não pode ser vazia.")
-        .isLength({ min: 10, max: 100 }).withMessage("A missão deve ter entre 10 e 100 caracteres."),
+        .isLength({ min: 10, max: 200 }).withMessage("A missão deve ter entre 10 e 100 caracteres."),
   
       body("areaAtuacao")
         .isArray({ min: 1 }).withMessage("A área de atuação é obrigatória e deve ser uma lista."),

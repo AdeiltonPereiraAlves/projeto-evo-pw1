@@ -8,7 +8,7 @@ export const validarRegistroVaga = () => {
 
     body("descricao")
       .isString().withMessage("A descrição é obrigatória e deve ser uma string.")
-      .isLength({ min: 10 }).withMessage("A descrição deve ter pelo menos 10 caracteres."),
+      .isLength({ min: 10 , max:500}).withMessage("A descrição deve ter pelo menos 10 caracteres."),
 
     body("requisitos")
       .isArray({ min: 1 }).withMessage("Os requisitos são obrigatórios e devem ser uma lista."),

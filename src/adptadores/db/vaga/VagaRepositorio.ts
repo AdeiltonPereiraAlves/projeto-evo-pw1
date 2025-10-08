@@ -48,6 +48,7 @@ export default class VagaRepositorio implements VagaRepositorioPort {
       const vagas = await prismaDb.vaga.findMany({
         include: {
           ong: true,
+          
         },
       });
       console.log(vagas, "vagas")
