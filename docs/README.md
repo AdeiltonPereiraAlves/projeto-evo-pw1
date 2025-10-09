@@ -63,6 +63,11 @@ O EVO é desenvolvido seguindo a **Arquitetura Hexagonal (Ports and Adapters)**,
 
 <img src="https://avatars.githubusercontent.com/u/124940122?v=4" width="150" style="border-radius:50%;" alt="Minha Foto">
 
+### Filipe Lira de Oliveira
+## Desenvolvedor FullStack
+- 💻 Estudante de Análise e Desenvolvimento de Sistemas
+- 🚀 Focado em **Node.js**, **React**, **Next.js**, **TypeScript** , **Prisma**, **Express**
+
 ## 🌐 Instalação e Configuração
 
 ### Pré-requisitos
