@@ -7,7 +7,6 @@ import voluntarioRepositorio from "./VoluntarioRepositorioPort";
 import Id from "../../shared/Id";
 import SenhaCriptografada from "../../portas/SenhaCriptografada";
 import VoluntarioType from "../../../@types/VoluntarioType";
-import UsuarioRepo from "../../portas/usuario/UsuarioRepo";
 import Voluntario from "../../model/voluntario/Voluntario";
 
 export default class RegistrarVoluntario

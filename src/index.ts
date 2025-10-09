@@ -124,7 +124,7 @@ app.use(express.urlencoded({extended:true}))
 // app.listen(port, () => {
 //     console.log("servidor rodando"+port)
 // } )
-app.listen(3001, '0.0.0.0', () => console.log("Servidor rodando"));
+app.listen(port, () => console.log("Servidor rodando"));
 
 
 const senhaCrypto = new Bcrypt()

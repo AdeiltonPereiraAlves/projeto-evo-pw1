@@ -10,6 +10,7 @@ export default class EditarFotoPerfil implements CasoDeUso<fotoDto,boolean>{
        
     ){}
     async executar(dto: fotoDto){
+        
         const fotoAtualizada = await this.voluntarioRepositorio.editarFoto(dto.id!,dto.imagem,)
         return fotoAtualizada
     }

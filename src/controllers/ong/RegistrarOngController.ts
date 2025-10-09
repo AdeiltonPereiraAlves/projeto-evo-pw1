@@ -4,6 +4,7 @@ import { Express, Request, Response } from "express";
 import { RegistrarOng } from "../../core/useCase/Ong/RegistrarOng";
 import OngType from "../../@types/OngType";
 import LonginUsuario from "../../core/useCase/auth/LonginUsuario";
+import cloudinary from "../../config/cloudinaryConfig";
 export default class RegistrarOngController {
   constructor(
     private servidor: Express,
@@ -21,14 +22,31 @@ export default class RegistrarOngController {
         //       imagemUp = "public/images/profile.png"
         //   }
 
-        let imagemUp = "";
+        // let imagemUp = "";
+        // if (req.file) {
+        //   // imagem enviada pelo usuário
+        //   imagemUp = `ongs/${req.file.filename}`;
+        // } else {
+        //   // imagem padrão
+        //   imagemUp = "profile.png"; // somente o nome
+        // }
+        const ongReq = req.usuario
+        let imagemUp = process.env.DEFAULT_PROFILE_IMAGE!;
         if (req.file) {
-          // imagem enviada pelo usuário
-          imagemUp = `ongs/${req.file.filename}`;
+          const filePath = (req.file as any).path; // caminho local do arquivo
+          const publicId = `voluntarios/${ongReq.id}`; // public_id fixo por usuário
+
+          // Upload para o Cloudinary, sobrescrevendo a antiga
+          const result = await cloudinary.uploader.upload(filePath, {
+            public_id: publicId,
+            overwrite: true,
+          });
+
+          imagemUp = result.secure_url;
         } else {
-          // imagem padrão
-          imagemUp = "profile.png"; // somente o nome
+          imagemUp = process.env.DEFAULT_PROFILE_IMAGE!;
         }
+
 
         const { nome, email, tipo, senha, cnpj, descricao, visao, missao, areaAtuacao, endereco } = req.body
         console.log(req.body, "chegou no controler ong")

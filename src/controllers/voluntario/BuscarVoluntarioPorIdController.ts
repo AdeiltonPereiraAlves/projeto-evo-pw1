@@ -24,6 +24,6 @@ export default class buscarVoluntarioPorIdControllers{
             }
       }
 
-      this.servidor.get("/perfil/:id",...middleware,buscar)
+      this.servidor.get("/buscar",...middleware,buscar)
     }
 }
