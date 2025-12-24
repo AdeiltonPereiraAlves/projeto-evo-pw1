@@ -62,8 +62,8 @@ export default class RegistrarVoluntarioController {
                     res.status(400).json("Erro ao registrar voluntario")
                     return
                 }
-                const voluntarioLogado = await this.loginUsuario.executar({ email, senha })
-                res.status(201).json({ voluntarioLogado })
+                const usuario = await this.loginUsuario.executar({ email, senha })
+                res.status(201).json(usuario)
             } catch (error: any) {
                 res.status(400).send(error.message)
             }

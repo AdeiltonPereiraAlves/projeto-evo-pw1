@@ -12,7 +12,7 @@ export default class LonginUsuario implements CasoDeUso<Dto, Object> {
   constructor(
     private usuarioDb: VoluntarioDb,
     private ongDb: OngRepositorioPort,
-    private provedorToken: jwtPort,
+    private provedorToken: jwtPort, 
     private bcrypt: SenhaCriptografada
   ) {}
 
@@ -89,7 +89,7 @@ export default class LonginUsuario implements CasoDeUso<Dto, Object> {
     // Remove a senha do retorno do usuário
     const { senha, ...usuarioSemSenha } = usuarioExistente;
 
-    console.log(usuarioExistente.nome, "usuarionome")
+    console.log(usuarioExistente, "usuarionome")
 
     // Gera o token JWT
     const token = this.provedorToken.gerar({
