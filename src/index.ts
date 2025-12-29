@@ -112,7 +112,8 @@ import path from "path";
 import cors from "cors"
 import BuscarStatus from "./core/useCase/Inscricao/BuscarStatus";
 import buscarVoluntarioPorIdControllers from "./controllers/voluntario/BuscarVoluntarioPorIdController";
-
+import BuscarOngPorIdController from "./controllers/ong/BuscarOngPorIdController";
+import BuscarOngPorId from "./core/useCase/Ong/BuscarOngPorId";
 const app = express();
 const port = process.env.PORT
 const secret = process.env.JWTSECRET
@@ -212,7 +213,8 @@ const editar = new EditarOng(ongRepositorio)
 new EditarOngController(app,editar,validarEditarOng(),middlewareValidador, UserAuthentication(voluntarioRepositorio, ongRepositorio, provedorToken),)
 
 
-
+const buscarOngPorId = new BuscarOngPorId(ongRepositorio);
+new BuscarOngPorIdController(app, buscarOngPorId, UserAuthentication(voluntarioRepositorio, ongRepositorio, provedorToken), UsuarioAutorizacao(["ONG"]) )
 
 // //--------------------------------------------------VAGA-----------------------------------------------------------------------------------------
 // // registrar vaga

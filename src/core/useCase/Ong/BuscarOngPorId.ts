@@ -5,7 +5,7 @@ export default class BuscarOngPorId implements CasoDeUso<string,any>{
     constructor(private ongRepositorio: OngRepositorioPort){}
     async executar(id: string): Promise<any> {
         try {
-            const ong = await this.ongRepositorio.buscarVagasDeOng(id)
+            const ong = await this.ongRepositorio.buscarPorId(id)
             return ong
         } catch (error) {
             
