@@ -6,7 +6,8 @@ export default class BuscarOngPorId implements CasoDeUso<string,any>{
     async executar(id: string): Promise<any> {
         try {
             const ong = await this.ongRepositorio.buscarPorId(id)
-            return ong
+            ong.senha = undefined;
+            return ong;
         } catch (error) {
             
             throw new Error("Method not implemented.");
