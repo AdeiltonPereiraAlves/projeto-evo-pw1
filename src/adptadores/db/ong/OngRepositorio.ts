@@ -140,10 +140,18 @@ export class OngRepositorio implements OngRepositorioPort {
   // alterar quantidade de vaga
   async alterQuantidadeVaga(alterarVaga: any) {
     try {
+      const vaga = await prismaDb.vaga.findUnique({
+        where: { id: alterarVaga.vagaId },
+      });
+
+      if(vaga?.quantidade! <=0){
+        throw new Error("Quantidade de vagas insuficiente");
+      }
        await prismaDb.vaga.updateMany({
         where: { id: alterarVaga.vagaId },
         data: {
           quantidade: {
+           
             decrement: alterarVaga.quantidade,
           },
         },

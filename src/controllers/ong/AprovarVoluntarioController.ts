@@ -13,13 +13,20 @@ export default class AprovarVoluntarioController{
                 const ong = req.usuario
                 const ongId = ong?.id!
                 const {id} = req.params
-                const aprovar:any = {
-                    
-                    status: StatusInscricao,
+                const aprovarOuRejeitar = req.body.status
+                console.log(aprovarOuRejeitar, "dados para aprovar")
+                let aprovar: any ={
+                    status:{},
                     ongId,
                     vagaId: id
-                    
+                };
+                if(aprovarOuRejeitar === StatusInscricao.rejeitado){
+                     aprovar.status = StatusInscricao.rejeitado
                 }
+                else{
+                    aprovar.status = StatusInscricao.aprovado
+                }
+                 
                 console.log(aprovar, "Aprovar")
                 const resultado = await this.casoDeUso.executar(aprovar)
                 console.log(resultado, "resultado")

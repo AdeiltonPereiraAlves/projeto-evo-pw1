@@ -23,7 +23,7 @@ export default class AprovarVoluntario implements CasoDeUso<aprovarDto,any>{
                 throw new Error("Vaga na existe")
             }
             dto.vagaId = vagaExistente.id
-            dto.status =  StatusInscricao.aprovado
+          
             dto.quantidade = 1
 
             console.log(dto.status, "status")
