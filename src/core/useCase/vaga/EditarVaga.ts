@@ -11,6 +11,7 @@ export default class EditarVaga implements CasoDeUso<any,VagaType>{
     ){}
     async executar(vaga: any): Promise<VagaType> {
         try {
+            console.log(vaga, "vaga no usecase de editar")
             const buscarId = new BuscarVagaPorId(this.vagaRepositorio)
             // const buscarOngPorId = new BuscarOngPorId(this.ongRepositorio)
             const existeVaga = await buscarId.executar(vaga.id)

@@ -76,6 +76,7 @@ export default class VagaRepositorio implements VagaRepositorioPort {
           titulo: vaga.titulo,
           descricao: vaga.descricao,
           requisitos: vaga.requisitos,
+          quantidade: vaga.quantidade,
           status: vaga.status,
           duracao: vaga.duracao,
           localizacao: vaga.localizacao,
