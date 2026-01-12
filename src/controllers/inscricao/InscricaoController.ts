@@ -5,7 +5,8 @@ import AtualizarInscricao from "../../core/useCase/Inscricao/AtualizarInscricao"
 import ExcluirInscricao from "../../core/useCase/Inscricao/ExcluirInscricao";
 import InscricaoType, { StatusInscricao } from "../../@types/InscricaoType";
 import BuscarStatus from "../../core/useCase/Inscricao/BuscarStatus";
-
+import { OngRepositorio } from "../../adptadores/db/ong/OngRepositorio";
+import ListarIncricoesDeUmaVaga from "../../core/useCase/Ong/ListarIncricoesDeUmaVaga";
 export default class InscricaoController {
   constructor(
     private servidor: Express,
@@ -14,6 +15,7 @@ export default class InscricaoController {
     private atualizarInscricao: AtualizarInscricao,
     private excluirInscricao: ExcluirInscricao,
     private inscricaoRepository: BuscarStatus,
+    private listarIncricoesDeUmaVaga: ListarIncricoesDeUmaVaga,
     ...middleware: any[]
   ) {
     // Registrar Inscrição
@@ -114,11 +116,34 @@ export default class InscricaoController {
       }
     }
 
+    // listar inscrições de uma vaga de uma ong
+      const  ListarIncricoesDeUmaVaga = async(req:Request, res:Response) =>{
+        console.log("entrou no controller de listar incricoes de uma vaga")
+      try {
+        const  vagaId  = req.params.id;
+        console.log(vagaId,"id da vaga no controller")
+        const ong = req.usuario.id; // vem do token JWT
+    
+        const inscricoes = await listarIncricoesDeUmaVaga.executar(vagaId);
+       
+        if (!inscricoes) {
+          throw new Error("erro na inscricao") // não existe inscrição
+        }
+
+        return res.json(inscricoes);
+      } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Erro ao verificar status da inscrição" });
+      }
+    
+      }
     // Rotas
     this.servidor.post("/inscricao/:id", ...middleware, registrar);
     this.servidor.get("/inscricao/:id", ...middleware, buscarPorId);
     this.servidor.put("/atualizar/inscricao/:id", ...middleware, atualizar);
     this.servidor.delete("/inscricao/:id", ...middleware, excluir);
     this.servidor.get("/inscricao/status/:id", ...middleware, verificarStatus);
+    this.servidor.get("/inscricoes/ong/:id", ...middleware, ListarIncricoesDeUmaVaga);
   }
 }
+

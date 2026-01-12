@@ -10,10 +10,10 @@ import VagaSaidaType from "../../../@types/VagaSaidaType";
 import { aprovarDto } from "../../../core/useCase/Ong/AprovarVoluntario";
 
 export class OngRepositorio implements OngRepositorioPort {
-  async buscarTodos():Promise<OngSaidaType[]> {
+  async buscarTodos(): Promise<OngSaidaType[]> {
     try {
       const ong = await prismaDb.ong.findMany();
-      return ong ;
+      return ong;
     } catch (error) {
       throw new Error("Erro no buscar ongs");
     }
@@ -58,7 +58,7 @@ export class OngRepositorio implements OngRepositorioPort {
     try {
       const ongRegistrada = await prismaDb.ong.create({
         data: {
-          id:ong.getId(),
+          id: ong.getId(),
           nome: ong.getNome(),
           email: ong.getEmail(),
           imagem: ong.getImagem()!,
@@ -73,14 +73,14 @@ export class OngRepositorio implements OngRepositorioPort {
 
         },
       });
-      return ongRegistrada ;
+      return ongRegistrada;
     } catch (error) {
       console.error("Erro ao cadastrar  ong:", error);
 
       throw new Error("Erro ao registrar ong");
     }
   }
-  async buscarVagasDeOng(id: string):Promise<VagaSaidaType[]| null> {
+  async buscarVagasDeOng(id: string): Promise<VagaSaidaType[] | null> {
     try {
       const ongComVagas = await prismaDb.ong.findUnique({
         where: { id },
@@ -89,7 +89,7 @@ export class OngRepositorio implements OngRepositorioPort {
             include: {
               inscricoes: {
                 select: {
-                  id:true,
+                  id: true,
                   ativo: true,
                   status: true,
                   voluntario: true,
@@ -99,11 +99,25 @@ export class OngRepositorio implements OngRepositorioPort {
           },
         },
       });
-      return ongComVagas as any ;
+      return ongComVagas as any;
     } catch (error) {
       throw new Error("Erro ao buscar ong com vagas");
     }
   }
+
+  //buscar incricoes de uma vaga de uma ong
+  async buscarInscricoesVagaOng(id: string): Promise<VagaSaidaType[] | null> {
+    try {
+      const ongComVagas = await prismaDb.inscricao.findMany({
+        where: { vagaId:id },
+      
+      });
+      return ongComVagas as any;
+    } catch (error) {
+      throw new Error("Erro ao buscar ong com vagas");
+    }
+  }
+
 
   async buscarPorEmail(email: string): Promise<any> {
     console.log(email, "email");
@@ -115,7 +129,7 @@ export class OngRepositorio implements OngRepositorioPort {
     return ong;
   }
 
-  async aprovarVoluntario(aprovacao: aprovarDto):Promise<boolean> {
+  async aprovarVoluntario(aprovacao: aprovarDto): Promise<boolean> {
     try {
       console.log(aprovacao, "aprovacao");
       this.alterQuantidadeVaga(aprovacao)
@@ -128,7 +142,7 @@ export class OngRepositorio implements OngRepositorioPort {
       });
 
       console.log(res, "res");
-      if(res){
+      if (res) {
         return true
       }
       return false;
@@ -144,25 +158,25 @@ export class OngRepositorio implements OngRepositorioPort {
         where: { id: alterarVaga.vagaId },
       });
 
-      if(vaga?.quantidade! <=0){
+      if (vaga?.quantidade! <= 0) {
         throw new Error("Quantidade de vagas insuficiente");
       }
-       await prismaDb.vaga.updateMany({
+      await prismaDb.vaga.updateMany({
         where: { id: alterarVaga.vagaId },
         data: {
           quantidade: {
-           
+
             decrement: alterarVaga.quantidade,
           },
         },
       });
-     
+
     } catch (error) {
       console.log(error, "erro");
       throw new Error("Erro ao alterar quantidade de vagas ");
     }
   }
-  async listarVagaDeUmaOng(ong: mudarStatusVagaDto):Promise<VagaSaidaType | null> {
+  async listarVagaDeUmaOng(ong: mudarStatusVagaDto): Promise<VagaSaidaType | null> {
     console.log(ong, "ong");
     try {
       const vagasDeUmaOng = await prismaDb.vaga.findUnique({
@@ -176,7 +190,7 @@ export class OngRepositorio implements OngRepositorioPort {
       throw new Error("Erro ao retonar vagas ");
     }
   }
-  async mudarStatusDaVaga(statusVaga: mudarStatusVagaDto):Promise<boolean> {
+  async mudarStatusDaVaga(statusVaga: mudarStatusVagaDto): Promise<boolean> {
     try {
       const res = await prismaDb.vaga.updateMany({
         where: { id: statusVaga.vagaId },
@@ -186,7 +200,7 @@ export class OngRepositorio implements OngRepositorioPort {
         },
       });
       console.log(res, "res");
-      if(res){
+      if (res) {
         return true
       }
       return false;
@@ -195,7 +209,7 @@ export class OngRepositorio implements OngRepositorioPort {
       throw new Error("Erro ao aprovar ");
     }
   }
-   async editarFoto(id: string, novaImagem: string): Promise<boolean> {
+  async editarFoto(id: string, novaImagem: string): Promise<boolean> {
     const ong = await prismaDb.ong.update({
       where: { id },
       data: { imagem: novaImagem },
@@ -203,8 +217,8 @@ export class OngRepositorio implements OngRepositorioPort {
 
     return ong ? true : false;
   }
-  async listarAvalicaoesDeUmaOng(ong:any){
-   
+  async listarAvalicaoesDeUmaOng(ong: any) {
+
     try {
       const avaliacoesDeUmaOng = await prismaDb.avaliacao.findMany({
         where: {

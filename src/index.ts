@@ -114,6 +114,7 @@ import BuscarStatus from "./core/useCase/Inscricao/BuscarStatus";
 import buscarVoluntarioPorIdControllers from "./controllers/voluntario/BuscarVoluntarioPorIdController";
 import BuscarOngPorIdController from "./controllers/ong/BuscarOngPorIdController";
 import BuscarOngPorId from "./core/useCase/Ong/BuscarOngPorId";
+import ListarInscricoesDeUmaVaga from "./core/useCase/Ong/ListarIncricoesDeUmaVaga";
 const app = express();
 const port = process.env.PORT
 const secret = process.env.JWTSECRET
@@ -216,6 +217,8 @@ new EditarOngController(app,editar,validarEditarOng(),middlewareValidador, UserA
 const buscarOngPorId = new BuscarOngPorId(ongRepositorio);
 new BuscarOngPorIdController(app, buscarOngPorId, UserAuthentication(voluntarioRepositorio, ongRepositorio, provedorToken), UsuarioAutorizacao(["ONG"]) )
 
+
+
 // //--------------------------------------------------VAGA-----------------------------------------------------------------------------------------
 // // registrar vaga
 
@@ -272,6 +275,7 @@ const buscarInscricaoPorId = new BuscarInscricaoPorId(inscricaoRepositorio);
 const atualizarInscricao = new AtualizarInscricao(inscricaoRepositorio);
 const excluirInscricao = new ExcluirInscricao(inscricaoRepositorio,voluntarioRepositorio);
 const buscarStatus = new BuscarStatus(inscricaoRepositorio);
+const listarIncricoesDeUmaVaga = new ListarInscricoesDeUmaVaga(ongRepositorio)
 
 new InscricaoController(
   app,
@@ -280,8 +284,10 @@ new InscricaoController(
   atualizarInscricao,
   excluirInscricao,
   buscarStatus,
+  listarIncricoesDeUmaVaga,
   UserAuthentication(voluntarioRepositorio, ongRepositorio, provedorToken),
-  UsuarioAutorizacao(["VOLUNTARIO", "ONG"])
+
+  UsuarioAutorizacao(["VOLUNTARIO", "ONG"]) // mudar depois deixar so a ong autorizada
 );
 
 // Avaliacao
